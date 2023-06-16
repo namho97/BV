@@ -1,0 +1,28 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>NHÓM DỊCH VỤ THƯỜNG DÙNG</div>
+</div>
+
+<mat-dialog-content>
+
+  <div style="border: 1px solid rgba(0, 0, 0, 0.12);margin-top:15px;">
+  <app-table-expanded #tableNhomDichVuThuongDung masterName="tableNhomDichVuThuongDung" [columns]="columnsNhomDichVuThuongDung"
+  [dataSource]="dataSourceNhomDichVuThuongDung" [documentType]="documentTypeNhomDichVuThuongDung"
+  [groupByColumns]="groupByColumnsNhomDichVuThuongDung" [sortByColumn]="sortByColumnNhomDichVuThuongDung" [showIndex]="false"
+  [showCheckbox]="true" [hideHeader]="true" [noBorderTop]="true" [tableDetailTemplate]="tableDetailTemplate" height="540">
+  </app-table-expanded>
+  
+  <ng-template #tableDetailTemplate let-dataItem>
+    <div class="full-width p-15">
+        <app-table #tableChiTietNhomDichVuThuongDung masterName="tableChiTietNhomDichVuThuongDung" [columns]="columnsChiTietNhomDichVuThuongDung"
+        [dataSource]="dataSourceChiTietNhomDichVuThuongDung" [documentType]="documentTypeNhomDichVuThuongDung"
+        [hideHeader]="true" [useAddDeault]="false" [showIndex]="true" maxHeight="600" [pageable]="false">                
+        </app-table>
+    </div>
+  </ng-template>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="button" mat-stroked-button style="margin-left: auto;" mat-dialog-close>Đóng</button>
+  <button type="button" mat-raised-button color="primary">CHỌN</button>
+</mat-dialog-actions>

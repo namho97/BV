@@ -1,0 +1,79 @@
+
+.error{
+    position: relative;
+    color: red;
+}
+.mat-form-field-wrapper{
+    padding-bottom: 0 !important;
+}
+mat-icon{
+    cursor: pointer;
+    &:hover{
+        color:#01ADEF;
+    }
+}
+.txt-search-table{
+    position: relative;
+    .search-table{
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        z-index: 9999;
+        border-left: 1px solid rgba(0, 0, 0, 0.12);
+        border-right: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 5px 5px 5px 5px;
+        -webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.5);
+        box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.5);
+        @media (max-width: 575px) {        
+            max-width: calc(100% - 15px);
+        }
+    }
+    mat-form-field{
+
+        cursor: pointer;
+    } 
+    
+    .txt-search-table-clear{
+        position: absolute;
+        top: 12px;
+        right:10px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        display: none;
+        mat-icon{
+            font-size: 15px;
+        }
+    }
+    &:hover{
+        .txt-search-table-clear{
+            display: block;
+        }
+    }
+}
+.select-has-icon-add{
+    mat-form-field{
+        width: calc(100% - 50px) !important;
+        float: left;
+        .mat-form-field-outline-end{
+            border-radius: 0 !important;
+        }
+    }
+    .mat-select-add{
+       width: 50px;
+        float: left;        
+        min-width: 0;
+        border-left: none;
+        border-radius: 0 5px 5px 0;
+        margin-top: 0;
+        height: 52px;
+        mat-icon{
+            margin-left: -3px;
+        }
+    }
+    .txt-search-table-clear{
+        right:60px;
+    }
+}

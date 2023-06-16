@@ -1,0 +1,137 @@
+<div fxLayout="row wrap" fxLayoutGap="10px grid" >
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <fieldset>
+      <legend>KẾT QUẢ XÉT NGHIỆM</legend>
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+        <tr>
+          <td width="30%">NỘI DUNG:</td>
+          <td><strong>{{canLamSangVo.KetQuaXetNghiem}}</strong></td>
+        </tr>
+        <tr>
+          <td>FILE ĐÍNH KÈM:</td>
+          <td>
+            <div fxLayout="row column" fxLayoutGap="0 grid">
+              <div  fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%"  *ngFor="let file of canLamSangVo.TaiLieuKetQuaXetNghiem;let i=index;">
+                  <div  style="position: relative;padding: 5px;" *ngIf="file.Src!=null && file.Src!=''">
+                      <img [src]="file.Src | safeUrl" alt="{{file.Name}}" style="width: 100%;cursor: pointer;" (click)="viewImage(file.Src)"/>
+                  </div>
+                  <div  style="position: relative;padding: 5px;" *ngIf="!(file.Src!=null && file.Src!='')">
+                    <img src="assets/img/image-not-found.png" alt="{{file.Name}}" matTooltip="Không tìm thấy hình" style="width: 100%;"/>
+                </div>
+              </div>
+          </div>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <fieldset>
+      <legend>KẾT QUẢ X-QUANG</legend>
+
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+        <tr>
+          <td width="30%">NỘI DUNG:</td>
+          <td><strong>{{canLamSangVo.KetQuaXQuang}}</strong></td>
+        </tr>
+        <tr>
+          <td>FILE ĐÍNH KÈM:</td>
+          <td>
+            <div fxLayout="row column" fxLayoutGap="0 grid">
+              <div  fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%"  *ngFor="let file of canLamSangVo.TaiLieuKetQuaXQuang;let i=index;">
+                  <div  style="position: relative;padding: 5px;" *ngIf="file.Src!=null && file.Src!=''">
+                      <img [src]="file.Src | safeUrl" alt="{{file.Name}}" style="width: 100%;cursor: pointer;" (click)="viewImage(file.Src)"/>
+                  </div>
+                  <div  style="position: relative;padding: 5px;" *ngIf="!(file.Src!=null && file.Src!='')">
+                    <img src="assets/img/image-not-found.png" alt="{{file.Name}}" matTooltip="Không tìm thấy hình" style="width: 100%;"/>
+                </div>
+              </div>
+          </div>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <fieldset>
+      <legend>KẾT QUẢ SIÊU ÂM</legend>
+
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+        <tr>
+          <td width="30%">NỘI DUNG:</td>
+          <td><strong>{{canLamSangVo.KetQuaSieuAm}}</strong></td>
+        </tr>
+        <tr>
+          <td>FILE ĐÍNH KÈM:</td>
+          <td>
+            <div fxLayout="row column" fxLayoutGap="0 grid">
+              <div  fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%"  *ngFor="let file of canLamSangVo.TaiLieuKetQuaSieuAm;let i=index;">
+                  <div  style="position: relative;padding: 5px;" *ngIf="file.Src!=null && file.Src!=''">
+                      <img [src]="file.Src | safeUrl" alt="{{file.Name}}" style="width: 100%;cursor: pointer;" (click)="viewImage(file.Src)"/>
+                  </div>
+                  <div  style="position: relative;padding: 5px;" *ngIf="!(file.Src!=null && file.Src!='')">
+                    <img src="assets/img/image-not-found.png" alt="{{file.Name}}" matTooltip="Không tìm thấy hình" style="width: 100%;"/>
+                </div>
+              </div>
+          </div>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <fieldset>
+      <legend>KẾT QUẢ ĐIỆN TIM</legend>
+
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+        <tr>
+          <td width="30%">NỘI DUNG:</td>
+          <td><strong>{{canLamSangVo.KetQuaDienTim}}</strong></td>
+        </tr>
+        <tr>
+          <td>FILE ĐÍNH KÈM:</td>
+          <td>
+            <div fxLayout="row column" fxLayoutGap="0 grid">
+              <div  fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%"  *ngFor="let file of canLamSangVo.TaiLieuKetQuaDienTim;let i=index;">
+                  <div  style="position: relative;padding: 5px;" *ngIf="file.Src!=null && file.Src!=''">
+                      <img [src]="file.Src | safeUrl" alt="{{file.Name}}" style="width: 100%;cursor: pointer;" (click)="viewImage(file.Src)"/>
+                  </div>
+                  <div  style="position: relative;padding: 5px;" *ngIf="!(file.Src!=null && file.Src!='')">
+                    <img src="assets/img/image-not-found.png" alt="{{file.Name}}" matTooltip="Không tìm thấy hình" style="width: 100%;"/>
+                </div>
+              </div>
+          </div>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+    <fieldset>
+      <legend>KẾT QUẢ THỦ THUẬT KHÁC</legend>
+
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+        <tr>
+          <td width="15%">NỘI DUNG:</td>
+          <td><strong>{{canLamSangVo.KetQuaThuThuatKhac}}</strong></td>
+        </tr>
+        <tr>
+          <td>FILE ĐÍNH KÈM:</td>
+          <td>
+            <div fxLayout="row column" fxLayoutGap="0 grid">
+              <div  fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%"  *ngFor="let file of canLamSangVo.TaiLieuKetQuaThuThuatKhac;let i=index;">
+                  <div  style="position: relative;padding: 5px;" *ngIf="file.Src!=null && file.Src!=''">
+                      <img [src]="file.Src | safeUrl" alt="{{file.Name}}" style="width: 100%;cursor: pointer;" (click)="viewImage(file.Src)"/>
+                  </div>
+                  <div  style="position: relative;padding: 5px;" *ngIf="!(file.Src!=null && file.Src!='')">
+                    <img src="assets/img/image-not-found.png" alt="{{file.Name}}" matTooltip="Không tìm thấy hình" style="width: 100%;"/>
+                </div>
+              </div>
+          </div>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+</div>
+

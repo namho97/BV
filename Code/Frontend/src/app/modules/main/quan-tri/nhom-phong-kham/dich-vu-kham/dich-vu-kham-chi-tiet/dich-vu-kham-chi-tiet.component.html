@@ -1,0 +1,86 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+                <fieldset fxFlex="100%" class="mb-3">
+                    <legend>THÔNG TIN CHUNG</legend>
+                    <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                        <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ma" label="MÃ"
+                            [required]="true" placeholder="MÃ" [(model)]="dichVuKhamVo.Ma" maxLength="20"
+                            [validationerror]="'Ma' | validationerror:validationErrors">
+                        </app-textbox>
+                        <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ten" label="TÊN"
+                            [required]="true" placeholder="TÊN" [(model)]="dichVuKhamVo.Ten" maxLength="250"
+                            [validationerror]="'Ten' | validationerror:validationErrors">
+                        </app-textbox>
+
+                        <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="Hiệu lực"
+                        [items]="[{KeyId:1,DisplayName:'Đang sử dụng'},{KeyId:2,DisplayName:'Không sử dụng'}]"
+                        [(model)]="dichVuKhamVo.HieuLucId" (modelChange)="hieuLucChange($event)"
+                        [validationerror]="'HieuLuc' | validationerror:validationErrors"  [required]="true">
+                      </app-select>
+                        <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" [required]="true" label="MẶC ĐỊNH"
+                            [items]="[{KeyId:1,DisplayName:'Có'},{KeyId:2,DisplayName:'Không'}]" 
+                            [(model)]="dichVuKhamVo.MacDinhId" (modelChange)="macDinhChange($event)"
+                            [validationerror]="'MacDinh' | validationerror:validationErrors">
+                        </app-select>
+                        <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="MoTa" label="MÔ TẢ"
+                            placeholder="MÔ TẢ" [(model)]="dichVuKhamVo.MoTa" maxLength="1000">
+                        </app-textarea>
+
+                    </div>
+                </fieldset>
+
+                <fieldset fxFlex="100%" class="mb-3">
+                    <legend>THÔNG TIN GIÁ</legend>
+                    <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+                        <table width="100%" class="table-border table-format">
+                          <tr>
+                            <th>ĐƠN GIÁ <span class="red">*</span></th>
+                            <th width="250px">SỬ DỤNG TỪ NGÀY <span class="red">*</span></th>
+                            <th width="250px">SỬ DỤNG ĐẾN NGÀY</th>
+                            <th width="50px"></th>
+                          </tr>
+                          <tr *ngFor="let item of dichVuKhamVo.DichVuKhamBenhGias;let i=index;">
+                            <td valign="top">
+                              <app-money id="DonGia{{i}}" label="" placeholder="ĐƠN GIÁ" [(model)]="item.Gia"
+                                [validationerror]="'DichVuKhamBenhGias['+i+'].Gia' | validationerror:validationErrors"></app-money>
+                            </td>
+                            <td valign="top">
+                              <app-datetimepicker id="TuNgay{{i}}" label="" placeholder="SỬ DỤNG TỪ NGÀY" [(model)]="item.TuNgay"
+                                [validationerror]="'DichVuKhamBenhGias['+i+'].TuNgay' | validationerror:validationErrors"></app-datetimepicker>
+                            </td>
+                            <td valign="top">
+                              <app-datetimepicker id="DenNgay{{i}}" label="" placeholder="SỬ DỤNG ĐẾN NGÀY" [(model)]="item.DenNgay"
+                                [validationerror]="'DichVuKhamBenhGias['+i+'].DenNgay' | validationerror:validationErrors"></app-datetimepicker>
+                            </td>
+                            <td valign="top"><button mat-icon-button color="warn" (click)="xoaDonGia(dichVuKhamVo.DichVuKhamBenhGias,item)">
+                                <mat-icon>delete_outline</mat-icon>
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td colspan="4" align="center"><button mat-stroked-button
+                                (click)="themDonGia(dichVuKhamVo.DichVuKhamBenhGias)">
+                                <mat-icon>add</mat-icon> Thêm giá mới
+                              </button></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </fieldset>
+            </div>
+        </div>
+     
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

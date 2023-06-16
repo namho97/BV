@@ -1,0 +1,72 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM NHÂN VIÊN</a>
+        <a class="active">HỒ SƠ NHÂN VIÊN</a>
+      </div>
+      <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="tableHoSoNhanVien.create()" >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="grid-content">
+      <app-table  #tableHoSoNhanVien masterName="tableHoSoNhanVien" [columns]="columnsHoSoNhanVien"
+       [documentType]="documentTypeHoSoNhanVien"
+      [groupByColumns]="groupByColumnsHoSoNhanVien"  [headerTemplate]="headerHoSoNhanVienTemplate"
+      [sortByColumn]="sortByColumnHoSoNhanVien" [showIndex]="false" [showCheckbox]="false"
+      (extDataItemSelected)="extDataItemSelected($event)">
+    </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-ho-so-nhan-vien-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()" (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-ho-so-nhan-vien-chi-tiet>
+    </div>
+  </div>
+</div>
+
+<ng-template #headerHoSoNhanVienTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <!-- <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaTiepNhan" label="MÃ TN"
+        [(model)]="hoSoNhanVienQueryInfo.MaTiepNhan" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaNguoiBenh" label="MÃ NB"
+        [(model)]="hoSoNhanVienQueryInfo.MaNguoiBenh" (keyup)="onKey($event)"></app-textbox> -->
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HoTen" label="HỌ TÊN"
+        [(model)]="hoSoNhanVienQueryInfo.HoTen" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" label="GIỚI TÍNH" [multiple]="true"
+        url="Common/GetGioiTinhLookup" [(model)]="hoSoNhanVienQueryInfo.GioiTinhs">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="DienThoai" label="ĐIỆN THOẠI"
+        [(model)]="hoSoNhanVienQueryInfo.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Email" label="EMAIL"
+          [(model)]="hoSoNhanVienQueryInfo.Email" (keyup)="onKey($event)"></app-textbox>
+
+      <app-checkbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="ChuaKichHoat" label="ĐANG KHÓA"
+          [(model)]="hoSoNhanVienQueryInfo.ChuaKichHoat"></app-checkbox>
+        <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+          <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem"><mat-icon>search</mat-icon> Tìm kiếm</button>
+        </div>
+        <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+          <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+        </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #tinhTrangTemplate let-dataItem>
+  <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;" class="bg green" *ngIf="dataItem.KichHoat">Đang hoạt động</span>
+  <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;" class="bg red" *ngIf="!dataItem.KichHoat">Đang khóa</span>
+</ng-template>
+<ng-template #actionTemplate let-dataItem>
+  <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_horiz</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="doiMatKhau(dataItem)"><mat-icon>password</mat-icon> Đổi mật khẩu</button>
+    <button mat-menu-item (click)="tableHoSoNhanVien.delete(dataItem)"><mat-icon>delete_outline</mat-icon> Xóa nhân viên</button>
+  </mat-menu>
+</ng-template>

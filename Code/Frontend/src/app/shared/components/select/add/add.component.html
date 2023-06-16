@@ -1,0 +1,9 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center">
+  <div>{{data.Title}}</div>
+  <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+      <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content>
+<ng-container *ngTemplateOutlet="data.Component;context:data.Context"></ng-container>
+</mat-dialog-content>

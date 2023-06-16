@@ -1,0 +1,73 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="TÊN HOẠT CHẤT 1"  [required]="true"
+                   url="QuanTriNhomDuocPhamTuongTacThuoc/GetLookupThuocHoacHoatChat"
+                    [(model)]="tuongTacThuocVo.ThuocHoacHoatChat1Id"
+                    [validationerror]="'ThuocHoacHoatChat1Id' | validationerror:validationErrors">
+                </app-select>
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="TÊN HOẠT CHẤT 2"  [required]="true"
+                   url="QuanTriNhomDuocPhamTuongTacThuoc/GetLookupThuocHoacHoatChat"
+                    [(model)]="tuongTacThuocVo.ThuocHoacHoatChat2Id"
+                    [validationerror]="'ThuocHoacHoatChat2Id' | validationerror:validationErrors">
+                </app-select>
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="MỨC ĐỘ CHÚ Ý KHI CHỈ ĐỊNH" [required]="true"
+                    url="QuanTriNhomDuocPhamTuongTacThuoc/GetLookupMucDoChuYKhiChiDinh"
+                    [(model)]="tuongTacThuocVo.MucDoChuYKhiChiDinh"
+                    [validationerror]="'MucDoChuYKhiChiDinh' | validationerror:validationErrors">
+                </app-select>
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="MỨC ĐỘ TƯƠNG TÁC" [required]="true"
+                    url="QuanTriNhomDuocPhamTuongTacThuoc/GetLookupMucDoTuongTac"
+                    [(model)]="tuongTacThuocVo.MucDoTuongTac"
+                    [validationerror]="'MucDoTuongTac' | validationerror:validationErrors">
+                </app-select>
+
+                <app-radio fxFlex.lt-sm="100%" fxFlex.lt-md="25%" fxFlex.lt-lg="25%" fxFlex="25%" id="duoc-dong-hoc"
+                    label="DƯỢC ĐỘNG HỌC" [items]="[{Value:true,Text:'Có'},{Value:false,Text:'Không'}]"
+                    [(model)]="tuongTacThuocVo.DuocDongHoc">
+                </app-radio>
+
+                <app-radio fxFlex.lt-sm="100%" fxFlex.lt-md="25%" fxFlex.lt-lg="25%" fxFlex="25%" id="duoc-luc-hoc"
+                    label="DƯỢC LỰC HỌC" [items]="[{Value:true,Text:'Có'},{Value:false,Text:'Không'}]"
+                    [(model)]="tuongTacThuocVo.DuocLucHoc">
+                </app-radio>
+                <app-radio fxFlex.lt-sm="100%" fxFlex.lt-md="25%" fxFlex.lt-lg="25%" fxFlex="25%" id="thuoc-thuc-an"
+                    label="THUỐC THỨC ĂN" [items]="[{Value:true,Text:'Có'},{Value:false,Text:'Không'}]"
+                    [(model)]="tuongTacThuocVo.ThuocThucAn">
+                </app-radio>
+                <app-radio fxFlex.lt-sm="100%" fxFlex.lt-md="25%" fxFlex.lt-lg="25%" fxFlex="25%" id="quy-tac"
+                    label="QUY TẮC" [items]="[{Value:true,Text:'Có'},{Value:false,Text:'Không'}]"
+                    [(model)]="tuongTacThuocVo.QuyTac">
+                </app-radio>
+
+
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="tuong-tac" label="TƯƠNG TÁC HẬU QUẢ"
+                    placeholder="TƯƠNG TÁC HẬU QUẢ" [(model)]="tuongTacThuocVo.TuongTacHauQua"  [required]="true"
+                    [validationerror]="'TuongTacHauQua' | validationerror:validationErrors">
+                </app-textbox>
+
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ghichu" label="GHI CHÚ"
+                    placeholder="GHI CHÚ" [(model)]="tuongTacThuocVo.GhiChu" maxLength="2500">
+                </app-textbox>
+
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="cach-xu-ly" label="CÁCH XỬ LÝ"
+                placeholder="CÁCH XỬ LÝ" [(model)]="tuongTacThuocVo.CachXuLy" >
+            </app-textbox>
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

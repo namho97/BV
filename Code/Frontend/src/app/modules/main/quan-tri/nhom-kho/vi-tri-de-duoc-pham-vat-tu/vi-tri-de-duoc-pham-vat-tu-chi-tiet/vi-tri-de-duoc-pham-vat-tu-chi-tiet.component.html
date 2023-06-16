@@ -1,0 +1,37 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="KHO"
+           url="QuanTriNhomKhoKho/GetLookup"
+           [(model)]="viTriDPVTVo.KhoId"
+           [validationerror]="'KhoId' | validationerror:validationErrors">
+           </app-select>
+           
+          <app-textbox fxFlex="100%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="Ten" label="TÊN" [required]="true"
+            placeholder="TÊN" [(model)]="viTriDPVTVo.Ten" maxLength="120"
+            [validationerror]="'Ten' | validationerror:validationErrors">
+          </app-textbox>
+
+          <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="HIỆU LỰC"
+           [items]="[{KeyId:true,DisplayName:'Đang sử dụng'},{KeyId:false,DisplayName:'Không sử dụng'}]"
+          [(model)]="viTriDPVTVo.HieuLuc"
+          [validationerror]="'HieuLuc' | validationerror:validationErrors">
+          </app-select>
+
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="MoTa" label="MÔ TẢ" placeholder="MÔ TẢ"
+            [(model)]="viTriDPVTVo.MoTa" maxLength="2000">
+        </app-textbox>
+        </div>
+      </div>
+    </ng-scrollbar>
+  </div>
+  <div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+  
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+      (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+      NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+  </div>

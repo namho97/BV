@@ -1,0 +1,98 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>KHÁM TỔNG QUÁT</legend>
+          <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+            <tr>
+              <td width="30%">LÝ DO KHÁM BỆNH:</td>
+              <td><strong>{{khamLamSangVo.LyDoVaoVien}}</strong></td>
+            </tr>
+            <tr>
+              <td>TỔNG TRẠNG:</td>
+              <td><strong>{{khamLamSangVo.TongTrang}}</strong></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>KHÁM CÁC BỘ PHẬN</legend>
+          
+          <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+            <tr *ngFor="let item of khamLamSangVo.KhamKhacs">
+              <td width="30%">{{item.BoPhan}}:</td>
+              <td><strong>{{item.MoTa}}</strong></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>CHỈ SỐ SINH TỒN
+          </legend>
+          <table style="table-layout: fixed;width:100%" class="table-format td-p-10" *ngIf="khamLamSangVo.ChiSoSinhTon!=null">
+            <tr>
+              <td width="50%">MẠCH (nhịp/phút):</td>
+              <td><strong>{{khamLamSangVo.ChiSoSinhTon.Mach}}</strong></td>
+            </tr>
+            <tr>
+              <td>NHIỆT ĐỘ (°C):</td>
+              <td><strong>{{khamLamSangVo.ChiSoSinhTon.NhietDo}}</strong></td>
+            </tr>
+            <tr>
+              <td>HUYẾT ÁP (mmHg):</td>
+              <td><strong>{{khamLamSangVo.ChiSoSinhTon.HuyetApTamThu}}/{{khamLamSangVo.ChiSoSinhTon.HuyetApTamTruong}}</strong></td>
+            </tr>
+            <tr>
+              <td>NHỊP THỞ (lần/phút):</td>
+              <td><strong>{{khamLamSangVo.ChiSoSinhTon.NhipTho}}</strong></td>
+            </tr>
+            <tr>
+              <td>CÂN NẶNG (kg):</td>
+              <td><strong>{{khamLamSangVo.ChiSoSinhTon.CanNang}}</strong></td>
+            </tr>
+            <tr>
+              <td>CHIỀU CAO (cm):</td>
+              <td><strong>{{khamLamSangVo.ChiSoSinhTon.ChieuCao}}</strong></td>
+            </tr>
+            <tr>
+              <td>BMI (kg/m²):</td>
+              <td><strong>{{khamLamSangVo.ChiSoSinhTon.Bmi}}</strong></td>
+            </tr>
+            <tr>
+              <td>SpO2 (%):</td>
+              <td><strong>{{khamLamSangVo.ChiSoSinhTon.SpO2}}</strong></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>TIỀN SỬ BỆNH 
+          </legend>
+          <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+            <tr>
+              <td width="30%">BẢN THÂN:</td>
+              <td><strong>{{khamLamSangVo.TienSuBenhBanThan}}</strong></td>
+            </tr>
+            <tr>
+              <td>GIA ĐÌNH:</td>
+              <td><strong>{{khamLamSangVo.TienSuBenhGiaDinh}}</strong></td>
+            </tr>
+            <tr>
+              <td>DỊ ỨNG:</td>
+              <td><strong>{{khamLamSangVo.TienSuBenhDiUng}}</strong></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>

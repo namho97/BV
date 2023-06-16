@@ -1,0 +1,170 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-1">
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HoTen" label="HỌ VÀ TÊN"
+                    [required]="true" placeholder="HỌ VÀ TÊN" [required]="true" [upperCase]="true"
+                    [(model)]="nguoiBenhVo.HoTen" maxLength="100"
+                    [validationerror]="'HoTen' | validationerror:validationErrors">
+                </app-textbox>
+
+                <app-datepicker fxFlex="60%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NgayThangNamSinh"
+                    label="NGÀY SINH (Đầy đủ)" [(model)]="nguoiBenhVo.NgayThangNamSinh" [required]="true"
+                    (modelChange)="ngayThangNamSinhChange($event)"
+                    [validationerror]="'NgayThangNamSinh' | validationerror:validationErrors">
+                </app-datepicker>
+
+                <app-textbox fxFlex="40%" fxFlex.gt-sm="15%" fxFlex.sm="15%" id="NamSinh" label="NĂM SINH" type="number"
+                    [(model)]="nguoiBenhVo.NamSinh" [required]="true"
+                    [validationerror]="'NamSinh' | validationerror:validationErrors"
+                    [disabled]="nguoiBenhVo.NgayThangNamSinh!=null">
+                </app-textbox>
+
+                <app-radio fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="GioiTinh" label="GT"
+                    [items]="[{Value:1,Text:'Nam'},{Value:2,Text:'Nữ'}]" [(model)]="nguoiBenhVo.GioiTinh"
+                    [required]="true" [validationerror]="'GioiTinh' | validationerror:validationErrors">
+                </app-radio>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="SoHoChieu"
+                    label="SỐ HỘ CHIẾU/CMND/CCCD" maxLength="20" placeholder="Số hộ chiếu/CMND/CCCD"
+                    [(model)]="nguoiBenhVo.SoChungMinhThu"
+                    [validationerror]="'SoChungMinhThu' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox type="number" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="SoDienThoai"
+                    label="SỐ ĐIỆN THOẠI" maxLength="12" [required]="true" placeholder="SỐ ĐIỆN THOẠI" [required]="true"
+                    [(model)]="nguoiBenhVo.SoDienThoai"
+                    [validationerror]="'SoDienThoai' | validationerror:validationErrors">
+                </app-textbox>
+                <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Nghe-nghiep" label="NGHỀ NGHIỆP"
+                    url="QuanTriNhomHanhChinhNgheNghiep/GetLookup" [(model)]="nguoiBenhVo.NgheNghiepId"
+                    (modelObjectChange)="changeNgheNghiep($event)">
+                </app-select>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Email" label="EMAIL"
+                    placeholder="EMAIL" maxLength="100" [(model)]="nguoiBenhVo.Email"
+                    [validationerror]="'Email' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="Noi-lam-viec" label="NƠI LÀM VIỆC"
+                    placeholder="NƠI LÀM VIỆC" [(model)]="nguoiBenhVo.NoiLamViec" maxLength="300">
+                </app-textbox>
+                <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="TinhThanh" label="TỈNH/THÀNH"
+                    url="QuanTriNhomHanhChinhDonViHanhChinh/GetTinhThanhLookup" [(model)]="nguoiBenhVo.TinhThanhId"
+                    [(modelText)]="nguoiBenhVo.TinhThanhTen" 
+                    [validationerror]="'TinhThanhId' | validationerror:validationErrors" [showIconAddOrEdit]="true"
+                    tooltipIconAdd="Thêm tỉnh/thành mới vào danh mục" tooltipIconEdit="Cập nhật tỉnh/thành vào danh mục"
+                    componentAddTitle="THÊM TỈNH/THÀNH MỚI VÀO DANH MỤC"
+                    componentEditTitle="CẬP NHẬT TỈNH/THÀNH VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+                    [componentAddOrEdit]="themTinhThanhMoiTemplate"
+                    [componentAddOrEditContext]="{$implicit:nguoiBenhVo.TinhThanhId}">
+                    <ng-template #themTinhThanhMoiTemplate let-dataItem>
+                        <app-don-vi-hanh-chinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+                            [isUpdate]="dataItem!=null && dataItem>0" capHanhChinhDefault="1"
+                            (dataChange)="themHoacSuaTinhThanhLuuChange($event)">
+                        </app-don-vi-hanh-chinh-chi-tiet>
+                    </ng-template>
+                </app-select>
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="QuanHuyen" label="QUẬN/HUYỆN"
+                    url="QuanTriNhomHanhChinhDonViHanhChinh/GetQuanHuyenLookup"
+                    [queryInfo]="{TinhThanhId: (nguoiBenhVo.TinhThanhId==null?0:nguoiBenhVo.TinhThanhId)}"
+                    [bind]="false" [(model)]="nguoiBenhVo.QuanHuyenId" [(modelText)]="nguoiBenhVo.QuanHuyenTen"
+                    [validationerror]="'QuanHuyenId' | validationerror:validationErrors"
+                    [disabled]="nguoiBenhVo.TinhThanhId==null" [showIconAddOrEdit]="true"
+                    tooltipIconAdd="Thêm quận/huyện mới vào danh mục" tooltipIconEdit="Cập nhật quận/huyện vào danh mục"
+                    componentAddTitle="THÊM QUẬN/HUYỆN MỚI VÀO DANH MỤC"
+                    componentEditTitle="CẬP NHẬT QUẬN/HUYỆN VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+                    [componentAddOrEdit]="themQuanHuyenMoiTemplate"
+                    [componentAddOrEditContext]="{$implicit:nguoiBenhVo.QuanHuyenId}">
+                    <ng-template #themQuanHuyenMoiTemplate let-dataItem>
+                        <app-don-vi-hanh-chinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+                            [isUpdate]="dataItem!=null && dataItem>0" capHanhChinhDefault="2"
+                            [tinhThanhIdDefault]="nguoiBenhVo.TinhThanhId"
+                            (dataChange)="themHoacSuaQuanHuyenLuuChange($event)">
+                        </app-don-vi-hanh-chinh-chi-tiet>
+                    </ng-template>
+                </app-select>
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="PhuongXa" label="PHƯỜNG/XÃ"
+                    url="QuanTriNhomHanhChinhDonViHanhChinh/GetPhuongXaLookup"
+                    [queryInfo]="{TinhThanhId: (nguoiBenhVo.TinhThanhId==null?0:nguoiBenhVo.TinhThanhId), QuanHuyenId: (nguoiBenhVo.QuanHuyenId==null?0:nguoiBenhVo.QuanHuyenId)}"
+                    [bind]="false" [(model)]="nguoiBenhVo.PhuongXaId" [(modelText)]="nguoiBenhVo.PhuongXaTen"
+                    [validationerror]="'PhuongXaId' | validationerror:validationErrors"
+                    [disabled]="nguoiBenhVo.QuanHuyenId==null" [showIconAddOrEdit]="true"
+                    tooltipIconAdd="Thêm phường/xã mới vào danh mục" tooltipIconEdit="Cập nhật phường/xã vào danh mục"
+                    componentAddTitle="THÊM PHƯỜNG/XÃ MỚI VÀO DANH MỤC"
+                    componentEditTitle="CẬP NHẬT PHƯỜNG/XÃ VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+                    [componentAddOrEdit]="themPhuongXaMoiTemplate"
+                    [componentAddOrEditContext]="{$implicit:nguoiBenhVo.PhuongXaId}">
+                    <ng-template #themPhuongXaMoiTemplate let-dataItem>
+                        <app-don-vi-hanh-chinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+                            [isUpdate]="dataItem!=null && dataItem>0" capHanhChinhDefault="3"
+                            [tinhThanhIdDefault]="nguoiBenhVo.TinhThanhId"
+                            [quanHuyenIdDefault]="nguoiBenhVo.QuanHuyenId"
+                            (dataChange)="themHoacSuaPhuongXaLuuChange($event)">
+                        </app-don-vi-hanh-chinh-chi-tiet>
+                    </ng-template>
+                </app-select>
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="KhomAp" label="KHU PHỐ/THÔN XÓM"
+                    url="QuanTriNhomHanhChinhDonViHanhChinh/GetKhomApLookup"
+                    [queryInfo]="{TinhThanhId: (nguoiBenhVo.TinhThanhId==null?0:nguoiBenhVo.TinhThanhId), QuanHuyenId: (nguoiBenhVo.QuanHuyenId==null?0:nguoiBenhVo.QuanHuyenId), PhuongXaId: (nguoiBenhVo.PhuongXaId==null?0:nguoiBenhVo.PhuongXaId)}"
+                    [bind]="false" [(model)]="nguoiBenhVo.KhomApId" [(modelText)]="nguoiBenhVo.KhomApTen"
+                    [validationerror]="'KhomApId' | validationerror:validationErrors"
+                    [disabled]="nguoiBenhVo.PhuongXaId==null" [showIconAddOrEdit]="true"
+                    tooltipIconAdd="Thêm khu phố/thôn xóm mới vào danh mục"
+                    tooltipIconEdit="Cập nhật khu phố/thôn xóm vào danh mục"
+                    componentAddTitle="THÊM KHU  PHỐ/THÔN XÓM MỚI VÀO DANH MỤC"
+                    componentEditTitle="CẬP NHẬT KHU  PHỐ/THÔN XÓM VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+                    [componentAddOrEdit]="themThonXomMoiTemplate"
+                    [componentAddOrEditContext]="{$implicit:nguoiBenhVo.KhomApId}">
+                    <ng-template #themThonXomMoiTemplate let-dataItem>
+                        <app-don-vi-hanh-chinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+                            [isUpdate]="dataItem!=null && dataItem>0" capHanhChinhDefault="4"
+                            [tinhThanhIdDefault]="nguoiBenhVo.TinhThanhId"
+                            [quanHuyenIdDefault]="nguoiBenhVo.QuanHuyenId" [phuongXaIdDefault]="nguoiBenhVo.PhuongXaId"
+                            (dataChange)="themHoacSuaThonXomLuuChange($event)">
+                        </app-don-vi-hanh-chinh-chi-tiet>
+                    </ng-template>
+                </app-select>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="DiaChi" label="SỐ NHÀ, ĐƯỜNG PHỐ"
+                    placeholder="SỐ NHÀ, ĐƯỜNG PHỐ" [(model)]="nguoiBenhVo.SoNha" maxLength="200">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HoTen" label="HỌ TÊN NGƯỜI GIÁM HỘ"
+                    placeholder="HỌ TÊN NGƯỜI GIÁM HỘ"
+                    [(model)]="nguoiBenhVo.HoTenNguoiGiamHo" maxLength="100"
+                    [validationerror]="'HoTenNguoiGiamHo' | validationerror:validationErrors">
+                </app-textbox>
+                <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Nghe-nghiep" label="DÂN TỘC"
+                     url="QuanTriNhomHanhChinhDanToc/GetLookup" [(model)]="nguoiBenhVo.DanTocId"
+                    [validationerror]="'DanTocId' | validationerror:validationErrors">
+                </app-select>
+                <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Nghe-nghiep" label="QUỐC TỊCH"
+                     url="QuanTriNhomHanhChinhQuocGia/GetLookup" [(model)]="nguoiBenhVo.QuocTichId"
+                    [validationerror]="'QuocTichId' | validationerror:validationErrors">
+                </app-select>
+
+                <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="tien-su-benh-ban-than"
+                    label="TIỀN SỬ BỆNH BẢN THÂN" placeholder="TIỀN SỬ BỆNH BẢN THÂN" maxLength="2000"
+                    [(model)]="nguoiBenhVo.TienSuBenhBanThan">
+                </app-textarea>
+                <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="tien-su-benh-gia-dinh"
+                    label="TIỀN SỬ BỆNH GIA ĐÌNH" placeholder="TIỀN SỬ BỆNH GIA ĐÌNH"  maxLength="2000"
+                    [(model)]="nguoiBenhVo.TienSuBenhGiaDinh">
+                </app-textarea>
+                <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="tien-su-di-ung" label="TIỀN SỬ DỊ ỨNG"
+                    placeholder="TIỀN SỬ DỊ ỨNG" [(model)]="nguoiBenhVo.TienSuDiUng"  maxLength="2000">
+                </app-textarea>
+            </div>
+
+        </div>
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

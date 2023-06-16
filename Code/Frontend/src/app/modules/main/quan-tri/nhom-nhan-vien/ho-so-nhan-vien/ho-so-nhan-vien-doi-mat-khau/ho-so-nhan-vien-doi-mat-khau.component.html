@@ -1,0 +1,45 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>ĐỔI MẬT KHẨU</div>
+  <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content style="max-height:660px">
+  <div fxLayout="row column" fxLayoutGap="0%">
+    <fieldset fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="mb-3">
+      <legend>THÔNG TIN HÀNH CHÍNH</legend>
+      <ul class="m-0 p-0 ml-5">
+        <li>Họ tên: <strong class="blue">{{hoSoNhanVienVo.HoTen}}</strong></li>
+        <li>Giới tính: <strong>{{hoSoNhanVienVo.GioiTinhHienThi}}</strong></li>
+        <li>Ngày sinh: <strong>{{hoSoNhanVienVo.NgaySinhHienThi}}</strong></li>
+        <li>SĐT: <strong>{{hoSoNhanVienVo.SoDienThoai}}</strong></li>
+        <li>Email: <strong>{{hoSoNhanVienVo.Email}}</strong></li>
+        <li>Địa chỉ: <strong>{{hoSoNhanVienVo.DiaChi}}</strong></li>
+      </ul>
+    </fieldset>
+
+    <fieldset fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <legend>THÔNG TIN MẬT KHẨU</legend>
+
+      <div fxLayout="row column" fxLayoutGap="1% grid">
+
+        <app-textbox  type="{{typePassword}}" fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="MatKhau"
+          label="MẬT KHẨU" maxLength="100" [required]="true" placeholder="MẬT KHẨU" [required]="true"
+          [(model)]="hoSoNhanVienVo.MatKhau" [icon]="iconEye" [iconTooltip]="iconTooltip" (onIconClick)="passwordEyeClick()"
+          [validationerror]="'MatKhau' | validationerror:validationErrors">
+        </app-textbox>
+        <app-textbox type="{{typePassword}}" fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="XacNhanMatKhau"
+          label="XÁC NHẬN MẬT KHẨU" maxLength="100" [required]="true" placeholder="XÁC NHẬN MẬT KHẨU" [required]="true"
+          [(model)]="hoSoNhanVienVo.XacNhanMatKhau" [icon]="iconEye" [iconTooltip]="iconTooltip" (onIconClick)="passwordEyeClick()"
+          [validationerror]="'XacNhanMatKhau' | validationerror:validationErrors">
+        </app-textbox>
+      </div>
+    </fieldset>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="button" mat-button style="margin-left: auto;" mat-dialog-close>HỦY</button>
+  <button type="button" mat-raised-button color="primary" style="float: right;" (click)="capNhat()">CẬP NHẬT</button>
+</mat-dialog-actions>

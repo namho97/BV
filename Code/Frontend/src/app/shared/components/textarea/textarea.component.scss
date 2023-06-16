@@ -1,0 +1,36 @@
+
+.error{
+    position: relative;
+    color: red;
+}
+.mat-form-field-wrapper{
+    padding-bottom: 5px !important;
+}
+mat-form-field{
+    .mat-textarea-search-clear{
+        position: absolute;
+        top: 3px;
+        right: 0px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        display: none;
+        mat-icon{
+            font-size: 15px;
+        }
+        &.number{
+            right: 20px;
+        }
+    }
+    &:hover{
+        .mat-textarea-search-clear{
+            display: block;
+        }
+    }
+    &.mat-form-field-disabled{
+        *{
+            cursor: not-allowed;
+        }
+    }
+
+}

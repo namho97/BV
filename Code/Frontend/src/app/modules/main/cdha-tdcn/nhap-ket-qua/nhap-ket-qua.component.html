@@ -1,0 +1,59 @@
+<div class="panel full-detail">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>CĐHA-TDCN</a>
+        <a class="active">NHẬP KẾT QUẢ</a>
+      </div> 
+    </div>
+    <div class="grid-content">
+      <app-table #tableNhapKetQua masterName="tableNhapKetQua" [columns]="columns" [dataSource]="dataSource"
+        [documentType]="documentType" [headerTemplate]="headerTemplate" [groupByColumns]="groupByColumns"
+        [sortByColumn]="sortByColumn" [showIndex]="false" [showCheckbox]="false"
+        (extDataItemSelected)="extDataItemSelected($event)">
+      </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT</h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-nhap-ket-qua-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()"></app-nhap-ket-qua-chi-tiet>
+    </div>
+  </div>
+</div>
+
+<ng-template #headerTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" label="TRẠNG THÁI" [multiple]="true"
+        [items]="[{KeyId:1,DisplayName:'Chờ kết quả'},{KeyId:2,DisplayName:'Đã có kết quả'}]" [(model)]="timKiemModel.TinhTrang">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaTiepNhan" label="MÃ TN"
+        [(model)]="timKiemModel.MaTiepNhan" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaNguoiBenh" label="MÃ NB"
+        [(model)]="timKiemModel.MaNguoiBenh" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HoTen" label="HỌ TÊN"
+        [(model)]="timKiemModel.HoTen" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" label="GIỚI TÍNH" [multiple]="true"
+        url="Common/GetGioiTinhLookup">
+      </app-select>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="ChiDinhTu"
+        label="CHỈ ĐỊNH TỪ" [(model)]="timKiemModel.ChiDinhTu" (keyup)="onKey($event)"></app-datetimepicker>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="ChiDinhDen"
+        label="CHỈ ĐỊNH ĐẾN" [(model)]="timKiemModel.ChiDinhDen" (keyup)="onKey($event)"></app-datetimepicker>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem"><mat-icon>search</mat-icon> Tìm kiếm</button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #tinhTrangTemplate let-dataItem>
+  <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;" class="bg" [ngClass]="{'grey':dataItem.LoaiTinhTrang==1,'green': dataItem.LoaiTinhTrang==2}">{{dataItem.TinhTrang}}</span>
+</ng-template>

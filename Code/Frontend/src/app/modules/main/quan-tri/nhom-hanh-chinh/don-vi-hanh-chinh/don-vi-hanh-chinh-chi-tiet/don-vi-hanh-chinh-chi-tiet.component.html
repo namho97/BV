@@ -1,0 +1,65 @@
+<div class="form-content">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-1">
+        <!-- [disabled]="capHanhChinhDefault!=null" -->
+        <app-select  fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="CapHanhChinh" [required]="true"
+          label="CẤP ĐƠN VỊ HÀNH CHÍNH" placeholder="CẤP ĐƠN VỊ HÀNH CHÍNH" 
+          [(model)]="donViHanhChinhVo.CapHanhChinh" 
+          [items]="[{KeyId:1,DisplayName:'Tỉnh/Thành phố'},{KeyId:2,DisplayName:'Quận/Huyện'},{KeyId:3,DisplayName:'Phường/Xã'},{KeyId:4,DisplayName:'Khu phố/Thôn xóm'}]"
+           [validationerror]="'CapHanhChinh' | validationerror:validationErrors" >
+        </app-select>
+
+        <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="TinhThanh" label="TỈNH/THÀNH" [required]="true"
+          url="QuanTriNhomHanhChinhDonViHanhChinh/GetTinhThanhLookup" [(model)]="donViHanhChinhVo.TrucThuocThanhPhoId"
+          [validationerror]="'TrucThuocThanhPhoId' | validationerror:validationErrors" *ngIf="donViHanhChinhVo.CapHanhChinh>1"
+          [disabled]="tinhThanhIdDefault!=null">
+        </app-select>
+
+        <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="QuanHuyen" label="QUẬN/HUYỆN" [required]="true"
+          url="QuanTriNhomHanhChinhDonViHanhChinh/GetQuanHuyenLookup"
+          [queryInfo]="{TinhThanhId: (donViHanhChinhVo.TrucThuocThanhPhoId==null?0:donViHanhChinhVo.TrucThuocThanhPhoId)}"
+          [bind]="false" [(model)]="donViHanhChinhVo.TrucThuocQuanHuyenId"
+          [validationerror]="'TrucThuocQuanHuyenId' | validationerror:validationErrors"
+          [disabled]="donViHanhChinhVo.TrucThuocThanhPhoId==null || quanHuyenIdDefault!=null" *ngIf="donViHanhChinhVo.CapHanhChinh>2">
+        </app-select>
+
+        <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="PhuongXa" label="PHƯỜNG/XÃ" [required]="true"
+          url="QuanTriNhomHanhChinhDonViHanhChinh/GetPhuongXaLookup"
+          [queryInfo]="{TinhThanhId: (donViHanhChinhVo.TrucThuocThanhPhoId==null?0:donViHanhChinhVo.TrucThuocThanhPhoId), QuanHuyenId: (donViHanhChinhVo.TrucThuocQuanHuyenId==null?0:donViHanhChinhVo.TrucThuocQuanHuyenId)}"
+          [bind]="false" [(model)]="donViHanhChinhVo.TrucThuocPhuongXaId"
+          [validationerror]="'TrucThuocPhuongXaId' | validationerror:validationErrors"
+          [disabled]="donViHanhChinhVo.TrucThuocQuanHuyenId==null || phuongXaIdDefault!=null" *ngIf="donViHanhChinhVo.CapHanhChinh>3">
+        </app-select>
+      </div>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+
+
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ma" label="MÃ ĐƠN VỊ" [required]="true"
+          placeholder="MÃ ĐƠN VỊ" [(model)]="donViHanhChinhVo.Ma" maxLength="20"
+          [validationerror]="'Ma' | validationerror:validationErrors">
+        </app-textbox>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="TenVietTat" label="TÊN VIẾT TẮT"
+          placeholder="TÊN VIẾT TẮT" [(model)]="donViHanhChinhVo.TenVietTat" maxLength="20"
+          [validationerror]="'TenVietTat' | validationerror:validationErrors">
+        </app-textbox>
+
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="Ten" label="TÊN ĐƠN VỊ"
+          [required]="true" placeholder="TÊN ĐƠN VỊ" [(model)]="donViHanhChinhVo.Ten" maxLength="500"
+          [validationerror]="'Ten' | validationerror:validationErrors">
+        </app-textbox>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

@@ -1,0 +1,33 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <div fxLayout="row column" fxLayoutGap="10px grid">
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ma" label="MÃ" placeholder="MÃ"
+                    [(model)]="nhomDichVuVo.Ma" required="true" maxLength="50"
+                    [validationerror]="'Ma' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="Ten" label="Tên" placeholder="Tên"
+                    [(model)]="nhomDichVuVo.Ten" required="true" maxLength="250"
+                    [validationerror]="'Ten' | validationerror:validationErrors">
+                </app-textbox>
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="NHÓM DỊCH VỤ BỆNH VIỆN CHA"
+                    url="QuanTriNhomPhongKhamNhomDichVu/GetLookup?id={{data}}" [(model)]="nhomDichVuVo.NhomDichVuBenhVienChaId">
+                </app-select>
+                <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="MoTa" label="MÔ TẢ"
+                    placeholder="MÔ TẢ" [(model)]="nhomDichVuVo.MoTa" maxLength="2000">
+                </app-textarea>
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+
+  
+</div>

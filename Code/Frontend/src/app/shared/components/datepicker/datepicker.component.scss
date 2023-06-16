@@ -1,0 +1,24 @@
+
+mat-form-field{
+    .mat-datepicker-search-clear{
+        position: absolute;
+        top: 3px;
+        right: 0px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        display: none;
+        mat-icon{
+            font-size: 15px;
+        }
+        &.number{
+            right: 20px;
+        }
+    }
+    &:hover{
+        .mat-datepicker-search-clear{
+            display: block;
+        }
+    }
+
+}

@@ -1,0 +1,39 @@
+
+.sidenav{
+    a{
+        text-decoration: none;
+        &:hover, &:active{
+            *{
+                color: rgba(255, 255, 255, 1);
+            }
+        }
+    }
+    mat-icon{
+        color: rgba(255, 255, 255, .8);
+    }
+    .nav-caption{
+        display: inline-block;
+        padding-left: 6px;
+        font-size: 15px;
+        color: rgba(255, 255, 255, .8);
+        b{
+            font-weight: 500;
+        }
+    }
+    .child{
+        &.level-1{
+            .nav-caption{
+                padding-left: 30px;
+            }
+        }
+        &.level-2{
+            .nav-caption{
+                padding-left: 45px;
+            }
+        }
+    }
+    .expand-icon{
+        position: absolute;
+        right: 0;
+    }
+}

@@ -1,0 +1,51 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM CẤU HÌNH</a>
+        <a class="active">NỘI DUNG MẪU</a>
+      </div>
+      <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="tableNoiDungMau.create()" >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="grid-content">
+      <app-table  #tableNoiDungMau masterName="tableNoiDungMau" [columns]="columnsNoiDungMau"
+       [documentType]="documentTypeNoiDungMau"
+      [groupByColumns]="groupByColumnsNoiDungMau"  [headerTemplate]="headerNoiDungMauTemplate"
+      [sortByColumn]="sortByColumnNoiDungMau" [showIndex]="false" [showCheckbox]="false"
+      (extDataItemSelected)="extDataItemSelected($event)">
+    </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-noi-dung-mau-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()" (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-noi-dung-mau-chi-tiet>
+    </div>
+  </div>
+</div>
+
+<ng-template #headerNoiDungMauTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 200px;margin-right: 5px;" label="LOẠI"
+        url="QuanTriNhomCauHinhNoiDungMau/GetLoaiLookup" [(model)]="noiDungMauQueryInfo.Loai" (modelChange)="timKiem()">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 250px;margin-right: 5px;" id="NoiDung" label="NỘI DUNG"
+        [(model)]="noiDungMauQueryInfo.NoiDung" (keyup)="onKey($event)"></app-textbox>
+
+        <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+          <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem"><mat-icon>search</mat-icon> Tìm kiếm</button>
+        </div>
+        <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+          <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+        </div>
+    </div>
+  </div>
+</ng-template>

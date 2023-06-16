@@ -1,0 +1,45 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row column" fxLayoutGap="0%">
+          <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <app-lich-su-kham-chi-tiet-thong-tin-hanh-chinh [(data)]="lichSuKhamVo">
+            </app-lich-su-kham-chi-tiet-thong-tin-hanh-chinh>
+          </div>
+          <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <mat-tab-group (selectedIndexChange)="selectedIndexChange($event)">
+              <mat-tab label="KHÁM LÂM SÀNG">
+                <div class="m-10 ml-0" *ngIf="tabActiveIndex==0">
+                  <app-lich-su-kham-chi-tiet-kham-benh [(data)]="lichSuKhamVo"></app-lich-su-kham-chi-tiet-kham-benh>
+                </div>
+              </mat-tab>
+              <mat-tab label="CHỈ ĐỊNH">
+                <div *ngIf="tabActiveIndex==1">
+                  <app-lich-su-kham-chi-tiet-chi-dinh [(data)]="lichSuKhamVo"></app-lich-su-kham-chi-tiet-chi-dinh>
+                </div>
+              </mat-tab>
+              <mat-tab label="KQ LS-CLS">
+                <div *ngIf="tabActiveIndex==2">
+                  <app-lich-su-kham-chi-tiet-ket-qua-ls-cls [(data)]="lichSuKhamVo"></app-lich-su-kham-chi-tiet-ket-qua-ls-cls>
+                </div>
+              </mat-tab>
+              <mat-tab label="KÊ TOA">
+                <div id="abc" *ngIf="tabActiveIndex==3">
+                  <app-lich-su-kham-chi-tiet-ke-toa [(data)]="lichSuKhamVo"></app-lich-su-kham-chi-tiet-ke-toa>
+                </div>
+              </mat-tab>
+              <mat-tab label="LỊCH SỬ KHÁM">
+                <div *ngIf="tabActiveIndex==4">
+                  <app-lich-su-kham-chi-tiet-lich-su-kham [(data)]="lichSuKhamVo"></app-lich-su-kham-chi-tiet-lich-su-kham>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </ng-scrollbar>  
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+  <button mat-raised-button color="warn" class="float-right" (click)="khamLai()">MỞ KHÁM LẠI</button>
+</div>

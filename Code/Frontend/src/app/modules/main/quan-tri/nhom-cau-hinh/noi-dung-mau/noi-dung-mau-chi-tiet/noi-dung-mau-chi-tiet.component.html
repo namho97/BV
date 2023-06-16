@@ -1,0 +1,29 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row column" fxLayoutGap="0%">
+        <fieldset fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+          <div fxLayout="row column" fxLayoutGap="1% grid">
+            <app-select fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="Loai" label="LOẠI" [required]="true" class="mt-1"
+              placeholder="LOẠI" [(model)]="noiDungMauVo.Loai" url="QuanTriNhomCauHinhNoiDungMau/GetLoaiLookup"
+              [validationerror]="'Loai' | validationerror:validationErrors">
+            </app-select>
+            <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDung" label="NỘI DUNG"
+              [required]="true" placeholder="NỘI DUNG" [(model)]="noiDungMauVo.NoiDung"
+              [validationerror]="'NoiDung' | validationerror:validationErrors">
+            </app-textarea>
+          </div>
+        </fieldset>
+
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" class="mr-1" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

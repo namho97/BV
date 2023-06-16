@@ -1,0 +1,5 @@
+<div class="full-width {{customClass}}">
+  <mat-checkbox id="{{id}}" name="{{id}}" [(ngModel)]="model" (ngModelChange)="emit($event)" ngControl="model" color="primary"
+    [disabled]="disabled">{{label}}</mat-checkbox>
+  <label id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

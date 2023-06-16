@@ -1,0 +1,42 @@
+
+
+<h1 mat-dialog-title>LƯU TOA MẪU MỚI</h1>
+<div mat-dialog-content>
+  <app-textbox style="width:400px"  customClass="mb-2" id="Ten" label="TÊN TOA MẪU"
+  placeholder="TÊN TOA MẪU" [(model)]="toaMauVo.Ten" [required]="true"
+  [validationerror]="'Ten' | validationerror:validationErrors">
+</app-textbox> 
+<app-select style="width:400px;" customClass="mb-2" id="IcdId" label="ICD CHÍNH"
+          placeholder="ICD CHÍNH" [(model)]="toaMauVo.IcdId"
+          url="QuanTriNhomPhongKhamIcd/GetLookup"
+          [validationerror]="'IcdId' | validationerror:validationErrors"
+          >
+        </app-select>
+              
+  <app-select  style="width:400px;" customClass="mb-2" id="icd" label="BÁC SĨ"
+    placeholder="BÁC SĨ" [(model)]="toaMauVo.BacSiId" [showIconAddOrEdit]="true" [required]="true"
+    tooltipIconAdd="Thêm bác sĩ mới vào danh mục" tooltipIconEdit="Cập nhật bác sĩ vào danh mục"
+    componentAddTitle="THÊM BÁC SĨ MỚI VÀO DANH MỤC"
+    componentEditTitle="CẬP NHẬT BÁC SĨ VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+    [componentAddOrEdit]="themBacSiTemplate"
+    [componentAddOrEditContext]="{$implicit:toaMauVo.BacSiId}"
+    url="QuanTriNhomNhanVienHoSoNhanVien/GetLookup"
+    [validationerror]="'BacSiId' | validationerror:validationErrors"
+    (modelObjectChange)="bacSiChange($event)">
+    <ng-template #themBacSiTemplate let-dataItem>
+      <app-ho-so-nhan-vien-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+        [isUpdate]="dataItem!=null && dataItem>0" (dataChange)="themHoacSuaBacSiLuuChange($event)">
+      </app-ho-so-nhan-vien-chi-tiet>
+    </ng-template>
+  </app-select>
+
+  <app-textarea style="width:400px"  customClass="mb-2" id="GhiChu" label="GHI CHÚ"
+  placeholder="GHI CHÚ" [(model)]="toaMauVo.GhiChu"
+  [validationerror]="'GhiChu' | validationerror:validationErrors">
+</app-textarea> 
+</div>
+
+<div class="full-width mt-5 text-right">
+  <button mat-raised-button color="primary" class="float-right" (click)="luu()">LƯU</button>
+  <button mat-button type="button" class="mr-1" (click)="huy()">HỦY</button>
+</div>

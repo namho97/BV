@@ -1,0 +1,72 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+  <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+    <fieldset>
+      <legend>CHẨN ĐOÁN</legend>
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+        <tr>
+          <td width="15%">ICD CHÍNH:</td>
+          <td><strong>{{chanDoanDieuTriVo.TenIcdChinh}}</strong></td>
+          <!-- <td width="15%">ICD KÈM THEO:</td>
+          <td><strong>Z00 - Khám tổng quát và kiểm tra sức khỏe, A00 - Bệnh tả</strong></td> -->
+        </tr>
+        <tr>
+          <td>CHẨN ĐOÁN:</td>
+          <td><strong>{{chanDoanDieuTriVo.NoiDungChanDoan}}</strong></td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+    <fieldset>
+      <legend>ĐIỀU TRỊ</legend>
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10" *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==1">
+        <!-- <tr>
+          <td width="15%">THỦ THUẬT:</td>
+          <td><strong>Z00 - Khám tổng quát và kiểm tra sức khỏe</strong></td>
+        </tr> -->
+        <tr>
+          <td>CÁCH GIẢI QUYẾT: <strong>{{chanDoanDieuTriVo.CachGiaiQuyetHienThi}}</strong></td>
+        </tr>
+        <tr>
+          <td>
+            <app-table #tableKeToa masterName="tableKeToa" [columns]="columnsKeToa" [dataSource]="dataSourceKeToa"
+            [documentType]="documentType" maxHeight="600" [pageable]="false" [groupByColumns]="groupByColumnsKeToa"
+            [sortByColumn]="sortByColumnKeToa" [showIndex]="true" [showCheckbox]="false" [noBorderLeft]="false"
+            [noBorderRight]="false" [hideHeader]="true" [noBorderTop]="true">
+            </app-table>
+
+          </td>
+        </tr>
+      </table>
+
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10" *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==3">
+        <!-- <tr>
+          <td width="15%">THỦ THUẬT:</td>
+          <td><strong>Z00 - Khám tổng quát và kiểm tra sức khỏe</strong></td>
+        </tr> -->
+        <tr>
+          <td width="30%">CÁCH GIẢI QUYẾT: <strong>{{chanDoanDieuTriVo.CachGiaiQuyetHienThi}}</strong></td>
+          <td width="30%">BỆNH VIỆN: <strong>{{chanDoanDieuTriVo.TenBenhVienChuyenDen}}</strong></td>
+          <td>LÝ DO NHẬP VIỆN: <strong>{{chanDoanDieuTriVo.LyDoNhapVien}}</strong></td>
+        </tr>
+      </table>
+      <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+        <tr>
+          <td>LỜI DẶN: <strong>{{chanDoanDieuTriVo.LoiDan}}</strong></td>
+        </tr>
+      </table>
+      <fieldset class="mb-3">
+        <legend>HẸN TÁI KHÁM</legend>
+        <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+          <tr>
+            <td width="20%">KHÁM LẠI SAU: <strong>{{chanDoanDieuTriVo.KhamLaiSau}}</strong>(ngày)</td>
+            <td width="30%">NGÀY HẸN TÁI KHÁM: <strong>{{chanDoanDieuTriVo.NgayHenTaiKhamHienThi}}</strong></td>
+            <td>GHI CHÚ: <strong>{{chanDoanDieuTriVo.GhiChuHenTaiKham}}</strong></td>
+          </tr>
+        </table>
+      </fieldset>
+      <app-print-button *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==1" buttonType="mat-stroked-button" color="primary" icon="print" class="float-right" typeSize="A5"
+      [htmlContent]="getContentInToaThuoc()" label="In toa thuốc"></app-print-button>
+    </fieldset>
+  </div>
+</div>

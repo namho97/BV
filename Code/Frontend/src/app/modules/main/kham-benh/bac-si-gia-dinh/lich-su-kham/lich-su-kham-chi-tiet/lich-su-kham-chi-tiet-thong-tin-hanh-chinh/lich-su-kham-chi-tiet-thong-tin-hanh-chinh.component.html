@@ -1,0 +1,24 @@
+<ng-container *ngIf="thongTinHanhChinhVo!=null">
+<fieldset class="mb-1"
+  style="background-color: #e6ffff;position: relative;">
+  <legend>THÔNG TIN HÀNH CHÍNH</legend>
+  <ul class="inline">
+    <li>STT: <strong class="red">{{thongTinHanhChinhVo.SoThuTu}}</strong></li>
+    <li>Họ tên: <strong class="blue">{{thongTinHanhChinhVo.HoTen}}</strong></li>
+    <li>CCCD: <strong>{{thongTinHanhChinhVo.SoChungMinhThu}}</strong></li>
+    <li>Giới tính: <strong>{{thongTinHanhChinhVo.GioiTinhHienThi}}</strong></li>
+    <li>Ngày sinh: <strong>{{thongTinHanhChinhVo.NgayThangNamSinh}}</strong></li>
+    <li>Tuổi: <strong>{{thongTinHanhChinhVo.Tuoi}}</strong></li>
+    <li>SĐT: <strong>{{thongTinHanhChinhVo.SoDienThoai}}</strong></li>
+    <li>Nghề nghiệp: <strong>{{thongTinHanhChinhVo.NgheNghiep}}</strong></li>
+    <li>Địa chỉ: <strong>{{thongTinHanhChinhVo.DiaChiDayDu}}</strong></li>
+    <li>Tiếp nhận lúc: <strong>{{thongTinHanhChinhVo.ThoiDiemTiepNhanHienThi}}</strong></li>
+    <li>Trạng thái: <span style="border-radius: 15px;padding: 3px 10px;text-align: center;" *ngIf="thongTinHanhChinhVo.TrangThai!=5" class="bg"
+      [ngClass]="{'green': thongTinHanhChinhVo.TrangThai==3,'red': thongTinHanhChinhVo.TrangThai==4}">{{thongTinHanhChinhVo.TrangThaiHienThi}}</span>
+      </li>
+    <li *ngIf="thongTinHanhChinhVo.TenNhanVienHuy!=null && thongTinHanhChinhVo.TenNhanVienHuy!=''">Tên nhân viên hủy: <strong>{{thongTinHanhChinhVo.TenNhanVienHuy}}</strong></li>
+    <li *ngIf="thongTinHanhChinhVo.ThoiDiemHuyHienThi!=null && thongTinHanhChinhVo.ThoiDiemHuyHienThi!=''">Thời điểm hủy: <strong>{{thongTinHanhChinhVo.ThoiDiemHuyHienThi}}</strong></li>
+    <li *ngIf="thongTinHanhChinhVo.LyDoHuy!=null && thongTinHanhChinhVo.LyDoHuy!=''">Lý do hủy: <strong>{{thongTinHanhChinhVo.LyDoHuy}}</strong></li>
+  </ul>
+</fieldset>
+</ng-container>

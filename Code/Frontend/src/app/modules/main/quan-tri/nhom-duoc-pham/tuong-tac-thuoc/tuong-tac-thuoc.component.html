@@ -1,0 +1,63 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM DƯỢC PHẨM</a>
+        <a class="active">TƯƠNG TÁC THUỐC</a>
+      </div>
+        <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="table.create()">
+        <mat-icon>add</mat-icon>
+    </button>
+    </div>
+    <div class="grid-content">
+      <app-table #tableThuocTuongTac masterName="tableThuocTuongTac" [columns]="columnsThuocTuongTac"
+        [documentType]="documentTypeThuocTuongTac" [groupByColumns]="groupByColumnsThuocTuongTac"
+        [headerTemplate]="headerThuocTuongTacTemplate" [sortByColumn]="sortByColumnThuocTuongTac" [showIndex]="false"
+        [showCheckbox]="false" (extDataItemSelected)="extDataItemSelected($event)">
+      </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-tuong-tac-thuoc-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)" (quayLaiChange)="quayLaiChange()"
+        (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-tuong-tac-thuoc-chi-tiet>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #headerThuocTuongTacTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ma" label="TÊN HOẠT CHẤT 1"
+        [(model)]="thuocTuongTacQueryInfo.HoatChat1" (keyup)="onKey($event)"></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ten" label="TÊN HOẠT CHẤT 2"
+        [(model)]="thuocTuongTacQueryInfo.HoatChat2" (keyup)="onKey($event)"></app-textbox>
+
+        <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="TuongTacHauQua" label="TƯƠNG TÁC HẬU QUẢ"
+        [(model)]="thuocTuongTacQueryInfo.TuongTacHauQua" (keyup)="onKey($event)"></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="CachXuLy" label="CÁCH XỬ LÝ"
+        [(model)]="thuocTuongTacQueryInfo.CachXuLy" (keyup)="onKey($event)"></app-textbox>
+
+
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem">
+          <mat-icon>search</mat-icon> Tìm kiếm
+        </button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem">
+          <mat-icon>clear</mat-icon> Hủy tìm kiếm
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

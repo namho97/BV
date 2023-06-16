@@ -1,0 +1,47 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ten" label="TÊN" [required]="true"
+                    placeholder="TÊN" [(model)]="khoVo.Ten" maxLength="250"
+                    [validationerror]="'Ten' | validationerror:validationErrors">
+                </app-textbox>
+                <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="LOẠI KHO" [required]="true"
+                    url="QuanTriNhomKhoKho/GetLookupLoaiKho" [(model)]="khoVo.LoaiKho"
+                    [validationerror]="'LoaiKho' | validationerror:validationErrors">
+                </app-select>
+                <div fxFlex="30%" fxFlex.sm="30%">
+                    <div class="container-custom no-label">
+                        <label>KHO CHỨA</label>
+                        <div fxLayout="row">
+                            <app-checkbox id="DP" label="DƯỢC PHẨM" class="ml-4 mb-1" fxFlex="35%"
+                                [(model)]="khoVo.LoaiDuocPham" style="margin-top: 1px;">
+                            </app-checkbox>
+
+                            <app-checkbox id="VT" label="VẬT TƯ" class="mb-1" [(model)]="khoVo.LoaiVatTu"
+                                style="margin-top: 1px;">
+                            </app-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="KHOA PHÒNG"
+                    url="QuanTriNhomKhoaPhongKhoaPhong/GetLookup" [(model)]="khoVo.KhoaPhongId">
+                </app-select>
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="PHÒNG BỆNH VIỆN"
+                    url="QuanTriNhomKhoaPhongKhoaPhongPhongKham/GetLookup" [(model)]="khoVo.PhongBenhVienId">
+                </app-select>
+
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

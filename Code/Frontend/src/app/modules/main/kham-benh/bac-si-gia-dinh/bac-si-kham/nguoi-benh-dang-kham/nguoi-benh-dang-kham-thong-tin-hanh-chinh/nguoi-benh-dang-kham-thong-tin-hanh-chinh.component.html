@@ -1,0 +1,24 @@
+<fieldset *ngIf="!taoDangKyMoi" [ngStyle]="{'background-color': '#e6ffff'}" style="position: relative;">
+  <legend>THÔNG TIN HÀNH CHÍNH</legend>
+  <ul class="inline">
+    <li>STT: <strong class="red">{{thongTinHanhChinhVo.SoThuTu}}</strong></li>
+    <li>Họ tên: <strong class="blue">{{thongTinHanhChinhVo.HoTen}}</strong></li>
+    <li>CCCD: <strong>{{thongTinHanhChinhVo.SoChungMinhThu}}</strong></li>
+    <li>Giới tính: <strong>{{thongTinHanhChinhVo.GioiTinhHienThi}}</strong></li>
+    <li>Ngày sinh: <strong>{{thongTinHanhChinhVo.NgayThangNamSinh}}</strong></li>
+    <li>Tuổi: <strong>{{thongTinHanhChinhVo.Tuoi}}</strong></li>
+    <li>SĐT: <strong>{{thongTinHanhChinhVo.SoDienThoai}}</strong></li>
+    <li>Nghề nghiệp: <strong>{{thongTinHanhChinhVo.NgheNghiep}}</strong></li>
+    <li>Địa chỉ: <strong>{{thongTinHanhChinhVo.DiaChiDayDu}}</strong></li>
+    <li>Tiếp nhận lúc: <strong>{{thongTinHanhChinhVo.ThoiDiemTiepNhanHienThi}}</strong></li>
+  </ul>
+
+  <button mat-icon-button style="position: absolute;bottom:0;right:0" matTooltip="Cập nhật đối tượng"
+    *ngIf="!taoDangKyMoi" (click)="capNhatThongTinHanhChinh()">
+    <mat-icon>edit_note</mat-icon>
+  </button>
+</fieldset>
+
+<ng-container  *ngIf="taoDangKyMoi">
+  <app-dang-ky-kham-chi-tiet [data]="{Id:0}" formFrom="2" (extHuy)="huy()" (extBatDauKham)="batDauKham($event)"></app-dang-ky-kham-chi-tiet>
+</ng-container>

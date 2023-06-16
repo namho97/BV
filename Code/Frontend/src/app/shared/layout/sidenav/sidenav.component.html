@@ -1,0 +1,37 @@
+
+<mat-nav-list class="sidenav">
+  <ng-container *ngFor="let item of navigationitems">
+    <a mat-list-item *ngIf="item.Hide!=true && item.children!=null && item.children.length>0" (click)="item.Show=!item.Show" [ngClass]="{'active': item!=null && isActive(item.route)}">      
+        <mat-icon *ngIf="item.icon!=null && item.icon!=''">{{item.icon}}</mat-icon><span class="nav-caption"><b>{{item.label}}</b></span><mat-icon class="expand-icon" *ngIf="item.Show!=true">expand_more</mat-icon><mat-icon class="expand-icon" *ngIf="item.Show==true">expand_less</mat-icon>
+    </a>
+    <a mat-list-item *ngIf="item.Hide!=true && !(item.children!=null && item.children.length>0)"  routerLink="{{item.route}}" (click)="onSidenavClose()" [ngClass]="{'active': item!=null && isActive(item.route)}">
+      <mat-icon *ngIf="item.icon!=null && item.icon!=''">{{item.icon}}</mat-icon><span class="nav-caption"><b>{{item.label}}</b></span>
+    </a>
+    <!-- <mat-divider></mat-divider> -->
+    <ng-container *ngIf="item.Hide!=true && item.children!=null && item.children.length>0 && item.Show">    
+      <ng-container *ngFor="let itemChild of item.children">      
+        <a *ngIf="itemChild.Hide!=true && !(itemChild.children!=null && itemChild.children.length>0) && itemChild.type=='link'" class="child level-1" mat-list-item routerLink="{{itemChild.route}}" [queryParams]="itemChild.queryParams" (click)="onSidenavClose()" [ngClass]="{'active': itemChild!=null && isActive(itemChild.route)}">
+          <mat-icon *ngIf="itemChild.icon!=null && itemChild.icon!=''">{{itemChild.icon}}</mat-icon><span class="nav-caption">{{itemChild.label}}</span>
+        </a>    
+        <a *ngIf="itemChild.Hide!=true && !(itemChild.children!=null && itemChild.children.length>0) && itemChild.type=='popup'" class="child level-1" mat-list-item  (click)="showPopup(itemChild)" [ngClass]="{'active': itemChild!=null && isActive(itemChild.route)}">
+          <mat-icon *ngIf="itemChild.icon!=null && itemChild.icon!=''">{{itemChild.icon}}</mat-icon><span class="nav-caption">{{itemChild.label}}</span>
+        </a>
+        <a *ngIf="itemChild.Hide!=true && itemChild.children!=null && itemChild.children.length>0" class="child level-1" mat-list-item (click)="itemChild.Show=!itemChild.Show" [ngClass]="{'active': itemChild!=null && isActive(itemChild.route)}">          
+          <mat-icon *ngIf="itemChild.icon!=null && itemChild.icon!=''">{{itemChild.icon}}</mat-icon><span class="nav-caption"><b>{{itemChild.label}}</b></span><mat-icon class="expand-icon" *ngIf="itemChild.Show!=true">expand_more</mat-icon><mat-icon class="expand-icon" *ngIf="itemChild.Show==true">expand_less</mat-icon>
+        </a>
+        <!-- <mat-divider></mat-divider> -->
+        <ng-container *ngIf="itemChild.Hide!=true && itemChild.children!=null && itemChild.children.length>0 && itemChild.Show">    
+          <ng-container *ngFor="let itemChildChild of itemChild.children">      
+            <a class="child level-2" mat-list-item routerLink="{{itemChildChild.route}}" (click)="onSidenavClose()" *ngIf="itemChildChild.Hide!=true && itemChildChild.type=='link'" [ngClass]="{'active': itemChildChild!=null && isActive(itemChildChild.route)}">
+              <mat-icon *ngIf="itemChildChild.icon!=null && itemChildChild.icon!=''">{{itemChildChild.icon}}</mat-icon><span class="nav-caption">{{itemChildChild.label}}</span>
+            </a>
+             <a class="child level-2" mat-list-item (click)="showPopup(itemChildChild)" *ngIf="itemChildChild.Hide!=true && itemChildChild.type=='popup'" [ngClass]="{'active': itemChildChild!=null && isActive(itemChildChild.route)}">
+              <mat-icon *ngIf="itemChildChild.icon!=null && itemChildChild.icon!=''">{{itemChildChild.icon}}</mat-icon><span class="nav-caption">{{itemChildChild.label}}</span>
+            </a>
+            <!-- <mat-divider></mat-divider> -->
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>  
+</mat-nav-list>

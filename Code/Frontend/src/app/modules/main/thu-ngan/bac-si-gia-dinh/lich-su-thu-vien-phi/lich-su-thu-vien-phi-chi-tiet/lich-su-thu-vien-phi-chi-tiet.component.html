@@ -1,0 +1,57 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="m-0">
+        <fieldset fxFlex.lt-sm="100%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex="100%" class="mb-3"
+          [ngStyle]="{'background-color': '#e6ffff'}" style="position: relative;max-height: 75px;overflow-y: auto;">
+          <legend>THÔNG TIN HÀNH CHÍNH</legend>
+          <ul class="inline"
+          *ngIf="dichVuThuVienPhiVo.ThongTinHanhChinh!=null">
+            <li>STT: <strong class="red">{{dichVuThuVienPhiVo.ThongTinHanhChinh.SoThuTu}}</strong></li>
+            <li>Họ tên: <strong class="blue">{{dichVuThuVienPhiVo.ThongTinHanhChinh.HoTen}}</strong></li>
+            <li>CCCD: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.SoChungMinhThu}}</strong></li>
+            <li>Giới tính: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.GioiTinhHienThi}}</strong></li>
+            <li>Ngày sinh: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.NgayThangNamSinh}}</strong></li>
+            <li>Tuổi: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.Tuoi}}</strong></li>
+            <li>SĐT: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.SoDienThoai}}</strong></li>
+            <li>Nghề nghiệp: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.NgheNghiep}}</strong></li>
+            <li>Địa chỉ: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.DiaChiDayDu}}</strong></li>
+            <li>Tiếp nhận lúc: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.ThoiDiemTiepNhanHienThi}}</strong></li>
+          </ul>
+        </fieldset>
+        <div fxFlex.lt-sm="100%" fxFlex.lt-md="100%'" fxFlex.lt-lg="100%" fxFlex="100%">
+          <app-table #tableLichSuThu masterName="tableLichSuThu" [columns]="columnsLichSuThu"
+          urlGetData="ThuNganBacSiGiaDinhThuVienPhi/GetLichSuThuDataForGrid" [additionalSearchObject]="{QueryId:data.Id}"
+          [documentType]="documentTypeLichSuThu" heightToolbar="315" [pageable]="false"
+          [groupByColumns]="groupByColumnsLichSuThu" [sortByColumn]="sortByColumnLichSuThu" [showIndex]="false"
+          [showCheckbox]="false" [hideHeader]="true" [noBorderTop]="true">
+        </app-table>
+        </div>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+</div>
+<ng-template #soTienTemplate let-dataItem>
+  <span>{{dataItem.TongSoTienBangSo | currency:'VND'}}</span>
+</ng-template>
+
+<ng-template #ghiChuTemplate let-dataItem>
+  <ng-container *ngIf="dataItem.DaHuy">
+    <p class="m-0">Ngày hủy: <strong class="red">{{dataItem.NgayHuyHienThi}}</strong></p>
+    <p class="m-0">Người hủy: <strong class="red">{{dataItem.TenNhanVienHuy}}</strong></p>
+    <p class="m-0">Lý do hủy: <strong class="red">{{dataItem.LyDoHuy}}</strong></p>
+  </ng-container>
+</ng-template>
+<ng-template #actionTemplate let-dataItem>
+  <button mat-stroked-button color="warn" (click)="huyPhieu(dataItem)" *ngIf="!dataItem.DaHuy">Hủy phiếu</button>
+</ng-template>
+
+
+<ng-template #soHoaDonTemplate let-dataItem>
+  <app-print-button buttonType="mat-stroked-button" color="{{dataItem.DaHuy?'warn':'primary'}}" icon="print" class="float-right" typeSize="A5"
+              [htmlContent]="getContentInBienLai(dataItem)" label="{{dataItem.SoPhieu}}"></app-print-button>
+              <p class="m-0 red text-center"  *ngIf="dataItem.DaHuy">(Đã hủy)</p>
+</ng-template>

@@ -1,0 +1,65 @@
+<div class="header">
+  <div class="breadcrumb flat">
+    <a>KHÁM BỆNH</a>
+    <a class="active">BÁC SĨ KHÁM</a>
+  </div>
+  <button mat-icon-button matTooltip="Hiển thị hàng đợi" *ngIf="hideLeft" (click)="extQuayLaiHangDoi()"
+        class="show-on-mobile-only btn-hang-doi-mobile">
+        <mat-icon>view_sidebar</mat-icon>
+  </button>
+  <button class="btn-tiep-nhan-moi" mat-raised-button matTooltip="Đăng ký khám mới" color="warn"
+        (click)="dangKyKhamMoi()">
+        <mat-icon>person_add</mat-icon><span> ĐĂNG KÝ MỚI</span>
+  </button>
+</div>
+
+<div class="grid-content {{nguoiBenhDangKhamId!=null?'has-detail':''}} {{hideLeft?'hide-left':'show-left'}}">
+  <div class="left">
+    <app-table #tableHangDoi masterName="tableHangDoi" [columns]="columnsHangDoi"
+      urlGetData="KhamBenhBacSiGiaDinhBacSiKham/GetHangDoiDataForGridAsync" [documentType]="documentTypeHangDoi"
+      [groupByColumns]="groupByColumnsHangDoi" heightToolbar="{{getHeightToolbar()}}" [headerTemplate]="headerHangDoiTemplate" [pageable]="false"
+      [sortByColumn]="sortByColumnHangDoi" [showIndex]="false" [showIconOpenSearchForm]="false" [showCheckbox]="false"
+      (getDataSource)="getDataSourceHangDoi($event)">
+    </app-table>
+    <button mat-mini-fab color="primary" matTooltip="Ẩn hàng đợi" (click)="hideLeft=!hideLeft" class="btn-hide-hang-doi">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+  <div class="middle" (click)="hideLeft=!hideLeft" matTooltip="Hiển thị hàng đợi" matTooltipPosition="right">
+    <ng-container *ngIf="hideLeft">
+      <span>HÀNG ĐỢI</span>
+      <button color="primary" mat-icon-button>
+        <mat-icon>east</mat-icon>
+      </button>
+    </ng-container>
+  </div>
+  <div class="right">
+    <div class="chi-tiet-content {{isMobile?'p-0':''}}">
+      <app-nguoi-benh-dang-kham [data]="nguoiBenhDangKhamId" [taoDangKyMoi]="taoDangKyMoi"
+        (extQuayLai)="extQuayLaiHangDoi()" (extQuayLaiVaTaiLai)="extQuayLaiVaTaiLai()" (extBatDauKham)="batDauKhamCuaDangKyMoi($event)"></app-nguoi-benh-dang-kham>
+    </div>
+  </div>
+</div>
+
+<!-- Hàng đợi -->
+
+<ng-template #headerHangDoiTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 390px;max-width: 100%;" id="HoTen"
+        label="TÌM KIẾM NGƯỜI BỆNH" [(model)]="bacSiKhamHangDoiQueryInfo.HoTen" [showOnHeader]="true"
+        [showIconClear]="true" (keyup)="onKey($event)" (clearEvent)="huyTimKiemHangDoi()"
+        [showIconSearch]="true" (searchEvent)="timKiemHangDoi()"
+        ></app-textbox>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #hoTenTemplate let-dataItem>
+  <a (click)="chonNguoiBenhKham(dataItem.Id)" [ngStyle]="{'color':dataItem.TrangThai==2?'#ffab00':(dataItem.TrangThai==5?'#C60909':'')}" matTooltip="{{dataItem.TrangThai==5?'NGƯỜI BỆNH CHƯA ĐẾN':dataItem.TrangThaiHienThi}}" matTooltipPosition="right">{{dataItem.HoTen}}</a>
+  <!-- <mat-icon *ngIf="dataItem.TrangThaiDenId==2" style="position: absolute;margin-left: 10px;margin-top: -4px;" matTooltip="Người bệnh chưa đến">how_to_reg</mat-icon> -->
+</ng-template>
+
+<ng-template #maTiepNhanTemplate let-dataItem>
+  <a (click)="chonNguoiBenhXemChiTiet(dataItem)">{{dataItem.MaTiepNhan}}</a>
+</ng-template>

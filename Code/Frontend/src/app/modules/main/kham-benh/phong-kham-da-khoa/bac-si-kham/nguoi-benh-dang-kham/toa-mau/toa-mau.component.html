@@ -1,0 +1,29 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>TOA MẪU</div>
+</div>
+
+<mat-dialog-content>
+
+  <app-table-expanded #tableToaMau masterName="tableToaMau" [columns]="columnsToaMau"
+  [dataSource]="dataSourceToaMau" [documentType]="documentTypeToaMau"
+  [groupByColumns]="groupByColumnsToaMau" [sortByColumn]="sortByColumnToaMau" [showIndex]="false"
+  [showCheckbox]="false" [hideHeader]="true" [noBorderTop]="true" [tableDetailTemplate]="tableDetailTemplate" maxHeight="600">
+  </app-table-expanded>
+  
+  <ng-template #tableDetailTemplate let-dataItem>
+    <div class="full-width p-15">
+        <app-table #tableChiTietToaMau masterName="tableChiTietToaMau" [columns]="columnsChiTietToaMau"
+        [dataSource]="dataSourceChiTietToaMau" [documentType]="documentTypeToaMau"
+        [hideHeader]="true" [useAddDeault]="false" [showIndex]="true" maxHeight="600" [pageable]="false">                
+        </app-table>
+    </div>
+  </ng-template>
+  
+  <ng-template #actionTemplate let-dataItem>
+    <button mat-stroked-button><mat-icon>done</mat-icon> Chọn</button>
+  </ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="button" mat-stroked-button style="margin-left: auto;" mat-dialog-close>Đóng</button>
+</mat-dialog-actions>

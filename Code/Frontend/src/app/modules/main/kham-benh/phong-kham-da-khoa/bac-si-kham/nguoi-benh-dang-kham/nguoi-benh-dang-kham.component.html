@@ -1,0 +1,55 @@
+<div class="form-content">
+  <ng-container *ngIf="data!=null">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row column" fxLayoutGap="0%">
+          <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <app-nguoi-benh-dang-kham-thong-tin-hanh-chinh [(data)]="data">
+            </app-nguoi-benh-dang-kham-thong-tin-hanh-chinh>
+          </div>
+          <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <mat-tab-group (selectedIndexChange)="selectedIndexChange($event)">
+              <mat-tab label="KHÁM LÂM SÀNG">
+                <div class="m-10 ml-0" *ngIf="tabActiveIndex==0">
+                  <app-nguoi-benh-dang-kham-kham-benh [(data)]="data"></app-nguoi-benh-dang-kham-kham-benh>
+                </div>
+              </mat-tab>
+              <mat-tab label="CHỈ ĐỊNH">
+                <div *ngIf="tabActiveIndex==1">
+                  <app-nguoi-benh-dang-kham-chi-dinh [(data)]="data"></app-nguoi-benh-dang-kham-chi-dinh>
+                </div>
+              </mat-tab>
+              <mat-tab label="KQ LS-CLS">
+                <div *ngIf="tabActiveIndex==2">
+                  <app-nguoi-benh-dang-kham-ket-qua-ls-cls [(data)]="data"></app-nguoi-benh-dang-kham-ket-qua-ls-cls>
+                </div>
+              </mat-tab>
+              <mat-tab label="KÊ TOA">
+                <div class="m-10 ml-0" id="abc" *ngIf="tabActiveIndex==3">
+                  <app-nguoi-benh-dang-kham-ke-toa [(data)]="data"></app-nguoi-benh-dang-kham-ke-toa>
+                </div>
+              </mat-tab>
+              <mat-tab label="LỊCH SỬ KHÁM">
+                <div *ngIf="tabActiveIndex==4">
+                  <app-nguoi-benh-dang-kham-lich-su-kham [(data)]="data"></app-nguoi-benh-dang-kham-lich-su-kham>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </ng-scrollbar>
+  </ng-container>
+  
+  <p *ngIf="data==null">(Chưa chọn người bệnh)</p>
+</div>
+<div class="footer" *ngIf="data!=null">
+  <button mat-icon-button (click)="quayLai()" class="show-on-mobile-only">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <button mat-stroked-button (click)="quayLaiChuKham()">Quay lại chưa khám</button>
+  <button mat-raised-button color="primary" class="float-right" (click)="luuVaHoanThanh()">LƯU VÀ HOÀN THÀNH
+    KHÁM</button>
+  <button mat-raised-button color="accent" class="float-right mr-1" (click)="luu()">LƯU</button>
+  <button mat-button class="float-right mr-1" (click)="nhapLai()">NHẬP LẠI</button>
+</div>

@@ -1,0 +1,13 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="mb-0">
+  <div>CHI TIẾT VIỆN PHÍ</div>
+  <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content style="max-height: 90vh;">
+  <app-thu-vien-phi-chi-tiet [data]="{Id:data.id}" [showOnPopup]="true" [viewOnly]="data.viewOnly"></app-thu-vien-phi-chi-tiet>
+</mat-dialog-content>
+<!-- <mat-dialog-actions>
+  <button type="button" mat-stroked-button style="margin-left: auto;" mat-dialog-close>Đóng</button>
+</mat-dialog-actions> -->
+          

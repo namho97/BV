@@ -1,0 +1,143 @@
+<div class="tree">
+  <div class="header {{statusOpenSearchForm?'open-search-form':''}}" *ngIf="!hideHeader">
+    <div class="tree-header-content">
+      <ng-container *ngIf="headerTemplate!=null">
+        <ng-container *ngTemplateOutlet="headerTemplate;"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="headerTemplate==null">
+        <app-textbox [(model)]="searchString"
+          style="display:inline-block ;width: 200px ;max-width: calc(100% - 130px); margin-right: 5px;" label="Nhập từ khóa tìm kiếm..."
+          (onEnterChange)="tim()"></app-textbox>
+        <button mat-stroked-button color="primary" style="display:inline-block ;width:90px;margin-right: 5px;"
+          (click)="tim()">Tìm kiếm</button>
+        <div style="display: inline-block;margin-bottom: 4px;width: 120px;" class="mb-1">
+          <button (click)="huyTimKiem()" mat-button>Hủy tìm kiếm</button>
+        </div>
+      </ng-container>
+      <mat-icon class="tree-header-icon" matTooltip="Thu nhỏ tìm kiếm" (click)="statusOpenSearchForm=false"
+        *ngIf="showIconOpenSearchForm && statusOpenSearchForm">keyboard_double_arrow_up</mat-icon>
+    </div>
+    <mat-icon class="tree-header-icon" matTooltip="Mở rộng tìm kiếm" (click)="statusOpenSearchForm=true"
+      *ngIf="showIconOpenSearchForm && !statusOpenSearchForm">keyboard_double_arrow_down</mat-icon>
+
+  </div>
+  <div class="content">
+    <ng-container *ngIf="this.dataSourceFlat!=null">
+      <div style="background-color: #fff;height: 100%;">
+        <button *ngIf="useAddDeault" color="primary" mat-button type="button" style="margin-left:14px;margin-top: 5px;"
+          (click)="create()">
+          <mat-icon style="margin-right:10px;">add</mat-icon>{{addLabel}}
+        </button>
+        <mat-tree id="{{id}}" [dataSource]="dataSourceFlat" [treeControl]="treeControl"
+          [style.height]="useAddDeault?'calc(100% - 51px)':'calc(100% - 10px)'" style="padding: 5px;">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10"
+            [style.display]="!node.hide?'flex':'none'">
+            <button mat-icon-button disabled></button>
+            <!-- {{node.name}} -->
+                                  
+            <ng-container *ngIf="useCheckbox">             
+              <mat-checkbox class="checkbox-label-no-padding mr-1"  color="primary" [indeterminate]="node.indeterminate" [checked]="node.selected" [disabled]="node.disabled || (node.parentNodeNoAccess && disableIfNoAccess)"
+              [(ngModel)]="node.selected" (ngModelChange)="checkNode($event, node)"></mat-checkbox>
+            </ng-container>
+            <mat-icon [ngClass]="node.iconColorClass" class="{{node.parentNodeNoAccess?'no-access':''}}" *ngIf="node.icon!=null" matTooltip="{{node.iconTooltip}}">{{node.icon}}</mat-icon>
+
+            <ng-container *ngIf="node.useTemplate && nodeTemplate">
+              <ng-container *ngTemplateOutlet="nodeTemplate; context:{$implicit: {node:node,dataItem:flatNodeMap.get(node)}}"></ng-container>
+            </ng-container>
+
+          <!-- KHông Có menu context -->
+          <ng-container *ngIf="!node.showMenuContext && (!node.useTemplate || !nodeTemplate)">
+            <label class="{{(node.nodeId == model) ? 'item-selected':''}} {{node.disabled || (node.parentNodeNoAccess && disableIfNoAccess) ? 'item-disable' : ''}} {{node.parentNodeNoAccess?'no-access':''}}"
+              (click)="selectNode(node)">{{node.name}} <span class="total-child"
+                *ngIf="node.totalChild!=null">{{node.totalChild}}</span></label>
+                <button mat-icon-button class="ml-1" *ngIf="node.addNode" (click)="addNewItem(node)" matTooltip="Tạo {{node.addNodeTitle}}">
+                  <mat-icon>add</mat-icon>
+                </button>
+          </ng-container>
+            <!-- Có menu context -->
+            <ng-container *ngIf="node.showMenuContext && (!node.useTemplate || !nodeTemplate)">
+              <label class="{{(node.nodeId == model) ? 'item-selected':''}} {{node.disabled || (node.parentNodeNoAccess && disableIfNoAccess) ? 'item-disable' : ''}} {{node.parentNodeNoAccess?'no-access':''}}"
+                (contextmenu)="onRightClick($event, node, actionMenuTrigger)" (click)="selectNode(node)">{{node.name}}
+                <span class="total-child" *ngIf="node.totalChild!=null">{{node.totalChild}}</span>
+                <span id="{{node.nodeId}}" [matMenuTriggerFor]="actionMenu" #actionMenuTrigger="matMenuTrigger"
+                  [matMenuTriggerData]="{element: node}"></span>
+              </label>
+              <button mat-icon-button class="ml-1" *ngIf="node.addNode" (click)="addNewItem(node)" matTooltip="Tạo {{node.addNodeTitle}}">
+                <mat-icon>add</mat-icon>
+              </button>
+            </ng-container>
+          </mat-tree-node>
+
+          <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="10"
+            [style.display]="!node.hide?'flex':'none'">
+            <ng-container *ngIf="node.lazyLoadChild">
+              <button mat-icon-button [attr.aria-label]="'Toggle ' + node.name" (click)="toggleLazyLoadNode(node)">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{treeControl.isExpanded(node) && node.expandable ?
+                  'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="!node.lazyLoadChild">
+              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{treeControl.isExpanded(node) && node.expandable ?
+                  'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+            </ng-container>
+            <!-- {{node.name}} -->
+              <ng-container *ngIf="useCheckbox">    
+                <mat-checkbox class="checkbox-label-no-padding mr-1" color="primary" [indeterminate]="node.indeterminate" [checked]="node.selected" [disabled]="node.disabled || (node.parentNodeNoAccess && disableIfNoAccess)"
+                [(ngModel)]="node.selected" (ngModelChange)="checkNode($event, node)"></mat-checkbox>           
+               
+              </ng-container>
+            <mat-icon [ngClass]="node.iconColorClass" class="{{node.parentNodeNoAccess?'no-access':''}}" *ngIf="node.icon!=null" matTooltip="{{node.iconTooltip}}">{{node.icon}}</mat-icon>            
+            <ng-container *ngIf="node.useTemplate && nodeTemplate">
+              <ng-container *ngTemplateOutlet="nodeTemplate; context:{$implicit: {node:node,dataItem:flatNodeMap.get(node)}}"></ng-container>
+            </ng-container>
+            <!-- KHông Có menu context -->
+            <ng-container *ngIf="!node.showMenuContext && (!node.useTemplate || !nodeTemplate)">
+              <label class="{{(node.nodeId == model) ? 'item-selected':''}} {{node.disabled || (node.parentNodeNoAccess && disableIfNoAccess) ? 'item-disable' : ''}} {{node.parentNodeNoAccess?'no-access':''}}"
+                (click)="selectNode(node)">{{node.name}}
+                <span class="total-child" *ngIf="node.totalChild!=null">{{node.totalChild}}</span></label>
+                <button mat-icon-button class="ml-1" *ngIf="node.addNode" (click)="addNewItem(node)" matTooltip="Tạo {{node.addNodeTitle}}">
+                  <mat-icon>add</mat-icon>
+                </button>
+            </ng-container>
+            <!-- Có menu context -->
+            <ng-container *ngIf="node.showMenuContext && (!node.useTemplate || !nodeTemplate)">
+                      
+              <label class="{{(node.nodeId == model) ? 'item-selected':''}} {{node.disabled || (node.parentNodeNoAccess && disableIfNoAccess) ? 'item-disable' : ''}} {{node.parentNodeNoAccess?'no-access':''}}"
+              (contextmenu)="onRightClick($event, node, actionMenuTrigger)" (click)="selectNode(node)">{{node.name}}
+              <span class="total-child" *ngIf="node.totalChild!=null">{{node.totalChild}}</span>
+              <span id="{{node.nodeId}}" [matMenuTriggerFor]="actionMenu" #actionMenuTrigger="matMenuTrigger"
+                [matMenuTriggerData]="{element: node}"></span>
+            </label>
+            <button mat-icon-button class="ml-1" *ngIf="node.addNode" (click)="addNewItem(node)" matTooltip="Tạo {{node.addNodeTitle}}">
+              <mat-icon>add</mat-icon>
+            </button>
+            </ng-container>
+          </mat-tree-node>
+
+          
+          <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding matTreeNodePaddingIndent="10">
+            <button mat-icon-button disabled></button>
+            <mat-form-field appearance="outline">
+              <mat-label>Nhập tên</mat-label>
+              <input matInput #itemValue>
+            </mat-form-field>
+            <button mat-icon-button color="primary" (click)="saveNode(node, itemValue.value)" matTooltip="LƯU"><mat-icon>save</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="deleteNode(node)" matTooltip="XÓA"><mat-icon>delete_outline</mat-icon></button>
+          </mat-tree-node>
+        </mat-tree>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<mat-menu #actionMenu="matMenu">
+  <ng-template matMenuContent let-aliasMenuItems="element" *ngIf="menuContextTemplate!=null">
+    <ng-container *ngTemplateOutlet="menuContextTemplate; context:{$implicit: {node:aliasMenuItems,dataItem:flatNodeMap.get(aliasMenuItems)}}"></ng-container>
+  </ng-template>
+</mat-menu>

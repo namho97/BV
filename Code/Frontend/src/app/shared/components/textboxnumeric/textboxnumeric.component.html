@@ -1,0 +1,27 @@
+<div class="full-width">
+    <mat-form-field appearance="outline" class="full-width  {{label==null||label==''?'no-label':''}} {{customClass}}">
+      <mat-label><span [innerHTML]="label"></span> <span style="color: red;font-weight: bold;" *ngIf="required"> *</span></mat-label>
+      <button tabindex="-1" matPrefix mat-icon-button class="crease" (click)="giam()" matTooltip="Giảm" [disabled]="disabled">
+        <mat-icon>remove_circle_outline</mat-icon>
+      </button>  
+      <input matInput type="number" placeholder="{{placeHolder}}" id="{{id}}" name="{{id}}" [(ngModel)]="model" min="{{min}}" max="{{max}}"
+        (ngModelChange)="emit($event)" (blur)="blur()" [readonly]="readonly" [disabled]="disabled">
+         
+        <button tabindex="-1" matSuffix mat-icon-button class="increase" (click)="tang()" matTooltip="Tăng" [disabled]="disabled">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>   
+        <button tabindex="-1" matSuffix mat-icon-button *ngIf="icon!=null && icon!=''" (click)="iconClick()" matTooltip="{{iconTooltip}}"
+        style="right: 20px;position: absolute;top: -25px;" [disabled]="disabled">
+          <mat-icon>{{icon}}</mat-icon>
+        </button>   
+        <!-- <button mat-button *ngIf="model!=null && showIconClear && !disabled"
+              mat-icon-button
+              aria-label="Clear"
+              (click)="reset()"
+              matTooltip="Bỏ chọn"
+              class="mat-textbox-search-clear {{type=='number'?'number':''}}">
+        <mat-icon>close</mat-icon>
+      </button>    -->
+    </mat-form-field>
+    <label id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+  </div>

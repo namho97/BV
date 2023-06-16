@@ -1,0 +1,21 @@
+
+<div class="full-width">
+  <mat-form-field appearance="outline" class="full-width mat-form-field-should-float">
+    <mat-label>{{label}} <span style="color: red;font-weight: bold;" *ngIf="required">*</span></mat-label>    
+    <input matInput hidden/>
+    <!-- https://www.npmjs.com/package/@kolkov/angular-editor -->
+    <angular-editor [(ngModel)]="model" [config]="editorConfig"  id="{{id}}" name="{{id}}" [disabled]="disabled"
+    (ngModelChange)="emit($event)" (blur)="blur()">
+    <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+      <ae-toolbar-set>
+        <ae-button iconClass="fa fa-table" title="Table"
+                   (buttonClick)="executeCommand(executeCommandFn)">
+        </ae-button>
+      </ae-toolbar-set>
+    </ng-template>
+    </angular-editor>
+    <button tabindex="-1" mat-stroked-button *ngIf="!showToolbar" (click)="showHideToolbar(true)" matTooltip="Hiển thị thanh công cụ" class="show-hide-toolbar"><mat-icon>expand_more</mat-icon></button>
+    <button tabindex="-1" mat-stroked-button *ngIf="showToolbar" (click)="showHideToolbar(false)" matTooltip="Ẩn thanh công cụ" class="show-hide-toolbar"><mat-icon>expand_less</mat-icon></button>
+  </mat-form-field>
+  <label  id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

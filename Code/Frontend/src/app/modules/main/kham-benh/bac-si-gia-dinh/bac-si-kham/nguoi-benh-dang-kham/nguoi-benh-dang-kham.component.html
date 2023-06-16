@@ -1,0 +1,64 @@
+<div class="form-content-kham-benh">
+  <ng-container *ngIf="data!=null">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row column" fxLayoutGap="5px grid">
+          <div fxFlex.lt-sm="100%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex="{{taoDangKyMoi?'100%':'55%'}}">
+            <app-nguoi-benh-dang-kham-thong-tin-hanh-chinh [(data)]="data" [(taoDangKyMoi)]="taoDangKyMoi"
+              (extBatDauKham)="batDauKhamCuaDangKyMoi($event)">
+            </app-nguoi-benh-dang-kham-thong-tin-hanh-chinh>
+          </div>
+          <div fxFlex.lt-sm="100%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex="45%" *ngIf="!taoDangKyMoi && thongTinHanhChinhVo.YeuCauTiepNhanId!=null && thongTinHanhChinhVo.YeuCauTiepNhanId>0">
+            <fieldset>
+              <legend>THÔNG TIN VIỆN PHÍ</legend>
+              <app-thu-vien-phi-rut-gon #thuVienPhi width="25%" [id]="thongTinHanhChinhVo.YeuCauTiepNhanId" (extClosePopup)="extClosePopupVienPhi()"></app-thu-vien-phi-rut-gon>
+            </fieldset>
+          </div>
+          <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" *ngIf="!taoDangKyMoi">
+              <mat-tab-group (selectedIndexChange)="selectedIndexChange($event)" [selectedIndex]="tabActiveIndex">
+                <mat-tab label="KHÁM LÂM SÀNG">
+                  <div class="m-10 ml-0" *ngIf="tabActiveIndex==0">
+                    <app-nguoi-benh-dang-kham-kham-benh [(data)]="data" [thongTinHanhChinh]="thongTinHanhChinhVo" [(taoDangKyMoi)]="taoDangKyMoi"
+                      [(nhanLuu)]="nhanLuu" [nhanHoanThanhKham]="nhanHoanThanhKham" [nhanNhapLai]="nhanNhapLai"
+                      (extLuuXong)="extLuuXong()"></app-nguoi-benh-dang-kham-kham-benh>
+                  </div>
+                </mat-tab>
+                <mat-tab label="CẬN LÂM SÀNG">
+                  <div class="m-10 ml-0" *ngIf="tabActiveIndex==1">
+                    <app-nguoi-benh-dang-kham-chi-dinh [(data)]="data" [(taoDangKyMoi)]="taoDangKyMoi"
+                      [(nhanLuu)]="nhanLuu" [nhanHoanThanhKham]="nhanHoanThanhKham" [nhanNhapLai]="nhanNhapLai"
+                      (extLuuXong)="extLuuXong()"></app-nguoi-benh-dang-kham-chi-dinh>
+                  </div>
+                </mat-tab>
+                <mat-tab label="CHẨN ĐOÁN ĐIỀU TRỊ">
+                  <div class="m-10 ml-0" *ngIf="tabActiveIndex==2">
+                    <app-nguoi-benh-dang-kham-ke-toa [(data)]="data" [thongTinHanhChinh]="thongTinHanhChinhVo" [(taoDangKyMoi)]="taoDangKyMoi"
+                      [(nhanLuu)]="nhanLuu" [nhanHoanThanhKham]="nhanHoanThanhKham" [nhanNhapLai]="nhanNhapLai" [taiLai]="taiLaiChanDoanDieuTri"
+                      (extLuuXong)="extLuuXong()" (taiLaiVienPhi)="thuVienPhi.getChiTietVienPhi()" (extTaiLaiXong)="taiLaiChanDoanDieuTriXong()"></app-nguoi-benh-dang-kham-ke-toa>
+                  </div>
+                </mat-tab>
+                <mat-tab label="LỊCH SỬ KHÁM">
+                  <div *ngIf="tabActiveIndex==3">
+                    <app-nguoi-benh-dang-kham-lich-su-kham [(data)]="data" [thongTinHanhChinh]="thongTinHanhChinhVo" [(taoDangKyMoi)]="taoDangKyMoi">
+                    </app-nguoi-benh-dang-kham-lich-su-kham>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </ng-scrollbar>
+  </ng-container>
+
+  <p *ngIf="data==null && !isMobile">(Chưa chọn người bệnh)</p>
+</div>
+<div class="footer" *ngIf="data!=null && !taoDangKyMoi">
+  <!-- <button mat-icon-button (click)="quayLai()" class="show-on-mobile-only">
+    <mat-icon>arrow_back</mat-icon>
+  </button> -->
+  <button mat-raised-button color="warn" class="ml-1 mr-1" (click)="huyDangKy()"><mat-icon *ngIf="isMobile" matTooltip="HỦY ĐĂNG KÝ">cancel</mat-icon> <span *ngIf="!isMobile">HỦY ĐĂNG KÝ</span></button>
+  <button mat-stroked-button color="warn" (click)="nguoiBenhVang()" *ngIf="thongTinHanhChinhVo.TrangThai!=5"><mat-icon *ngIf="isMobile" matTooltip="NB VẮNG">face_retouching_off</mat-icon> <span *ngIf="!isMobile">NB VẮNG</span></button>
+  <button mat-raised-button color="primary" class="float-right" (click)="luuVaHoanThanh()"><mat-icon *ngIf="isMobile" matTooltip="HOÀN THÀNH KHÁM">check_circle</mat-icon> <span *ngIf="!isMobile">HOÀN THÀNH KHÁM</span></button>
+  <button mat-raised-button color="accent" class="float-right mr-1" (click)="luu()"><mat-icon *ngIf="isMobile" matTooltip="LƯU">save</mat-icon> <span *ngIf="!isMobile">LƯU</span></button>
+  <button mat-button class="float-right mr-1" (click)="nhapLai()"><mat-icon *ngIf="isMobile" matTooltip="NHẬP LẠI">restart_alt</mat-icon> <span *ngIf="!isMobile">NHẬP LẠI</span></button>
+</div>

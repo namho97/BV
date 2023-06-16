@@ -1,0 +1,11 @@
+<div class="full-width  {{customClass}}">
+  <div class="mat-field">
+    <label><span [innerHTML]="label"></span> <span style="color: red;font-weight: bold;" *ngIf="required"> *</span></label>
+    <mat-radio-group style="{{style}}" id="{{id}}" [(ngModel)]="model"  (ngModelChange)="emit($event)"  [disabled]="disabled">
+      <mat-radio-button color="primary" *ngFor="let item of items" [value]="item.Value" [disabled]="item.Disabled ? item.Disabled : false" class="mr-1"  [style.color]="item.Color">
+        <strong>{{item.Text}}</strong>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <label  id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

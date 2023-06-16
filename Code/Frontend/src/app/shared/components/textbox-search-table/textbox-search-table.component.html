@@ -1,0 +1,33 @@
+<div class="txt-search-table full-width {{showIconAddOrEdit?'select-has-icon-add':''}}" id="mat-form-field-{{id}}">
+  <mat-form-field appearance="outline" class="full-width {{customClass}}" [floatLabel]="floatLabel" (click)="showSearchTable(true)">
+    <mat-label><span [innerHTML]="label"></span> <span style="color: red;font-weight: bold;" *ngIf="required"> *</span></mat-label>
+    <input matInput placeholder="{{placeHolder}}" id="{{id}}{{isAutoFocus ? '-focus': ''}}" name="{{id}}{{isAutoFocus ? '-focus': ''}}" [(ngModel)]="model" maxlength="{{maxLength}}"
+      (keyup)="onKey($event)" type="{{type}}"  onKeyPress="if(this.value.length==maxLength) return false;"
+      [readonly]="readonly" [disabled]="disabled">
+      <button tabindex="-1" matSuffix mat-icon-button *ngIf="icon!=null && icon!=''" (click)="iconClick()" matTooltip="{{iconTooltip}}">
+        <mat-icon>{{icon}}</mat-icon>
+      </button>
+  </mat-form-field>
+  <button tabindex="-1" mat-button *ngIf="model!=null && !disabled"
+        mat-icon-button
+        aria-label="Clear"
+        (click)="reset()"
+        matTooltip="Bỏ chọn"
+        class="txt-search-table-clear">
+  <mat-icon>close</mat-icon>
+</button>
+<button tabindex="-1" mat-stroked-button *ngIf="showIconAddOrEdit"
+      (click)="add()"
+      matTooltip="{{tooltipIconAdd}}"
+      class="mat-select-add">
+<mat-icon>add</mat-icon>
+</button>
+  <label id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+  <div id="{{id}}-search-table" class="search-table">
+    <app-table #tableSearch masterName="tableSearch" [columns]="columns" [dataSource]="dataSource"
+      [groupByColumns]="groupByColumns"  [maxHeight]="maxHeight" [hideHeader]="true" [pageable]="false"
+      [sortByColumn]="sortByColumn" [showIndex]="false" [showCheckbox]="false"
+      (extRowSelect)="rowSelect($event)" (keyup)="onKey($event)">
+    </app-table>
+  </div>
+</div>

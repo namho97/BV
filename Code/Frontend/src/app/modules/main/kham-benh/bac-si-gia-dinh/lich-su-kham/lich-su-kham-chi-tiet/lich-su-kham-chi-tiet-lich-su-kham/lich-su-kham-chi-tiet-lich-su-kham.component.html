@@ -1,0 +1,8 @@
+<app-table #tableLichSuKham masterName="tableLichSuKham" [columns]="columnsLichSuKham"
+urlGetData="KhamBenhBacSiGiaDinhLichSuBacSiKham/GetLichSuKhamChiTietThongTinLichSuKham" [documentType]="documentTypeLichSuKham" [heightAuto]="true" [pageable]="false"
+[groupByColumns]="groupByColumnsLichSuKham" [sortByColumn]="sortByColumnLichSuKham" [showIndex]="true"
+[showCheckbox]="false" [hideHeader]="true" [noBorderTop]="true">
+</app-table>
+<ng-template #ngayKhamTemplate let-dataItem>
+    <a (click)="view(dataItem)">{{dataItem.NgayKham}}</a>
+</ng-template>

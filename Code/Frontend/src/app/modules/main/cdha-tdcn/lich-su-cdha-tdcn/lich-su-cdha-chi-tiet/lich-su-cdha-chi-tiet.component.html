@@ -1,0 +1,44 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0 grid">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row column" fxLayoutGap="10px grid">
+      <fieldset fxFlex="100%" class="mb-3" style="background-color: #e6ffff;position: relative;">
+        <legend>THÔNG TIN HÀNH CHÍNH</legend>
+        <ul class="inline">
+          <li>Mã TN: <strong>2204050036</strong></li>
+          <li>Mã NB: <strong>22036936</strong></li>
+          <li>Họ tên: <strong>NGUYỄN THỊ LAN</strong></li>
+          <li>Giới tính: <strong>Nữ</strong></li>
+          <li>Tuổi: <strong>31</strong></li>
+          <li>SĐT: <strong>035 276 3599</strong></li>
+          <li>Dân tộc: <strong>Kinh</strong></li>
+          <li>Nghề nghiệp: <strong>Công nhân</strong></li>
+          <li>Địa chỉ: <strong>203 Quang Trung, Phường Quang Trung, Quận Hà Đông, Thành phố Hà Nội</strong></li>
+          <li>Số BHYT: <strong>5623659865986458</strong></li>
+          <li>Mức hưởng: <strong class="blue">20%</strong></li>
+          <li>Ngày hiệu lực: <strong>05/04/2022</strong></li>
+        </ul>
+      </fieldset>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset>
+          <legend>PHIẾU IN</legend>        
+          <app-select label="DỊCH VỤ" [required]="true"
+          [(model)]="lichSuCDHAVo.DichVu" 
+          [items]="[
+          {KeyId:1,DisplayName:'NỘi soi tim'},
+          {KeyId:2,DisplayName:'NỘi soi phổi'}
+          ]" (modelChange)="dichVuChange($event)">
+          </app-select>
+          <iframe [srcdoc]="contentIn | safe" frameBorder="0" id="iframeXemPhieuIn"></iframe>
+        </fieldset>
+      </div>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+<div class="form-footer">
+<button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+<button mat-raised-button color="warn" class="float-right" (click)="moNhapKetQuaLai()">MỞ NHẬP KQ LẠI</button>
+<app-print-button buttonType="mat-stroked-button" color="primary" icon="print" class="float-right mr-1"
+        [htmlContent]="contentIn | safe" label="In kết quả"></app-print-button>
+</div>

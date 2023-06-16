@@ -1,0 +1,71 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM KHO</a>
+        <a class="active">KHO</a>
+      </div>
+      <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="table.create()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="grid-content">
+      <app-table #tableKho masterName="tableKho" [columns]="columnsKho" [documentType]="documentTypeKho"
+        [groupByColumns]="groupByColumnsKho" [headerTemplate]="headerKhoTemplate" [sortByColumn]="sortByColumnKho"
+        [showIndex]="false" [showCheckbox]="false" (extDataItemSelected)="extDataItemSelected($event)">
+      </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-kho-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)" (quayLaiChange)="quayLaiChange()"
+        (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-kho-chi-tiet>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #headerKhoTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ten" label="TÊN"
+        [(model)]="khoQueryInfo.Ten" (keyup)="onKey($event)"></app-textbox>
+
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" label="LOẠI KHO"
+        url="QuanTriNhomKhoKho/GetLookupLoaiKho" [(model)]="khoQueryInfo.LoaiKho">
+      </app-select>
+
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" label="KHOA PHÒNG"
+        url="QuanTriNhomKhoaPhongKhoaPhong/GetLookup" [(model)]="khoQueryInfo.KhoaPhongId">
+      </app-select>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;"
+        label="PHÒNG BỆNH VIỆN" url="QuanTriNhomKhoaPhongKhoaPhongPhongKham/GetLookup"
+        [(model)]="khoQueryInfo.PhongBenhVienId">
+      </app-select>
+      <div style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;">
+        <app-checkbox id="DP" label="DƯỢC PHẨM" class="ml-4 mb-1"  [(model)]="khoQueryInfo.LoaiDuocPham"></app-checkbox>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;">
+        <app-checkbox id="VT" label="VẬT TƯ" class="mb-1" [(model)]="khoQueryInfo.LoaiVatTu">
+        </app-checkbox>
+      </div>
+
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem">
+          <mat-icon>search</mat-icon> Tìm kiếm
+        </button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem">
+          <mat-icon>clear</mat-icon> Hủy tìm kiếm
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

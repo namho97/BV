@@ -1,0 +1,29 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM PHÒNG KHÁM</a>
+        <a class="active">TRIỆU CHỨNG</a>
+      </div> 
+      <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="gridTree()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="grid-content">      
+      <app-tree #treeTrieuChung id="treeTrieuChung" urlGetData="QuanTriNhomPhongKhamTrieuChung/GetDataForGridAsync"
+      [(model)]="id" [isExpandAll]="false" heightToolbar="150"  (extOnSelected)="chonTrieuChung($event)" >
+    </app-tree>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT</h3>
+    </div>
+    <div class="chi-tiet-content">
+      <app-trieu-chung-chi-tiet [data]="id" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()"></app-trieu-chung-chi-tiet>
+    </div>
+  </div>
+</div>

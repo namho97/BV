@@ -1,0 +1,46 @@
+<div class="form-content">
+    <!-- <ng-scrollbar fxLayout="row column" fxLayoutGap="0%"> -->
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="Ma" label="MÃ" [required]="true"
+                placeholder="MÃ" [(model)]="chucDanhVo.Ma" maxLength="50" [disabled]="chucDanhVo.IsDefault == false"
+                [validationerror]="'Ma' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="Ten" label="TÊN" [required]="true"
+                placeholder="TÊN" [(model)]="chucDanhVo.Ten" maxLength="250" [disabled]="chucDanhVo.IsDefault == false"
+                [validationerror]="'Ten' | validationerror:validationErrors">
+            </app-textbox>
+
+            <!-- <app-select fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%" id="nhom-chuc-danh" label="NHÓM CHỨC DANH"
+                url="QuanTriNhomHanhChinhNhomChucDanh/GetLookup" [(model)]="chucDanhVo.NhomChucDanhId"
+                [validationerror]="'NhomChucDanhId' | validationerror:validationErrors">
+            </app-select> -->
+            <!-- <app-select fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%" label="NHÓM CHỨC DANH"
+                [items]="[{KeyId:1,DisplayName:'Bác sĩ'},{KeyId:2,DisplayName:'Bác sĩ y học dự phòng'},{KeyId:3,DisplayName:'Y sĩ'}]"
+                [(model)]="chucDanhVo.NhomChucDanhId" [disabled]="chucDanhVo.IsDefault == false" 
+                [validationerror]="'NhomChucDanhId' | validationerror:validationErrors">
+            </app-select> -->
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="HIỆU LỰC"
+                [items]="[{KeyId:1,DisplayName:'Đang sử dụng'},{KeyId:2,DisplayName:'Không sử dụng'}]"
+                [(model)]="chucDanhVo.HieuLucId" [disabled]="chucDanhVo.IsDefault == false"
+                (modelChange)="hieuLucChange($event)" [validationerror]="'HieuLuc' | validationerror:validationErrors">
+            </app-select>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ghichu" label="GHI CHÚ"
+                placeholder="GHI CHÚ" [(model)]="chucDanhVo.GhiChu" maxLength="2000"
+                [disabled]="chucDanhVo.IsDefault == false">
+            </app-textbox>
+        </div>
+    </div>
+    <!-- </ng-scrollbar> -->
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate && chucDanhVo.IsDefault == true" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

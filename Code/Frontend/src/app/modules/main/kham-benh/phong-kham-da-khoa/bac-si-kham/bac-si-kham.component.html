@@ -1,0 +1,98 @@
+<div class="header">
+  <div class="breadcrumb flat">
+    <a>KHÁM BỆNH</a>
+    <a class="active">BÁC SĨ KHÁM</a>
+  </div> 
+</div>
+
+<div class="grid-content {{dataItemHangDoiSelected!=null||dataItemDaHoanThanhSelected!=null?'has-detail':''}}">
+  <div class="left">
+    <app-table *ngIf="tabActive==0" #tableHangDoi masterName="tableHangDoi" [columns]="columnsHangDoi"
+            [dataSource]="dataSourceHangDoi" [documentType]="documentTypeHangDoi"
+            [groupByColumns]="groupByColumnsHangDoi" heightToolbar="207" [headerTemplate]="headerHangDoiTemplate"
+            [sortByColumn]="sortByColumnHangDoi" [showIndex]="true" [showCheckbox]="false">
+          </app-table>
+    <!-- <mat-tab-group (selectedIndexChange)="selectedIndexChange($event)">
+      <mat-tab label="HÀNG ĐỢI"> 
+         <app-table *ngIf="tabActive==0" #tableHangDoi masterName="tableHangDoi" [columns]="columnsHangDoi"
+            [dataSource]="dataSourceHangDoi" [documentType]="documentTypeHangDoi"
+            [groupByColumns]="groupByColumnsHangDoi" heightToolbar="257" [headerTemplate]="headerHangDoiTemplate"
+            [sortByColumn]="sortByColumnHangDoi" [showIndex]="true" [showCheckbox]="false">
+          </app-table>
+      </mat-tab>
+      <mat-tab label="ĐÃ HOÀN THÀNH">        
+        <app-table *ngIf="tabActive==1"  #tableDaHoanThanh masterName="tableDaHoanThanh" [columns]="columnsDaHoanThanh"
+            [dataSource]="dataSourceDaHoanThanh" [documentType]="documentTypeDaHoanThanh"
+            [groupByColumns]="groupByColumnsDaHoanThanh" heightToolbar="257" [headerTemplate]="headerDaHoanThanhTemplate"
+            [sortByColumn]="sortByColumnDaHoanThanh" [showIndex]="true" [showCheckbox]="false">
+          </app-table>
+      </mat-tab>
+    </mat-tab-group> -->
+  </div>
+  <div class="right">
+    <div class="header">
+      <h3 class="title">NGƯỜI BỆNH ĐANG KHÁM</h3>
+      <!-- <h3 class="title">{{tabActive==0?'NGƯỜI BỆNH ĐANG KHÁM':'THÔNG TIN LẦN KHÁM'}}</h3> -->
+    </div>
+    <div class="chi-tiet-content">
+      <app-nguoi-benh-dang-kham [data]="dataItemHangDoiSelected" (extQuayLai)="extQuayLaiHangDoi()"></app-nguoi-benh-dang-kham>
+      <!-- <ng-container *ngIf="tabActive==0">
+       <app-nguoi-benh-dang-kham *ngIf="dataItemHangDoiSelected!=null" [data]="dataItemHangDoiSelected" (extQuayLai)="extQuayLaiHangDoi()"></app-nguoi-benh-dang-kham>
+      <p *ngIf="dataItemHangDoiSelected==null">(Chưa chọn người bệnh)</p>
+      </ng-container>
+      <ng-container *ngIf="tabActive==1">
+        <app-thong-tin-lan-kham *ngIf="dataItemDaHoanThanhSelected!=null" [data]="dataItemDaHoanThanhSelected" ></app-thong-tin-lan-kham>
+        <p *ngIf="dataItemDaHoanThanhSelected==null">(Chưa chọn người bệnh)</p>
+      </ng-container>
+       -->
+      
+      
+    </div>
+  </div>
+</div>
+
+<!-- Hàng đợi -->
+
+<ng-template #headerHangDoiTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 280px;margin-right: 5px;" id="HoTen" label="TÌM KIẾM MÃ TN/NB, HỌ TÊN"
+        [(model)]="bacSiKhamHangDoiQueryInfo.MaTnNbHoTen" (keyup)="onKey($event)"></app-textbox>
+      <div style="display: inline-block;margin-bottom: 4px;width: 40px;margin-right: 5px;">
+        <button (click)="timKiemHangDoi()" mat-icon-button color="primary" class="mb-1" matTooltip="Tìm kiếm"><mat-icon>search</mat-icon></button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 40px;" class="mb-1" *ngIf="bacSiKhamHangDoiSearching">
+        <button (click)="huyTimKiemHangDoi()" mat-icon-button matTooltip="Hủy tìm kiếm"><mat-icon>cancel</mat-icon></button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #hoTenTemplate let-dataItem>
+  <a (click)="chonNguoiBenhKham(dataItem)">{{dataItem.HoTen}}</a>
+</ng-template>
+
+
+<!-- Dã hoàn thành -->
+
+<ng-template #headerDaHoanThanhTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 280px;margin-right: 5px;" id="HoTen" label="TÌM KIẾM MÃ TN/NB, HỌ TÊN"
+        [(model)]="bacSiKhamDaHoanThanhQueryInfo.MaTnNbHoTen" (keyup)="onKey($event)"></app-textbox>
+        <div style="display: inline-block;margin-bottom: 4px;width: 40px;margin-right: 5px;">
+          <button (click)="timKiemDaHoanThanh()" mat-icon-button color="primary" class="mb-1" matTooltip="Tìm kiếm"><mat-icon>search</mat-icon></button>
+        </div>
+        <div style="display: inline-block;margin-bottom: 4px;width: 40px;" class="mb-1" *ngIf="bacSiKhamDaHoanThanhSearching">
+          <button (click)="huyTimKiemDaHoanThanh()" mat-icon-button matTooltip="Hủy tìm kiếm"><mat-icon>cancel</mat-icon></button>
+        </div>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 280px;margin-right: 5px;" id="TiepNhanTu"
+        label="TIẾP NHẬN TỪ" [(model)]="bacSiKhamDaHoanThanhQueryInfo.HoanThanhKhamTu" (keyup)="onKey($event)"></app-datetimepicker>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 280px;margin-right: 5px;" id="TiepNhanDen"
+        label="TIẾP NHẬN ĐẾN" [(model)]="bacSiKhamDaHoanThanhQueryInfo.HoanThanhKhamDen" (keyup)="onKey($event)"></app-datetimepicker>
+    </div>
+  </div>
+</ng-template>
+<ng-template #maTiepNhanTemplate let-dataItem>
+  <a (click)="chonNguoiBenhXemChiTiet(dataItem)">{{dataItem.MaTiepNhan}}</a>
+</ng-template>

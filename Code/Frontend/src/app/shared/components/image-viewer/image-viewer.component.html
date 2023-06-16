@@ -1,0 +1,13 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+    <div>XEM ẢNH</div>
+    <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <mat-dialog-content>  
+    <ng-scrollbar  track="all" pointerEventsMethod="scrollbar">
+        <img [src]="data.src | safeUrl" alt=""/>
+    </ng-scrollbar>    
+  </mat-dialog-content>
+  

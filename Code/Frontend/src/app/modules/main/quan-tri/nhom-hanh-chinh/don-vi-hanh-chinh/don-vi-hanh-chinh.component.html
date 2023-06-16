@@ -1,0 +1,102 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM HÀNH CHÍNH</a>
+        <a class="active">ĐƠN VỊ HÀNH CHÍNH</a>
+      </div>
+      <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="table.create()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="grid-content">
+      <app-table-expanded #tabledDonViHanhChinh masterName="tabledDonViHanhChinh" [columns]="columnsTinhThanh"
+        urlGetData="QuanTriNhomHanhChinhDonViHanhChinh/GetDataForGridAsync" [documentType]="documentTypeDonViHanhChinh"
+        [groupByColumns]="groupByColumnsDonViHanhChinh" [sortByColumn]="sortByColumnDonViHanhChinh"
+        [headerTemplate]="headerdDonViHanhChinhTemplate" [useAddDeault]="false" [showIndex]="false"
+        [showIconOpenSearchForm]="true" (extDataItemSelected)="extDataItemSelected($event)"
+        [tableDetailTemplate]="detailQuanHuyenTemplate"
+        [additionalSearchObject]="{CapHanhChinhId:1,TrucThuocDonViHanhChinhId:null,TinhThanhId: (donViHanhChinhQueryInfo.TinhThanhId==null?0:donViHanhChinhQueryInfo.TinhThanhId), QuanHuyenId:(donViHanhChinhQueryInfo.QuanHuyenId==null?0:donViHanhChinhQueryInfo.QuanHuyenId), PhuongXaId: (donViHanhChinhQueryInfo.PhuongXaId==null?0:donViHanhChinhQueryInfo.PhuongXaId), KhomApId: (donViHanhChinhQueryInfo.KhomApId==null?0:donViHanhChinhQueryInfo.KhomApId)}">
+      </app-table-expanded>
+
+
+      <ng-template #detailQuanHuyenTemplate let-dataItem>
+        <div class="full-width p-15">
+          <app-table-expanded #tableQuanHuyenDonViViHanhChinh masterName="tableQuanHuyenDonViViHanhChinh"
+            [columns]="columnsQuanHuyen" urlGetData="QuanTriNhomHanhChinhDonViHanhChinh/GetDataForGridAsync"
+            [documentType]="documentTypeDonViHanhChinh" [hideHeader]="true" [useAddDeault]="false" [showIndex]="false"
+            maxHeight="600" [showIconOpenSearchForm]="true" (extDataItemSelected)="extDataItemSelected($event)"
+            [tableDetailTemplate]="detailPhuongXaTemplate"
+            [additionalSearchObject]="{CapHanhChinhId:2,TrucThuocDonViHanhChinhId:dataItem.Id,TinhThanhId: (donViHanhChinhQueryInfo.TinhThanhId==null?0:donViHanhChinhQueryInfo.TinhThanhId), QuanHuyenId:(donViHanhChinhQueryInfo.QuanHuyenId==null?0:donViHanhChinhQueryInfo.QuanHuyenId), PhuongXaId: (donViHanhChinhQueryInfo.PhuongXaId==null?0:donViHanhChinhQueryInfo.PhuongXaId), KhomApId: (donViHanhChinhQueryInfo.KhomApId==null?0:donViHanhChinhQueryInfo.KhomApId)}">
+          </app-table-expanded>
+
+        </div>
+      </ng-template>
+
+      <ng-template #detailPhuongXaTemplate let-dataItem>
+        <div class="full-width p-15">
+          <app-table-expanded #tablePhuongXaDonViViHanhChinh masterName="tablePhuongXaDonViViHanhChinh"
+            [columns]="columnsPhuongXa" urlGetData="QuanTriNhomHanhChinhDonViHanhChinh/GetDataForGridAsync"
+            [documentType]="documentTypeDonViHanhChinh" [hideHeader]="true" [useAddDeault]="false" [showIndex]="false"
+            maxHeight="600" [showIconOpenSearchForm]="true" (extDataItemSelected)="extDataItemSelected($event)"
+            [tableDetailTemplate]="detailKhomApTemplate"
+            [additionalSearchObject]="{CapHanhChinhId:3,TrucThuocDonViHanhChinhId:dataItem.Id,TinhThanhId: (donViHanhChinhQueryInfo.TinhThanhId==null?0:donViHanhChinhQueryInfo.TinhThanhId), QuanHuyenId:(donViHanhChinhQueryInfo.QuanHuyenId==null?0:donViHanhChinhQueryInfo.QuanHuyenId), PhuongXaId: (donViHanhChinhQueryInfo.PhuongXaId==null?0:donViHanhChinhQueryInfo.PhuongXaId), KhomApId: (donViHanhChinhQueryInfo.KhomApId==null?0:donViHanhChinhQueryInfo.KhomApId)}">
+          </app-table-expanded>
+
+        </div>
+      </ng-template>
+
+      <ng-template #detailKhomApTemplate let-dataItem>
+        <div class="full-width p-15">
+          <app-table #tableKhomApDonViViHanhChinh masterName="tableKhomApDonViViHanhChinh" [columns]="columnsKhomAp"
+            urlGetData="QuanTriNhomHanhChinhDonViHanhChinh/GetDataForGridAsync"
+            [documentType]="documentTypeDonViHanhChinh" [hideHeader]="true" [useAddDeault]="false" [showIndex]="false"
+            maxHeight="600" [showIconOpenSearchForm]="true" (extDataItemSelected)="extDataItemSelected($event)"
+            [additionalSearchObject]="{CapHanhChinhId:4,TrucThuocDonViHanhChinhId:dataItem.Id,TinhThanhId: (donViHanhChinhQueryInfo.TinhThanhId==null?0:donViHanhChinhQueryInfo.TinhThanhId), QuanHuyenId:(donViHanhChinhQueryInfo.QuanHuyenId==null?0:donViHanhChinhQueryInfo.QuanHuyenId), PhuongXaId: (donViHanhChinhQueryInfo.PhuongXaId==null?0:donViHanhChinhQueryInfo.PhuongXaId), KhomApId: (donViHanhChinhQueryInfo.KhomApId==null?0:donViHanhChinhQueryInfo.KhomApId)}">
+          </app-table>
+
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-don-vi-hanh-chinh-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()" (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()">
+      </app-don-vi-hanh-chinh-chi-tiet>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #headerdDonViHanhChinhTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ma"
+        label="MÃ ĐƠN VỊ" [(model)]="donViHanhChinhQueryInfo.MaDonVi" (keyup)="onKey($event)"></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ten"
+        label="TÊN VIẾT TẮT" [(model)]="donViHanhChinhQueryInfo.TenVietTat" (keyup)="onKey($event)"></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HamLuong"
+        label="TÊN ĐƠN VỊ" [(model)]="donViHanhChinhQueryInfo.TenDonVi" (keyup)="onKey($event)"></app-textbox>
+
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem">
+          <mat-icon>search</mat-icon> Tìm kiếm
+        </button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem">
+          <mat-icon>clear</mat-icon> Hủy tìm kiếm
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,238 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+  <!-- <app-textbox fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="BenhSu" label="BỆNH SỬ"
+                    placeholder="BỆNH SỬ" [(model)]="data.KhamBenh.BenhSu"
+                    [validationerror]="'BenhSu' | validationerror:validationErrors">
+                  </app-textbox> -->
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>KHÁM BỆNH</legend>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">LÝ DO KHÁM BỆNH: <strong>{{data.KhamBenh.LyDoVaoVien}}</strong></div>
+            <app-select fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="LoaiBenh" label="LOẠI BỆNH"
+              placeholder="LOẠI BỆNH" [(model)]="data.KhamBenh.LoaiBenh" [showIconAddOrEdit]="true"
+              [items]="[{KeyId:1,DisplayName:'Viêm xoan',Description:'-Đau đầu, sổ mũi, ù tai, ho\r\n-Tiểu đường'},{KeyId:2,DisplayName:'Xổ mũi',Description:'-Sổ mũi, ù tai, ho\r\n-Tiểu đường'}]"
+              [validationerror]="'LoaiBenh' | validationerror:validationErrors" (modelObjectChange)="modelObjectChangeLoaiBenh($event)">
+            </app-select>
+            <!-- <div fxFlex="20%" fxFlex.gt-sm="10%" fxFlex.sm="10%">
+              <button mat-icon-button matTooltip="Thêm loại bệnh" class="mt-2">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div> -->
+            <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDungBenh" label="NỘI DUNG BỆNH"
+              placeholder="NỘI DUNG BỆNH" [(model)]="data.KhamBenh.NoiDungBenh" [required]="true"
+              [validationerror]="'NoiDungBenh' | validationerror:validationErrors">
+            </app-textarea>
+            <app-checkbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="Khám chi tiết các bộ phận"
+              [(model)]="data.KhamBenh.CoKhamChiTiet"></app-checkbox>
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" *ngIf="data.KhamBenh.CoKhamChiTiet">
+              <fieldset>
+                <legend>KHÁM CHI TIẾT CÁC BỘ PHẬN</legend>
+                <table style="table-layout: fixed;width:100%" class="table-format">
+                  <tr *ngFor="let item of data.KhamBenh.KhamKhacs;let i=index">
+                    <td style="width:15px">{{i+1}}</td>
+                    <td style="width:150px">
+                      <app-textbox class="full-width" id="BoPhan" label="BỘ PHẬN" placeholder="BỘ PHẬN"
+                        [(model)]="item.BoPhan" [required]="true"
+                        [validationerror]="'BoPhan' | validationerror:validationErrors">
+                      </app-textbox>
+                    </td>
+                    <td>
+                      <app-textbox class="full-width" id="MoTa" label="MÔ TẢ" placeholder="MÔ TẢ" [(model)]="item.MoTa"
+                        [required]="true" [validationerror]="'MoTa' | validationerror:validationErrors">
+                      </app-textbox>
+                    </td>
+                    <td style="width:20px">
+                      <mat-icon (click)="xoaKhamChiTietCacBoPhan(item)">delete_outline</mat-icon>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" align="center" matTooltip="Thêm" (click)="themKhamChiTietCacBoPhan()">
+                      <mat-icon>add</mat-icon>
+                    </td>
+                  </tr>
+                </table>
+              </fieldset>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>KẾT LUẬN</legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+            <app-select fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="IcdChinh" label="ICD CHÍNH" placeholder="ICD CHÍNH"
+              [(model)]="data.KhamBenh.IcdChinh"
+              [items]="[{KeyId:1,DisplayName:'Z00 - Khám tổng quát và kiểm tra sức khỏe',Description:'Khám tổng quát và kiểm tra sức khỏe cho những người không có điều gì than phiền về sức khỏe hoặc những người đã có chẩn đoán'},{KeyId:2,DisplayName:'A00 - Bệnh tả',Description:'Bệnh tả'}]"
+              [validationerror]="'IcdChinh' | validationerror:validationErrors" (modelObjectChange)="modelObjectChangeIcd($event)">
+            </app-select>
+            <app-select fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="IcdKemTheo" label="ICD KÈM THEO" placeholder="ICD KÈM THEO"
+              [(model)]="data.KhamBenh.IcdKemTheo" [multiple]="true"
+              [items]="[{KeyId:1,DisplayName:'Z00 - Khám tổng quát và kiểm tra sức khỏe',Description:'Khám tổng quát và kiểm tra sức khỏe cho những người không có điều gì than phiền về sức khỏe hoặc những người đã có chẩn đoán'},{KeyId:2,DisplayName:'A00 - Bệnh tả',Description:'Bệnh tả'}]"
+              [validationerror]="'IcdKemTheo' | validationerror:validationErrors">
+            </app-select>
+            <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ChanDoan" label="CHẨN ĐOÁN"
+              placeholder="CHẨN ĐOÁN" [(model)]="data.KhamBenh.ChanDoan" [required]="true"
+              [validationerror]="'ChanDoan' | validationerror:validationErrors">
+            </app-textarea>
+          </div>
+        </fieldset>
+      </div>
+      <app-checkbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="pl-1" [(model)]="data.KhamBenh.CoHenTaiKham" label="Hẹn tái khám"></app-checkbox>
+
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" *ngIf="data.KhamBenh.CoHenTaiKham">
+        <fieldset>
+          <legend>THÔNG TIN HẸN TÁI KHÁM</legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="KhamLaiSau" label="KHÁM LẠI SAU (ngày)" placeholder="KHÁM LẠI SAU (ngày)"
+            [(model)]="data.KhamBenh.KhamLaiSau" type="number"
+            [validationerror]="'KhamLaiSau' | validationerror:validationErrors">
+          </app-textbox>
+            <app-datepicker fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="NgayHenTaiKham" label="NGÀY HẸN TÁI KHÁM" placeholder="NGÀY HẸN TÁI KHÁM"
+              [(model)]="data.KhamBenh.NgayHenTaiKham"  [required]="true"
+              [validationerror]="'NgayHenTaiKham' | validationerror:validationErrors">
+            </app-datepicker>
+            <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="GhiChuHenTaiKham" label="GHI CHÚ"
+              placeholder="GHI CHÚ" [(model)]="data.KhamBenh.GhiChuHenTaiKham"
+              [validationerror]="'GhiChuHenTaiKham' | validationerror:validationErrors">
+            </app-textarea>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>CHỈ SỐ SINH TỒN
+          </legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <div class="overflow-auto">
+                <table style="table-layout: fixed;width:100%" class="table-format">
+                  <tr *ngFor="let item of data.KhamBenh.ChiSoSinhTons;let i=index">
+                    <td width="33%">
+                      <app-textbox class="full-width" customClass="mb-1" id="Mach" label="MẠCH (nhịp/phút)" placeholder="MẠCH (nhịp/phút)"
+                        [(model)]="item.Mach" [validationerror]="'Mach' | validationerror:validationErrors">
+                      </app-textbox>
+                      <app-textbox class="full-width" customClass="mb-1" id="NhietDo" label="NHIỆT ĐỘ (°C)" placeholder="NHIỆT ĐỘ (°C)"
+                        [(model)]="item.NhietDo" [validationerror]="'NhietDo' | validationerror:validationErrors">
+                      </app-textbox>
+                      <app-textbox class="full-width" customClass="mb-1" id="HuyetAp" label="HUYẾT ÁP (mmHg)" placeholder="HUYẾT ÁP (mmHg)"
+                        [(model)]="item.HuyetAp" [validationerror]="'HuyetAp' | validationerror:validationErrors">
+                      </app-textbox>
+                    </td>
+                    <td width="33%">
+                      <app-textbox class="full-width" customClass="mb-1" id="NhipTho" label="NHỊP THỞ (lần/phút)"
+                        placeholder="NHỊP THỞ (lần/phút)" [(model)]="item.NhipTho"
+                        [validationerror]="'NhipTho' | validationerror:validationErrors">
+                      </app-textbox>
+                      <app-textbox class="full-width" customClass="mb-1" id="CanNang" label="CÂN NẶNG (kg)" placeholder="CÂN NẶNG (kg)"
+                        [(model)]="item.CanNang" [validationerror]="'CanNang' | validationerror:validationErrors">
+                      </app-textbox>
+                      <app-textbox class="full-width" customClass="mb-1" id="ChieuCao" label="CHIỀU CAO (cm)" placeholder="CHIỀU CAO (cm)"
+                        [(model)]="item.ChieuCao" [validationerror]="'ChieuCao' | validationerror:validationErrors">
+                      </app-textbox>
+                    </td>
+                    <td>
+                      <app-textbox class="full-width" customClass="mb-1" id="Bmi" label="BMI (kg/m²)" [disabled]="true"
+                        placeholder="BMI (kg/m²)" [(model)]="item.Bmi"
+                        [validationerror]="'Bmi' | validationerror:validationErrors">
+                      </app-textbox>
+                      <app-textbox class="full-width" customClass="mb-1" id="Glasgow" label="GLASSGOW" placeholder="GLASSGOW"
+                        [(model)]="item.Glasgow" [validationerror]="'Glasgow' | validationerror:validationErrors">
+                      </app-textbox>
+                      <app-textbox class="full-width" customClass="mb-1" id="SpO2" label="SpO2 (%)" placeholder="SpO2 (%)"
+                        [(model)]="item.SpO2" [validationerror]="'SpO2' | validationerror:validationErrors">
+                      </app-textbox>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>TIỀN SỬ BỆNH <mat-icon class="icon-right" matTooltip="Thêm tiền sử bệnh" (click)="themTienSuBenh()">
+              add</mat-icon>
+          </legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <table style="table-layout: fixed;width:100%" class="table-format">
+                <tr *ngFor="let item of data.KhamBenh.TienSuBenhs;let i=index">
+                  <td style="width:15px">{{i+1}}</td>
+                  <td style="width:100px">
+                    <app-select class="full-width" id="LoaiTienSuBenh" label="LOẠI" placeholder="LOẠI"
+                      [(model)]="item.LoaiTienSuBenh"
+                      [items]="[{KeyId:1,DisplayName:'Bản thân'},{KeyId:2,DisplayName:'Gia đình'}]"
+                      [validationerror]="'LoaiTienSuBenh' | validationerror:validationErrors">
+                    </app-select>
+                  </td>
+                  <td>
+                    <app-textbox class="full-width" id="TenBenhTienSu" label="TÊN BỆNH" placeholder="TÊN BỆNH"
+                      [(model)]="item.TenBenhTienSu" [required]="true"
+                      [validationerror]="'TenBenhTienSu' | validationerror:validationErrors">
+                    </app-textbox>
+                  </td>
+                  <td style="width:20px">
+                    <mat-icon (click)="xoaTienSuBenh(item)">delete_outline</mat-icon>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset>
+          <legend>DỊ ỨNG <mat-icon class="icon-right" matTooltip="Thêm dị ứng" (click)="themDiUng()">add</mat-icon>
+          </legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <table style="table-layout: fixed;width:100%" class="table-format">
+                <tr *ngFor="let item of data.KhamBenh.DiUngs;let i=index">
+                  <td style="width:15px">{{i+1}}</td>
+                  <td style="width:100px">
+                    <app-select class="full-width" id="LoaiDiUng" label="LOẠI" placeholder="LOẠI"
+                      [(model)]="item.LoaiDiUng"
+                      [items]="[{KeyId:1,DisplayName:'Thuốc'},{KeyId:2,DisplayName:'Thức ăn'},{KeyId:3,DisplayName:'Khác'}]"
+                      [validationerror]="'LoaiDiUng' | validationerror:validationErrors">
+                    </app-select>
+                  </td>
+                  <td>
+                    <app-textbox class="full-width" id="TenDiUng" label="TÊN DỊ ỨNG" placeholder="TÊN DỊ ỨNG"
+                      [(model)]="item.TenDiUng" [required]="true"
+                      [validationerror]="'TenDiUng' | validationerror:validationErrors">
+                    </app-textbox>
+                  </td>
+                  <td style="width:100px">
+                    <app-textbox class="full-width" id="BieuHienDiUng" label="BIỂU HIỆN" placeholder="BIỂU HIỆN"
+                      [(model)]="item.BieuHienDiUng"
+                      [validationerror]="'BieuHienDiUng' | validationerror:validationErrors">
+                    </app-textbox>
+                  </td>
+                  <td style="width:100px">
+                    <app-select class="full-width" id="MucDoDiUng" label="MỨC ĐỘ" placeholder="MỨC ĐỘ"
+                      [(model)]="item.MucDoDiUng"
+                      [items]="[{KeyId:1,DisplayName:'Nhẹ'},{KeyId:2,DisplayName:'Vừa'},{KeyId:3,DisplayName:'Nặng'},{KeyId:4,DisplayName:'Đe dọa tử vong'}]"
+                      [validationerror]="'MucDoDiUng' | validationerror:validationErrors">
+                    </app-select>
+                  </td>
+                  <td style="width:20px">
+                    <mat-icon (click)="xoaDiUng(item)">delete_outline</mat-icon>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>BỆNH NHÂN TIẾP THEO</div>
+</div>
+
+<mat-dialog-content style="max-height:660px">
+  <ul class="m-0 p-0 ml-4">
+    <li>STT: <strong class="red">{{data.thongTinNguoiBenhTiepTheo.SoThuTu}}</strong></li>
+    <li>Họ tên: <strong class="blue">{{data.thongTinNguoiBenhTiepTheo.HoTen}}</strong></li>
+    <li>CCCD: <strong>{{data.thongTinNguoiBenhTiepTheo.SoChungMinhThu}}</strong></li>
+    <li>Giới tính: <strong>{{data.thongTinNguoiBenhTiepTheo.GioiTinhHienThi}}</strong></li>
+    <li>Ngày sinh: <strong>{{data.thongTinNguoiBenhTiepTheo.NgayThangNamSinh}}</strong></li>
+    <li>Tuổi: <strong>{{data.thongTinNguoiBenhTiepTheo.Tuoi}}</strong></li>
+    <li>SĐT: <strong>{{data.thongTinNguoiBenhTiepTheo.SoDienThoai}}</strong></li>
+    <li>Nghề nghiệp: <strong>{{data.thongTinNguoiBenhTiepTheo.NgheNghiep}}</strong></li>
+    <li>Địa chỉ: <strong>{{data.thongTinNguoiBenhTiepTheo.DiaChiDayDu}}</strong></li>
+    <li>Tiếp nhận lúc: <strong>{{data.thongTinNguoiBenhTiepTheo.TiepNhanLucHienThi}}</strong></li>
+  </ul>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="button" mat-stroked-button class="float-right" style="margin-left: auto;" color="warn" (click)="close(false)">CHỌN NB KHÁC</button>
+  <button type="button" mat-raised-button class="float-right" color="primary" (click)="close(true)">CHỌN NB NÀY</button>
+</mat-dialog-actions>

@@ -1,0 +1,109 @@
+<!-- <div class="header">
+  <div class="breadcrumb flat">
+    <a class="active">TRANG CHỦ</a>
+  </div>
+</div> -->
+
+<div class="grid-content p-15">
+  <ng-scrollbar fxLayout="row columns" fxLayoutGap="0%">
+    <div  fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+
+        <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+          <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <mat-card class="text-center">
+                <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" 
+                  fxLayoutAlign="center">
+                  <app-datetimepicker id="TuNgay" label="TỪ NGÀY" [(model)]="startDate" fxFlex="100%" fxFlex.gt-sm="40%"
+                    fxFlex.sm="40%">
+                  </app-datetimepicker>
+                  <app-datetimepicker id="DenNgay" label="ĐẾN NGÀY" [(model)]="endDate" fxFlex="100%" fxFlex.gt-sm="40%"
+                    fxFlex.sm="40%">
+                  </app-datetimepicker>
+                  <div fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%">
+                    <button class="btn-tim-kiem" color="primary" mat-stroked-button type="button" matTooltip="Làm mới" style="float:left;padding:7px 12px 7px 12px !important;margin-top:2px;">
+                      <mat-icon>search</mat-icon> Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+            <div fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%">
+              <mat-card class="text-center" style="height: 188px;overflow-y: auto;">
+                <button mat-fab color="primary">
+                  <mat-icon>groups</mat-icon>
+                </button>
+                <h2 class="mt-4">125</h2>
+                <p>TỔNG TIẾP NHẬN</p>
+                <p class="green"><button mat-button>
+                    <mat-icon>trending_up</mat-icon>12.5%
+                  </button></p>
+              </mat-card>
+            </div>
+            <div fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%">
+              <mat-card class="text-center" style="height: 188px;overflow-y: auto;">
+                <button mat-fab color="accent">
+                  <mat-icon>verified_user</mat-icon>
+                </button>
+                <h2 class="mt-4">20</h2>
+                <p>BẢO HIỂM Y TẾ</p>
+                <p class="red"><button mat-button>
+                    <mat-icon>trending_down</mat-icon>5%
+                  </button></p>
+              </mat-card>
+            </div>
+            <div fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%">
+              <mat-card class="text-center" style="height: 188px;overflow-y: auto;">
+                <button mat-fab color="warn">
+                  <mat-icon>child_care</mat-icon>
+                </button>
+                <h2 class="mt-4">70</h2>
+                <p>TRẺ EM</p>
+                <p class="red"><button mat-button>
+                    <mat-icon>trending_down</mat-icon>5%
+                  </button></p>
+              </mat-card>
+            </div>
+            <div fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%">
+              <mat-card class="text-center" style="height: 188px;overflow-y: auto;">
+                <button mat-fab color="default">
+                  <mat-icon>hotel</mat-icon>
+                </button>
+                <h2 class="mt-4">15</h2>
+                <p>NHẬP VIỆN</p>
+                <p class="red"><button mat-button>
+                    <mat-icon>trending_down</mat-icon>5%
+                  </button></p>
+              </mat-card>
+            </div>
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="mb-0 pb-0">
+              <mat-card>
+                <mat-card-title><strong>TRẠNG THÁI KHÁM</strong></mat-card-title>
+                <mat-card-content>
+                  <div class="chart-tinh-trang-kham">
+                    <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="chartDataLabels"
+                      [type]="barChartType" (chartHover)="chartHovered($event)"
+                      (chartClick)="chartClicked($event)"></canvas>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" class="mb-0 pb-0">
+          <mat-card>
+            <mat-card-title><strong>DOANH THU GẦN ĐÂY</strong></mat-card-title>
+            <mat-card-content>
+              <div class="chart-doanh-thu">
+                <canvas baseChart [data]="barChartDoanhThuData" [options]="barChartDoanhThuOptions" [plugins]="barChartDoanhThuLabels"
+                  [type]="barChartDoanhThuType" (chartHover)="chartDoanhThuHovered($event)"
+                  (chartClick)="chartDoanhThuClicked($event)"></canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>

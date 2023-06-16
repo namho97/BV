@@ -1,0 +1,31 @@
+
+ <mat-sidenav-container [ngClass]="{'hide-menu':!showMenu}">
+  <mat-sidenav #sidenav role="navigation">
+    <app-sidenav (sidenavClose)="sidenav.close()" [navigationitems]="navigationitems"></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button mat-mini-fab class="button-hide" color="primary" matTooltip="Mở menu" matTooltipPosition="right" *ngIf="showMenu==false" (click)="showMenu=true"><mat-icon>chevron_right</mat-icon></button>
+    <div class="sidenav-desktop">
+      <div class="top">
+        <a routerLink="/trang-chu" class="logo">
+          <span><img src="assets/img/logo.png" alt="CAMINO CLINIC" /> </span>
+          <span class="name">CAMINO <span style="color:#ACD703;vertical-align: initial;">CLINIC</span></span>
+        </a>
+        <app-textbox placeHolder="Tìm kiếm chức năng" floatLabel="always" icon="search" customClass="search-function" [(model)]="searchString" (keyup)="onKey($event)" (onIconClick)="search()"></app-textbox>
+        <mat-divider></mat-divider>
+      </div>
+      <div class="bottom">
+        <ng-scrollbar>
+          <app-sidenav [navigationitems]="navigationitems"></app-sidenav>
+        </ng-scrollbar>
+      </div>
+
+    <button mat-icon-button class="button-show" color="default" matTooltip="Đóng menu" matTooltipPosition="right" *ngIf="showMenu==true" (click)="showMenu=false"><mat-icon>chevron_left</mat-icon></button>
+
+    </div>
+    <main>
+      <app-header (sidenavToggle)="sidenav.toggle()" [showMenu]="showMenu"></app-header>
+      <router-outlet (activate)="componentAddOrEdited($event)" (deactivate)="componentRemoved($event)"></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

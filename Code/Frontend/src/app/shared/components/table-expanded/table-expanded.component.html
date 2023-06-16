@@ -1,0 +1,209 @@
+<div class="table-header {{statusOpenSearchForm?'open-search-form':''}}" *ngIf="!hideHeader">
+  <div class="table-header-content">
+    <ng-container *ngIf="headerTemplate!=null">
+      <ng-container *ngTemplateOutlet="headerTemplate;"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="headerTemplate==null">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <p class="m-0" fxFlex="none" fxHide.xs>
+          <span *ngIf="selection.isEmpty()"></span>
+          <span *ngIf="selection.hasValue()">{{ selection.selected.length }}
+            dòng được chọn</span>
+        </p>
+
+        <div *ngIf="selection.hasValue()" class="mr-4 pr-4 border-r" fxFlex="none">
+          <button (click)="deletes(selection.selected)" color="primary" mat-icon-button matTooltip="Xóa dòng đang chọn"
+            type="button">
+            <mat-icon class="red">delete_outline</mat-icon>
+          </button>
+        </div>
+        <app-textbox style="width:500px;max-width: calc(100% - 5px);margin-top: 3px;" id="searchString" label="NHẬP TỪ KHÓA TÌM KIẾM..."
+        [(model)]="searchString" (keyup)="onKey($event)" (clearEvent)="cancelSearch()" [showIconSearch]="true"
+        (searchEvent)="search()">
+      </app-textbox>
+        <!-- <mat-form-field appearance="outline" class="mat-form-field-no-padding">
+          <mat-label>Nhập từ khóa tìm kiếm...</mat-label>
+          <input matInput (keyup)="onKey($event)" [(ngModel)]="searchString">
+        </mat-form-field>
+        <button class="rounded-full ml-2 btn-tim-kiem" fxHide.xs color="primary" mat-stroked-button type="button" (click)="search()" style="top:0">
+          <mat-icon>search</mat-icon> Tìm kiếm
+        </button>
+        <button fxHide.xs class="ml-1 btn-huy-tim-kiem" (click)="cancelSearch()" mat-button style="top:0" *ngIf="dangTimKiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+
+        <span fxFlex></span>
+
+        <button class="ml-4" fxFlex="none" fxHide.gt-xs mat-icon-button type="button">
+          <mat-icon>search</mat-icon>
+        </button> -->
+
+        <button (click)="importExcel()" *ngIf="showImportExcel" class="ml-3" fxFlex="none" mat-icon-button
+          matTooltip="Nhập từ Excel" type="button">
+          <img src="assets/img/import-from-excel.png" alt="Nhập dữ liệu từ Excel" style="width: 20px;" />
+        </button>
+
+        <button (click)="exportExcel()" *ngIf="showExportExcel" class="ml-3" fxFlex="none" mat-icon-button
+          matTooltip="Xuất dữ liệu ra Excel" type="button">
+          <img src="assets/img/export-to-excel.png" alt="Xuất dữ liệu ra Excel" style="width: 20px;" />
+        </button>
+        <button (click)="create()" *ngIf="useAddDeault" class="ml-3" color="primary" fxFlex="none" mat-mini-fab
+          matTooltip="Thêm" type="button">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+    <button [matMenuTriggerFor]="columnFilterMenu" class="inline-block" mat-icon-button matTooltip="Lọc cột" style="
+    position: absolute;
+    right: -7px;
+    z-index: 9999;
+    top: -4px;"
+      type="button" *ngIf="showColumnVisibility">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+
+    <mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+      <ng-container *ngFor="let column of columns">
+        <button (click)="toggleColumnVisibility(column, $event)" *ngIf="!column.hideFilter"
+          class="checkbox-item mat-menu-item" [disabled]="column.disableFilter==false">
+          <mat-checkbox (click)="$event.stopPropagation()" [disabled]="column.disableFilter==false"
+            [(ngModel)]="column.visible" color="primary">
+            {{ column.label }}
+          </mat-checkbox>
+        </button>
+      </ng-container>
+    </mat-menu>
+    <mat-icon class="table-header-icon" matTooltip="Thu nhỏ tìm kiếm" (click)="statusOpenSearchForm=false"
+      *ngIf="showIconOpenSearchForm && statusOpenSearchForm">keyboard_double_arrow_up</mat-icon>
+  </div>
+  <mat-icon class="table-header-icon" matTooltip="Mở rộng tìm kiếm" (click)="statusOpenSearchForm=true"
+    *ngIf="showIconOpenSearchForm && !statusOpenSearchForm">keyboard_double_arrow_down</mat-icon>
+
+</div>
+<div class="table-content overflow-auto" id="{{masterName}}"
+  [ngStyle]="{'border-top':noBorderTop?'none':'1px solid rgba(0, 0, 0, 0.12)'}">
+  <table [dataSource]="_tableDataSource" style="min-width: 100%;" mat-table matSort multiTemplateDataRows
+    (matSortChange)="announceSortChange($event)">
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+    <ng-container *ngFor="let column of columns; trackBy: trackByProperty; let i = index">
+      <!-- Expanded Column -->
+      <ng-container [matColumnDef]="column.property" *ngIf="column.type === 'expanded'"  [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+        <th *matHeaderCellDef mat-header-cell [ngStyle]="{'width.px':column.width}">
+        </th>
+        <td *matCellDef="let row" class="w-4" mat-cell>
+          <ng-container *ngIf="row.HiddenExpand != true">
+            <button mat-icon-button *ngIf="!row.isExpanded" (click)="row.isExpanded = !row.isExpanded"
+            matTooltip="Mở rộng">
+            <mat-icon>add</mat-icon>
+          </button>
+        
+          <button mat-icon-button *ngIf="row.isExpanded" (click)="row.isExpanded = !row.isExpanded"
+            matTooltip="Thu nhỏ">
+            <mat-icon>remove</mat-icon>
+          </button>
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container [matColumnDef]="column.property" *ngIf="column.type !== 'checkbox' && column.type !== 'expanded'"  [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+        <th *matHeaderCellDef class="uppercase" mat-header-cell [disabled]="!column.sortable" mat-sort-header
+          [ngStyle]="{'width.px':column.width}" [resizeColumn]="true" [index]="i">
+          <ng-container *ngIf="!column.columnHeaderTemplate">{{ column.label }}</ng-container>
+          <ng-container *ngIf="column.columnHeaderTemplate">
+            <ng-container *ngTemplateOutlet="column.columnHeaderTemplate;"></ng-container>
+          </ng-container>
+        </th>
+        <ng-container *ngIf="!column.template">
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            <a (click)="view(row.Id)" *ngIf="column.isLink" [innerHTML]="row[column.property]"></a>
+            <div *ngIf="!column.isLink" [innerHTML]="row[column.property]"></div>
+            <div *ngIf="column.useActionDefault">
+              <button mat-icon-button color="warn" matTooltip="Xóa" (click)="delete(row)">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="column.template">
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            <ng-container *ngTemplateOutlet="column.template; context:{$implicit: row}"></ng-container>
+          </td>
+        </ng-container>
+
+      </ng-container>
+      <!-- Checkbox Column -->
+      <ng-container [matColumnDef]="column.property" *ngIf="column.type === 'checkbox'"  [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+        <th *matHeaderCellDef mat-header-cell [ngStyle]="{'width.px':column.width}">
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" color="primary">
+          </mat-checkbox>
+        </th>
+        <td *matCellDef="let row" class="w-4" mat-cell>
+          <mat-checkbox (change)="$event ? selectionToggle(row) : null" (click)="$event.stopPropagation()"
+            [checked]="selection.isSelected(row)" color="primary">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+    </ng-container>
+    
+    <!-- Row data -->
+    <tr *matHeaderRowDef="visibleColumns; sticky: true" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: visibleColumns; when: !isGroup; let i = index;"
+      class="hover:bg-hover trans-ease-out cursor-pointer {{row.HighLightClass}}" mat-row
+      [class.expanded-row]="row.isExpanded">
+    </tr>
+    
+      <!-- expandedDetail -->
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];when: !isGroup;" class="detail-row"></tr>
+    <ng-container *ngIf="tableDetailTemplate">
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="visibleColumns.length">
+          <div class="row element-detail" [@detailExpand]="element.isExpanded ? 'expanded' : 'collapsed'" *ngIf="element.isExpanded">
+            <ng-container *ngTemplateOutlet="tableDetailTemplate; context:{$implicit: element}"></ng-container>
+          </div>
+        </td>
+      </ng-container>
+    </ng-container>
+
+    <!-- Group header -->
+    <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="groupHeaderClick(row)"> </tr>
+    <ng-container matColumnDef="groupHeader">
+      <td colspan="999" mat-cell *matCellDef="let group" style="background-color:#ebeced ;">
+        <div style="line-height: 35px;" [ngStyle]="{'margin-left.px':(group.level-1)*15}">
+          <mat-icon *ngIf="group.expanded" style="line-height: 35px;">expand_less</mat-icon>
+          <mat-icon *ngIf="!group.expanded" style="line-height: 35px;">expand_more</mat-icon>
+          <!-- <strong>{{groupByColumns[group.level-1]}} = {{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong> -->
+          <div style="display:inline;font-weight: bold;" [innerHTML]="group[groupByColumns[group.level-1]]"></div>
+        </div>
+      </td>
+    </ng-container>
+  </table>
+</div>
+<!-- <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageIndex]="skip" [pageSize]="pageSize" [length]="_totalRowCount" (page)="handlePageEvent($event)"
+  class="sticky left-0"></mat-paginator> -->
+<div class="paginator" *ngIf="pageable">
+  <ng-container *ngIf="pageNotTotal">
+    <button mat-icon-button matTooltip="Trang trước" [disabled]="pageIndex==0" (click)="paginatorNotTotalPrev()">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Trang sau" [disabled]="isLastPage" (click)="paginatorNotTotalNext()">
+      <mat-icon>navigate_next</mat-icon>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="!pageNotTotal">
+    <button mat-icon-button matTooltip="Trang trước" [disabled]="pageIndex==0" (click)="paginatorPrev()"
+      *ngIf="!_isLoadingTotalPage">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+    <div class="row-per-page" *ngIf="!_isLoadingTotalPage">{{_itemPerPageFrom}}-{{_itemPerPageTo}} trên
+      {{_totalRowCount}}</div>
+    <div class="row-per-page-loading" *ngIf="_isLoadingTotalPage">
+      <mat-spinner diameter="20"></mat-spinner> <span>Đang tính số trang...</span>
+    </div>
+    <button mat-icon-button matTooltip="Trang sau" [disabled]="_totalRowCount<=(skip+take)" (click)="paginatorNext()"
+      *ngIf="!_isLoadingTotalPage">
+      <mat-icon>navigate_next</mat-icon>
+    </button>
+  </ng-container>
+
+</div>

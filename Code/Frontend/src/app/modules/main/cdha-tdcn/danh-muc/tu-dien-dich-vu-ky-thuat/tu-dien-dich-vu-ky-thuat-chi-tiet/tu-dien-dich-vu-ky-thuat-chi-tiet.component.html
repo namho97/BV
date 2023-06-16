@@ -1,0 +1,32 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row column" fxLayoutGap="10px grid">
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="DichVu" label="DỊCH VỤ"
+        placeholder="DỊCH VỤ" [(model)]="tuDienVo.DichVu" [disabled]="true" required="true">
+        </app-textbox>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="MaMauKetQua" label="MÃ MẪU KẾT QUẢ"
+        placeholder="MÃ MẪU KẾT QUẢ" [(model)]="tuDienVo.MaMauKetQua">
+        </app-textbox>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%" id="TenMauKetQua" label="TÊN MẪU KẾT QUẢ"
+        placeholder="TÊN MẪU KẾT QUẢ" [(model)]="tuDienVo.TenMauKetQua" required="true">
+        </app-textbox>
+        
+        <app-editor fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDungKetQua" label="NỘI DUNG KẾT QUẢ"
+        [(model)]="tuDienVo.NoiDungKetQua" [required]="true" [showToolbar]="false"
+        [validationerror]="'NoiDungKetQua' | validationerror:validationErrors">
+      </app-editor>
+      <app-editor fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDungKetLuan"
+        label="NỘI DUNG KẾT LUẬN" [(model)]="tuDienVo.NoiDungKetLuan" [required]="true"
+        [showToolbar]="false" [validationerror]="'NoiDungKetLuan' | validationerror:validationErrors">
+      </app-editor>
+      </div>
+    </div>
+</ng-scrollbar>
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+
+  <button mat-raised-button color="primary" type="button" style="float: right;" (click)="luu()">LƯU</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

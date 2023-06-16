@@ -1,0 +1,74 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+  <div fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%">
+    <div style="border: 1px solid rgba(0, 0, 0, 0.12);border-top: none;border-bottom: none;">
+      <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);height: 30px; padding: 5px 10px; font-weight: bold;line-height: 30px;">
+        DỊCH VỤ BỆNH VIỆN
+        <a class="float-right" (click)="chonNhomDichVuThuongDung()"><u><i>Nhóm dịch vụ thường dùng</i></u></a>
+      </div>
+      <app-table #tableDichVu masterName="tableDichVu" [columns]="columnsDichVu"
+        [dataSource]="dataSourceDichVu" [documentType]="documentType" heightToolbar="{{heightToolbarDichVu}}"
+        [groupByColumns]="groupByColumnsDichVu" [sortByColumn]="sortByColumnDichVu" [showIndex]="false"
+        [showCheckbox]="true" [headerTemplate]="headerChiDinhTemplate">
+      </app-table>
+    </div>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="5%" fxFlex.sm="5%" style="text-align:center ;">
+    <div fxHide.xs style="display: table; height: 100%; overflow: hidden;text-align:center ;width:100%;">
+      <div style="display: table-cell; vertical-align: middle;">
+        <button mat-stroked-button style="width:calc(100% - 10px);margin:0 5px; padding: 0 5px;min-width: 0;" matTooltip="Chọn dịch vụ" color="primary">
+          <mat-icon>east</mat-icon>
+        </button>
+      </div>
+    </div>
+    <button class="show-on-mobile-only" mat-stroked-button style="width:50px;margin:5px 0; padding: 0 5px;min-width: 0;" matTooltip="Chọn dịch vụ" color="primary">
+      <mat-icon>south</mat-icon>
+    </button>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="65%" fxFlex.sm="65%">
+    <div style="border: 1px solid rgba(0, 0, 0, 0.12);border-top: none;border-bottom: none;">
+    <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);height: 30px; padding: 5px 10px; font-weight: bold;line-height: 30px;" class="green">
+      DỊCH VỤ NGƯỜI BỆNH ĐANG DÙNG
+    </div>
+    <app-table #tableDichVuDangChon masterName="tableDichVuDangChon" [columns]="columnsDichVuDangChon"
+      [dataSource]="dataSourceDichVuDangChon" [documentType]="documentType" heightToolbar="{{heightToolbarDichVuDangChon}}" [pageable]="false"
+      [groupByColumns]="groupByColumnsDichVuDangChon" [sortByColumn]="sortByColumnDichVuDangChon" [showIndex]="true" [hasFooter]="true"
+      [showCheckbox]="false" [hideHeader]="true" [noBorderTop]="true" [hasSticky]="true">
+    </app-table>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #headerChiDinhTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 280px;margin-right: 5px;" id="MaTenDichVu" label="TÌM KIẾM MÃ, TÊN DỊCH VỤ"
+        [(model)]="chiDinhQueryInfo.MaTenDichVu" (keyup)="onKey($event)"></app-textbox>
+      <div style="display: inline-block;margin-bottom: 4px;width: 40px;margin-right: 5px;">
+        <button (click)="timKiemDichVu()" mat-icon-button color="primary" class="mb-1" matTooltip="Tìm kiếm"><mat-icon>search</mat-icon></button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 40px;" class="mb-1" *ngIf="chiDinhSearching">
+        <button (click)="huyTimKiemDichVu()" mat-icon-button matTooltip="Hủy tìm kiếm"><mat-icon>cancel</mat-icon></button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #tenDichVuTemplate let-dataItem>
+  <!-- <a *ngIf="dataItem.LoaiTinhTrang==1" (click)="viewDichVu(dataItem)">{{dataItem.TenDichVu}}</a> -->
+  <span>{{dataItem.TenDichVu}}</span>
+</ng-template>
+<ng-template #actionDichVuTemplate let-dataItem>
+  <ng-container *ngIf="dataItem.LoaiTinhTrang==1">
+    <mat-icon color="warn" matTooltip="Xóa dịch vụ">delete_outline</mat-icon>
+  </ng-container>
+</ng-template>
+
+<ng-template #thanhTienFooterTemplate>
+  <strong>600.000</strong>
+</ng-template>
+
+<ng-template #tinhTrangTemplate let-dataItem>
+  <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;" class="bg" [ngClass]="{'grey':dataItem.LoaiTinhTrang==1,'orange': dataItem.LoaiTinhTrang==2,'green': dataItem.LoaiTinhTrang==3,'red': dataItem.LoaiTinhTrang==4}">{{dataItem.TinhTrang}}</span>
+</ng-template>

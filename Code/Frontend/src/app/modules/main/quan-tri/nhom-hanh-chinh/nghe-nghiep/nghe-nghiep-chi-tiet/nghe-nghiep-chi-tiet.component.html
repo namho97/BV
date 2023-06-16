@@ -1,0 +1,35 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+          <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ma" label="MÃ" [required]="true"
+            placeholder="MÃ" [(model)]="ngheNghiepVo.Ma" maxLength="100"
+            [validationerror]="'Ma' | validationerror:validationErrors">
+          </app-textbox>
+          <app-textbox fxFlex="100%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="Ten" label="TÊN" [required]="true"
+            placeholder="TÊN" [(model)]="ngheNghiepVo.Ten" maxLength="500"
+            [validationerror]="'Ten' | validationerror:validationErrors">
+          </app-textbox>
+          <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="HIỆU LỰC"
+           [items]="[{KeyId:1,DisplayName:'Đang sử dụng'},{KeyId:2,DisplayName:'Không sử dụng'}]"
+          [(model)]="ngheNghiepVo.HieuLucId"
+          (modelChange)="hieuLucChange($event)"
+          [validationerror]="'HieuLuc' | validationerror:validationErrors">
+          </app-select>
+
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ghichu" label="GHI CHÚ" placeholder="GHI CHÚ"
+            [(model)]="ngheNghiepVo.GhiChu" >
+        </app-textbox>
+        </div>
+      </div>
+    </ng-scrollbar>
+  </div>
+  <div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+  
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+      (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+      NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+  </div>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Deployment\PhongKhamDaKhoa\Api</_PublishTargetUrl>
+    <History>True|2022-09-21T04:24:59.7359272Z;False|2022-09-21T11:24:44.1143098+07:00;True|2022-09-15T17:27:49.4555690+07:00;True|2022-09-15T17:16:01.0892722+07:00;True|2022-09-14T17:24:34.8712413+07:00;True|2022-09-13T16:46:44.4973814+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

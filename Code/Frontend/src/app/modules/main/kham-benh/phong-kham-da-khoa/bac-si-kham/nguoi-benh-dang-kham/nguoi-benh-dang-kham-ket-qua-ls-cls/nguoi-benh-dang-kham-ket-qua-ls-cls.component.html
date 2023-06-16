@@ -1,0 +1,9 @@
+<app-table #tableKetQua masterName="tableKetQua" [columns]="columnsKetQua"
+[dataSource]="dataSourceKetQua" [documentType]="documentTypeKetQua" [heightAuto]="true" [pageable]="false"
+[groupByColumns]="groupByColumnsKetQua" [sortByColumn]="sortByColumnKetQua" [showIndex]="true"
+[showCheckbox]="false" [hideHeader]="true" [noBorderTop]="true">
+</app-table>
+
+<ng-template #xemKetQuaTemplate let-dataItem>
+  <button mat-icon-button><mat-icon>visibility</mat-icon></button>
+</ng-template>

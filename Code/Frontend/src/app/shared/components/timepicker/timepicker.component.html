@@ -1,0 +1,20 @@
+<div class="full-width">
+  <mat-form-field appearance="outline" class="full-width ">
+    <mat-label><span [innerHTML]="label"></span> <span style="color: red;font-weight: bold;" *ngIf="required"> *</span>
+    </mat-label>
+    <input matInput placeholder="{{placeHolder}}" id="{{id}}" name="{{id}}" [(ngModel)]="model"
+      (ngModelChange)="emit($event)" (blur)="blur()" [readonly]="readonly" [disabled]="disabled"
+      [ngxMatTimepicker]="pickerTime">
+    <ngx-mat-timepicker #pickerTime></ngx-mat-timepicker>
+    <button tabindex="-1" mat-icon-button style="margin-top: -18px;position: absolute;right: 0; cursor: pointer;"
+      (click)="pickerTime.open()" [disabled]="disabled">
+      <mat-icon>schedule</mat-icon>
+    </button>
+
+    <button tabindex="-1" mat-button *ngIf="model!=null && showIconClear && !disabled" mat-icon-button
+      aria-label="Clear" (click)="reset()" matTooltip="Bỏ chọn" class="mat-clear">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <label id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

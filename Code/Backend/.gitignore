@@ -1,0 +1,10 @@
+Camino.Api/bin/
+Camino.Api/obj/
+Camino.Core/obj/
+Camino.Core/bin/
+Camino.Data/bin/
+Camino.Data/obj/
+Camino.Services/obj/
+Camino.Services/bin/
+/.vs
+*.orig

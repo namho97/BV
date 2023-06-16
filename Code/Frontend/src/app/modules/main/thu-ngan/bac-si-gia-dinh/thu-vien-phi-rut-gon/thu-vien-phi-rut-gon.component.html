@@ -1,0 +1,25 @@
+<div fxLayout="row wrap" fxLayoutGap="5px grid" >
+  <div fxFlex="50%" fxFlex.gt-sm="{{width}}" fxFlex.sm="{{width}}">
+    TỔNG CỘNG: <strong>{{thuVienPhiVo.TongCong | currency:'VND'}}</strong>
+  </div>
+  <!-- <div fxFlex="100%" fxFlex.gt-sm="{{width}}" fxFlex.sm="{{width}}">
+    MIỄN GIẢM: <strong>{{thuVienPhiVo.TongMienGiam | currency:'VND'}}</strong>
+  </div> -->
+  <div fxFlex="50%" fxFlex.gt-sm="{{width}}" fxFlex.sm="{{width}}">
+    ĐÃ THU: <strong class="blue">{{thuVienPhiVo.TongDaThu | currency:'VND'}}</strong>
+  </div>
+  <div fxFlex="50%" fxFlex.gt-sm="{{width}}" fxFlex.sm="{{width}}">CHƯA THU: <strong
+      class="red">{{thuVienPhiVo.TongChuaThu | currency:'VND'}}</strong></div>
+  <div fxFlex="50%" fxFlex.gt-sm="{{width}}" fxFlex.sm="{{width}}" *ngIf="thuVienPhiVo.TongChuaThu>0 ">
+    <button mat-raised-button color="warn" *ngIf="!viewOnly" (click)="thuTien()">THU TIỀN</button>    
+  </div>
+  <div fxFlex="50%" fxFlex.gt-sm="{{width}}" fxFlex.sm="{{width}}" *ngIf="thuVienPhiVo.TongChuaThu>0 ">
+    
+    <app-checkbox label="Có in phiếu" [(model)]="thuVienPhiVo.CoInPhieu" customClass="mb-0"
+    (modelChange)="coInPhieuChange($event)"></app-checkbox>
+  </div>
+  <div fxFlex="50%" fxFlex.gt-sm="{{width}}" fxFlex.sm="{{width}}">
+    <p class="mb-0"><a (click)="chiTietVienPhi()"><u><i>Chi tiết viện phí</i></u></a></p></div>
+</div>
+<app-print-button #btnIn buttonType="mat-stroked-button" color="primary" icon="print" style="display: none;" typeSize="A5"
+            [htmlContent]="getContentInBienLai({TongSoTienBangSo:(thuVienPhiVo.TongCong??0),TongSoTienBangChu:(thuVienPhiVo.TongSoTienBangChu),TienMat:(thuVienPhiVo.TongCong??0),ChuyenKhoan:0,Pos:0,NoiDungThu:'Thu tiền viện phí'})"></app-print-button>

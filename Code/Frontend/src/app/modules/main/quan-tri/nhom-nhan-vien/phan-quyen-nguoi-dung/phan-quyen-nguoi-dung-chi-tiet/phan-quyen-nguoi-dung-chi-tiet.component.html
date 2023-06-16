@@ -1,0 +1,172 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row column" fxLayoutGap="0%">
+        <fieldset fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="mb-3">
+          <legend>THÔNG TIN CHUNG</legend>
+          <div fxLayout="row column" fxLayoutGap="1% grid">
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="Name" label="TÊN NHÓM QUYỀN" [required]="true"
+              placeholder="TÊN NHÓM QUYỀN" [(model)]="phanQuyenVo.Name" maxLength="100" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+              [validationerror]="'Name' | validationerror:validationErrors">
+            </app-textbox>
+            <app-checkbox *ngIf="isUpdate" fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="IsDefault" label="LÀ QUYỀN MẶC ĐỊNH" customClass="mt-3" [disabled]="true"
+              [(model)]="phanQuyenVo.IsDefault">
+            </app-checkbox>
+          </div>
+        </fieldset>
+        <fieldset fxFlex="100%" class="mb-3">
+          <legend>CHỨC NĂNG</legend>
+          <div class="panelChucNang">
+            <div class="header-template" id="header">
+              <div style="position: relative;">
+                <div class="leftChungNang">
+
+                  <app-textbox style="display: inline-block;width: 100%;" id="HoTen"
+                    label="NHẬP TỪ KHÓA TÌM KIẾM..." [(model)]="phanQuyenQueryInfo.Ten"  (keyup)="onKey($event)" (clearEvent)="huyTimKiem()"
+                    [showIconSearch]="true" (searchEvent)="timKiem()">
+                  </app-textbox>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" fxLayoutGap.lt-sm="0">
+            <table id="phanQuyen" width="100%" class="table table-border mt-2" [cellPadding]="0" [cellSpacing]="0">
+              <thead>
+                <tr>
+                  <th>CHỨC NĂNG</th>
+                  <th width="10%">XEM</th>
+                  <th width="10%">THÊM</th>
+                  <th width="10%">SỬA </th>
+                  <th width="10%">XÓA</th>
+                  <th width="10%">XỬ LÝ KHÁC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td colspan="5" align="center">
+                    <app-checkbox id="TatCa" label="CHỌN TẤT CẢ" [(model)]="phanQuyenQueryInfo.TatCa" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                    (modelChange)="changeTatCa($event)"></app-checkbox>
+                  </td>
+                </tr>
+                <ng-container *ngFor="let item of this.phanQuyenVo.RoleFunctionGrids; let i = index">
+                  <tr [class]="valueClass(item.GroupLevel,item)" [id]="valueId(item.GroupLevel,item)"
+                    [style]="valueStyle(item.GroupLevel)">
+                    <td [ngStyle]="{
+                                      'font-weight':check(item) ? '800' : '600',
+                                      'padding-left' :((item.GroupLevel-1)*15) + 'px' ,
+                                      'width': 50 + '%'
+                                   }" (click)="changegroup($event,item,item.GroupLevel)">                     
+
+                     <button *ngIf="checkChild(item) !=0" mat-button class="button-parent button-bold">
+                      <mat-icon *ngIf="item.IsExpand && checkChild(item) !=0">
+                        expand_less</mat-icon>
+                      <mat-icon *ngIf="!item.IsExpand && checkChild(item) !=0">
+                        expand_more</mat-icon>
+                        {{item.Name}}
+                     </button>
+                     <label *ngIf="checkChild(item) == 0" [ngStyle]="{
+                       'font-weight':check(item) ? '800' : '600'
+                    }" style="padding-left: 15px;">{{item.Name}}</label>
+                    </td>
+
+
+                    <ng-container *ngIf="checkChild(item)== 0">
+                      <ng-container *ngFor="let itemQuyen of item.Quyens">
+
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == false && itemQuyen.SecurityOperation == 1">
+                          <app-checkbox id="view{{i}}" class="no-label" [(model)]="itemQuyen.Value" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                            (modelChange)="viewSelect(itemQuyen.Value,item)"></app-checkbox>
+                        </td>
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == true && itemQuyen.SecurityOperation == 1">
+                        </td>
+
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == false && itemQuyen.SecurityOperation ==3">
+                          <app-checkbox id="add{{i}}" class="no-label" [(model)]="itemQuyen.Value" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                            (modelChange)="addSelect(itemQuyen.Value,item)"></app-checkbox>
+                        </td>
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == true && itemQuyen.SecurityOperation ==3">
+
+                        </td>
+
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == false && itemQuyen.SecurityOperation ==5">
+                          <app-checkbox id="edit{{i}}" class="no-label" [(model)]="itemQuyen.Value" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                            (modelChange)="editSelect(itemQuyen.Value,item)"></app-checkbox>
+                        </td>
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == true && itemQuyen.SecurityOperation ==5">
+
+                        </td>
+
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == false && itemQuyen.SecurityOperation ==4">
+                          <app-checkbox id="delete{{i}}" class="no-label" [(model)]="itemQuyen.Value" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                            (modelChange)="deleteSelect(itemQuyen.Value,item)"></app-checkbox>
+                        </td>
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == true && itemQuyen.SecurityOperation ==4">
+
+                        </td>
+
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == false && itemQuyen.SecurityOperation == 2">
+                          <app-checkbox id="opption{{i}}" class="no-label" [(model)]="itemQuyen.Value" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                            (modelChange)="xuLyKhacSelect(itemQuyen.Value,item)"></app-checkbox>
+                        </td>
+                        <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen"
+                          *ngIf="itemQuyen.Disabled == true && itemQuyen.SecurityOperation == 2">
+                        </td>
+                      </ng-container>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="checkChild(item)!= 0">
+                      <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen">
+                        <app-checkbox id="view{{i}}" class="no-label" [(model)]="item.IsViewAll" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                          (modelChange)="viewAllSelect(item.IsViewAll,item)"></app-checkbox>
+                      </td>
+                      <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen">
+                        <app-checkbox id="add{{i}}" class="no-label" [(model)]="item.IsInsertAll" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                          (modelChange)="addAllSelect(item.IsInsertAll,item)"></app-checkbox>
+                      </td>
+                      <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen">
+                        <app-checkbox id="edit{{i}}" class="no-label" [(model)]="item.IsEditAll" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                          (modelChange)="editAllSelect(item.IsEditAll,item)"></app-checkbox>
+                      </td>
+                      <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen">
+                        <app-checkbox id="delete{{i}}" class="no-label" [(model)]="item.IsDeleteAll" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                          (modelChange)="deleteAllSelect(item.IsDeleteAll,item)"></app-checkbox>
+                      </td>
+                      <td [ngStyle]="{'text-align': 'center'}" class="columPhanQuyen">
+                        <app-checkbox id="opption{{i}}" class="no-label" [(model)]="item.IsProcessAll" customClass="mb-1 mt-1" [disabled]="phanQuyenVo.IsCheckRoleDefaultOnCreate"
+                          (modelChange)="xuLyKhacAllSelect(item.IsProcessAll,item)"></app-checkbox>
+                      </td>
+                    </ng-container>
+
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" class="mr-1" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate && phanQuyenVo.IsCheckRoleDefaultOnCreate == false" mat-raised-button color="primary"
+    type="button" style="float: right;" (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"
+    *ngIf="phanQuyenVo.IsCheckRoleDefaultOnCreate == false"> NHẬP LẠI</button>
+</div>

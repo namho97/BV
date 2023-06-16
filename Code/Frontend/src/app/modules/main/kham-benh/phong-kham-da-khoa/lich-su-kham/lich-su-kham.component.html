@@ -1,0 +1,62 @@
+<div class="panel">
+  <div class="left">    
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>KHÁM BỆNH</a>
+        <a class="active">LỊCH SỬ KHÁM</a>
+      </div> 
+    </div>
+    <div class="grid-content">
+      <app-table  #tableLichSuKham masterName="tableLichSuKham" [columns]="columnsLichSuKham"
+      [dataSource]="dataSourceLichSuKham" [documentType]="documentTypeLichSuKham"
+      [groupByColumns]="groupByColumnsLichSuKham"  [headerTemplate]="headerLichSuKhamTemplate"
+      [sortByColumn]="sortByColumnLichSuKham" [showIndex]="false" [showCheckbox]="false"
+      (extDataItemSelected)="extDataItemSelected($event)">
+    </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-lich-su-kham-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()"></app-lich-su-kham-chi-tiet>
+    </div>
+  </div>
+</div>
+
+
+<!-- Dã hoàn thành -->
+
+<ng-template #headerLichSuKhamTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaTiepNhan" label="MÃ TN"
+        [(model)]="lichSuKhamQueryInfo.MaTiepNhan" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaNguoiBenh" label="MÃ NB"
+        [(model)]="lichSuKhamQueryInfo.MaNguoiBenh" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HoTen" label="HỌ TÊN"
+        [(model)]="lichSuKhamQueryInfo.HoTen" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" label="GIỚI TÍNH" [multiple]="true"
+        url="Common/GetGioiTinhLookup">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="DienThoai" label="ĐIỆN THOẠI"
+        [(model)]="lichSuKhamQueryInfo.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="TiepNhanTu"
+        label="HOÀN THÀNH TỪ" [(model)]="lichSuKhamQueryInfo.HoanThanhKhamTu" (keyup)="onKey($event)"></app-datetimepicker>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="TiepNhanDen"
+        label="HOÀN THÀNH ĐẾN" [(model)]="lichSuKhamQueryInfo.HoanThanhKhamDen" (keyup)="onKey($event)"></app-datetimepicker>
+        <div style="display: inline-block;margin-bottom: 4px;width: 120px;margin-right: 5px;">
+          <button (click)="timKiemLichSuKham()" mat-stroked-button color="primary" class="mb-1" matTooltip="Tìm kiếm">Tìm kiếm</button>
+        </div>
+        <div style="display: inline-block;margin-bottom: 4px;width: 120px;" class="mb-1" *ngIf="bacSiKhamLichSuKhamSearching">
+          <button (click)="huyTimKiemLichSuKham()" mat-button matTooltip="Hủy tìm kiếm">Hủy tìm kiếm</button>
+        </div> 
+    </div>
+  </div>
+</ng-template>
+<ng-template #maTiepNhanTemplate let-dataItem>
+  <a (click)="chonNguoiBenhXemChiTiet(dataItem)">{{dataItem.MaTiepNhan}}</a>
+</ng-template>

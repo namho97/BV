@@ -1,0 +1,9 @@
+
+<div class="full-width">
+  <mat-form-field appearance="outline" class="full-width ">
+    <mat-label>{{label}} <span style="color: red;font-weight: bold;" *ngIf="required">*</span></mat-label>
+    <input matInput [textMask]="{mask: mask}"  placeholder="{{placeHolder}}"  id="{{id}}" name="{{id}}" [(ngModel)]="model" (ngModelChange)="emit($event)" (blur)="blur()" type="{{type}}"
+    [readonly]="readonly"  [disabled]="disabled">
+  </mat-form-field>
+  <label  id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

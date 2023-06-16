@@ -1,0 +1,46 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ma" label="MÃ" [required]="true"
+          placeholder="MÃ" [(model)]="benhVienVo.Ma" maxLength="100"
+          [validationerror]="'Ma' | validationerror:validationErrors">
+        </app-textbox>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="Ten" label="TÊN" [required]="true"
+          placeholder="TÊN" [(model)]="benhVienVo.Ten" maxLength="500"
+          [validationerror]="'Ten' | validationerror:validationErrors">
+        </app-textbox>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="ten-viet-tat" label="TÊN VIẾT TẮT"
+           placeholder="TÊN VIẾT TẮT " [(model)]="benhVienVo.TenVietTat" maxLength="50">
+        </app-textbox>
+        <app-textmask fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="SoDienThoai" label="SỐ ĐIỆN THOẠI"
+          placeholder="SỐ ĐIỆN THOẠI" [(model)]="benhVienVo.SoDienThoai" maxLength="50">
+        </app-textmask>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="email" label="EMAIL" placeholder="EMAIL"
+          [(model)]="benhVienVo.Email" maxLength="50">
+        </app-textbox>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="DiaChi" label="ĐỊA CHỈ"
+          placeholder="ĐỊA CHỈ" [(model)]="benhVienVo.DiaChi" maxLength="250">
+        </app-textbox>
+        <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="LOẠI BỆNH VIỆN" 
+          url="QuanTriNhomPhongKhamBenhVien/GetLookupLoaiBenhVien" [(model)]="benhVienVo.LoaiBenhVienId" [bind]="true">
+        </app-select>
+        <app-textboxnumeric class="col-sm-4" id="hang-benh-vien"  fxFlex="100%" fxFlex.gt-sm="20%"
+          fxFlex.sm="20%" min="1" [(model)]="benhVienVo.HangBenhVien" label="HẠNG BỆNH VIỆN">
+        </app-textboxnumeric>
+        <app-textboxnumeric class="col-sm-4" id="tuyen-chuyen-mon"  fxFlex="100%" fxFlex.gt-sm="20%"
+          fxFlex.sm="20%" min="1" [(model)]="benhVienVo.TuyenChuyenMonKyThuat" label="TUYẾN CHUYÊN MÔN KỸ THUẬT">
+        </app-textboxnumeric>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

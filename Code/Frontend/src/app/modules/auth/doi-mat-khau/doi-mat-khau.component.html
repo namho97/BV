@@ -1,0 +1,21 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header class="mb-5">
+      <mat-card-title>          
+      <img src="assets/img/logo.png" alt="Health to Home" width="150px"/>
+      <p style="font-size: 20px;margin-top: 30px;">ĐỔI MẬT KHẨU</p>
+
+      </mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form" #form="ngForm">
+      <mat-card-content>
+        <app-textbox id="userName" [disabled]="true" type="number" label="SỐ ĐIỆN THOẠI"  [required]="true" placeholder="SỐ ĐIỆN THOẠI" [(model)]="doiMatKhau.username"  (keyup)="onKey($event)" [validationerror]="'UserName' | validationerror:validationErrors"></app-textbox>        
+        <app-textbox type="password" id="MatKhauCu" label="MẬT KHẨU CŨ" [required]="true" placeholder="MẬT KHẨU CŨ" [required]="true" [(model)]="doiMatKhau.oldpassword"  (keyup)="onKey($event)" [validationerror]="'OldPassword' | validationerror:validationErrors"></app-textbox>
+        <app-textbox id="password" label="MẬT KHẨU MỚI"  placeholder="MẬT KHẨU MỚI"  [required]="true" [(model)]="doiMatKhau.password" type="password"  (keyup)="onKey($event)" [validationerror]="'Password' | validationerror:validationErrors"></app-textbox>        
+        <app-textbox id="password" label="NHẬP LẠI MẬT KHẨU MỚI"  placeholder="NHẬP LẠI MẬT KHẨU MỚI"  [required]="true" [(model)]="doiMatKhau.repassword" type="password"  (keyup)="onKey($event)" [validationerror]="'RePassword' | validationerror:validationErrors"></app-textbox>
+      </mat-card-content>
+      <button mat-raised-button color="primary" class="btn-block" type="button" (click)="submit()">ĐỔI MẬT KHẨU</button>
+    </form>
+  </mat-card>  
+</div>

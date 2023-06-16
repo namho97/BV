@@ -1,0 +1,18 @@
+<p><b>ĐỔI MẬT KHẨU</b></p>
+<div fxLayout="row column" fxLayoutGap="15px grid" class="tab-content">
+  <app-textbox fxFlex="100%" type="password" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="MatKhauCu" label="MẬT KHẨU CŨ"
+    [required]="true" placeholder="MẬT KHẨU CŨ" [required]="true" [(model)]="doiMatKhau.MatKhauCu"
+    [validationerror]="'MatKhauCu' | validationerror:validationErrors"></app-textbox>
+  <app-textbox type="password" fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="MatKhauMoi" label="MẬT KHẨU MỚI"
+    [required]="true" placeholder="MẬT KHẨU MỚI" [required]="true" [(model)]="doiMatKhau.MatKhauMoi"
+    [validationerror]="'MatKhauMoi' | validationerror:validationErrors"></app-textbox>
+  <app-textbox type="password" fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="XacNhanMatKhau"
+    label="XÁC NHẬN MẬT KHẨU" [required]="true" placeholder="XÁC NHẬN MẬT KHẨU" [required]="true"
+    [(model)]="doiMatKhau.XacNhanMatKhau" [validationerror]="'XacNhanMatKhau' | validationerror:validationErrors">
+  </app-textbox>
+
+  <div fxFlex="100%" class="text-right">
+    <button mat-raised-button type="button" class="mr-1" (click)="huycapNhat()">HỦY</button>
+    <button mat-raised-button color="primary" type="button" (click)="capNhat()">CẬP NHẬT</button>
+  </div>
+</div>

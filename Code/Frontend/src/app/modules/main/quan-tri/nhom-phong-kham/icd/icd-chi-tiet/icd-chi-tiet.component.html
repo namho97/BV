@@ -1,0 +1,67 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ma" label="MÃ" [required]="true"
+          placeholder="MÃ" [(model)]="icdVo.Ma" maxLength="20" 
+          [validationerror]="'Ma' | validationerror:validationErrors">
+        </app-textbox>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="TenTiengViet" label="TÊN TIẾNG VIỆT" [required]="true"
+          placeholder="TÊN TIẾNG VIỆT" [(model)]="icdVo.TenTiengViet" maxLength="250"
+          [validationerror]="'Ten' | validationerror:validationErrors">
+        </app-textbox>
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="TenTiengAnh" label="TÊN TIẾNG ANH" 
+          placeholder="TÊN TIẾNG ANH" [(model)]="icdVo.TenTiengAnh" maxLength="250">
+        </app-textbox>
+
+        <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="GIỚI TÍNH"
+         [items]="[{KeyId:1,DisplayName:'Nam'},{KeyId:2,DisplayName:'Nữ'},{KeyId:3,DisplayName:'Chưa xác định'}]"
+        [(model)]="icdVo.GioiTinhInt">
+      </app-select>
+
+      <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="MÃN TÍNH"
+         [items]="[{KeyId:1,DisplayName:'Có'},{KeyId:2,DisplayName:'Không'}]"
+        [(model)]="icdVo.ManTinhInt">
+      </app-select>
+
+      <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%"
+        label="BỆNH THƯỜNG GẶP"  [items]="[{KeyId:1,DisplayName:'Có'},{KeyId:2,DisplayName:'Không'}]"
+        [(model)]="icdVo.BenhThuongGapInt">
+      </app-select>
+      <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="BỆNH NĂM"
+         [items]="[{KeyId:1,DisplayName:'Có'},{KeyId:2,DisplayName:'Không'}]"
+        [(model)]="icdVo.BenhNamInt">
+      </app-select>
+      <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%"
+        label="KHÔNG BẢO HIỂM"  [items]="[{KeyId:1,DisplayName:'Có'},{KeyId:2,DisplayName:'Không'}]"
+        [(model)]="icdVo.KhongBaoHiemInt">
+      </app-select>
+      <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%"
+        label="NGOÀI ĐỊNH SUẤT"  [items]="[{KeyId:1,DisplayName:'Có'},{KeyId:2,DisplayName:'Không'}]"
+        [(model)]="icdVo.NgoaiDinhSuatInt">
+      </app-select>
+
+      <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" [required]="true"
+        label="HIỆU LỰC"  [items]="[{KeyId:1,DisplayName:'Có'},{KeyId:2,DisplayName:'Không'}]"
+        [(model)]="icdVo.HieuLucInt" [validationerror]="'HieuLuc' | validationerror:validationErrors">
+      </app-select>
+      <app-textarea fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="MoTa" label="MÔ TẢ" placeholder="MÔ TẢ"
+        [(model)]="icdVo.MoTa" maxLength="1000">
+      </app-textarea>
+      <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDungChanDoan" label="NỘI DUNG CHẨN ĐOÁN" placeholder="NỘI DUNG CHẨN ĐOÁN"
+        [(model)]="icdVo.NoiDungChanDoan" maxLength="2000">
+      </app-textarea>
+
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

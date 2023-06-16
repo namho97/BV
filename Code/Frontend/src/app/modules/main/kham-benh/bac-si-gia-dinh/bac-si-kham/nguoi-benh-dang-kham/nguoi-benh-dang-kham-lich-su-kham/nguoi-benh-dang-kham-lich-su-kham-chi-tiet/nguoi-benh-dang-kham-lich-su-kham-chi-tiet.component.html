@@ -1,0 +1,10 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>LỊCH SỬ KHÁM CHI TIẾT NGÀY <strong class="red">{{dataChon.NgayKham}}</strong></div>
+  <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content style="max-height: 725px;">
+  <app-lich-su-kham-chi-tiet [data]="dataChon" [displayOnPopup]="data.displayOnPopup"></app-lich-su-kham-chi-tiet>
+</mat-dialog-content>

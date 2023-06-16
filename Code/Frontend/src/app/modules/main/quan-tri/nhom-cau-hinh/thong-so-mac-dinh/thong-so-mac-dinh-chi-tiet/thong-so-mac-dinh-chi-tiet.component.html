@@ -1,0 +1,135 @@
+<div class="form-content">
+    <!-- <ng-scrollbar fxLayout="row column" fxLayoutGap="0%"> -->
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+
+            <app-textbox [disabled]="isUpdate" fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="mo-ta" label="NAME" [required]="true"
+                placeholder="NAME" [(model)]="thongSoMacDinhVo.Name" maxLength="255"
+                [validationerror]="'Name' | validationerror:validationErrors">
+            </app-textbox>
+
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="mo-ta" label="MÔ TẢ" [required]="true"
+                placeholder="MÔ TẢ" [(model)]="thongSoMacDinhVo.Description" maxLength="255"
+                [validationerror]="'Ma' | validationerror:validationErrors">
+            </app-textbox>
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="loai" label="LOẠI" placeholder="LOẠI"
+                [(model)]="type" [bind]="true" [disabled]="isUpdate" (modelChange)="changeLoai($event)"
+                url="QuanTriNhomCauHinhThongSoMacDinh/GetLookupLoaiCauHinh">
+            </app-select>
+            <div fxFlex="100%" fxFlex.sm="100%" *ngIf="type==1">
+                <div class="container-custom">
+                    <label>Chọn</label>
+                    <div fxLayout="row" fxLayoutGap="16px">
+                        <app-checkbox id="CheckboxA" [(model)]="thongSoMacDinhVo.Value" label="True" [disabled]="true">
+                        </app-checkbox>
+                    </div>
+                    <app-validationerrorother [validationerror]="'Value' | validationerror:validationErrors">
+                    </app-validationerrorother>
+                </div>
+            </div>
+
+            <app-textboxnumeric *ngIf="type==2" class="col-sm-4" id="Value" fxFlex="100%" fxFlex.sm="100%"
+                [required]="true" min="1" [(model)]="thongSoMacDinhVo.Value" label="GIÁ TRỊ"
+                [validationerror]="'Value' | validationerror:validationErrors">
+            </app-textboxnumeric>
+
+            <app-textbox *ngIf="type==3" id="Value" label="GIÁ TRỊ" fxFlex="100%" fxFlex.sm="100%" [required]="true"
+                [(model)]="thongSoMacDinhVo.Value" [validationerror]="'Value' | validationerror:validationErrors">
+            </app-textbox>
+
+            <app-textboxnumeric *ngIf="type==4" class="col-sm-4" id="Value" [format]="" fxFlex="100%" fxFlex.sm="100%"
+                [required]="true" min="1" [(model)]="thongSoMacDinhVo.Value" label="GIÁ TRỊ"
+                [validationerror]="'Value' | validationerror:validationErrors">
+            </app-textboxnumeric>
+
+            <app-datepicker *ngIf="type==5" id="Datepicker" fxFlex="100%" fxFlex.sm="100%"
+                [(model)]="thongSoMacDinhVo.Value" label="GIÁ TRỊ" [required]="true"
+                [validationerror]="'Value' | validationerror:validationErrors">
+            </app-datepicker>
+
+            <app-timepicker *ngIf="type==6" id="Timepicker" [modelIsNumber]="true" format="HH:mm" fxFlex="100%"
+                fxFlex.sm="100%" [(model)]="thongSoMacDinhVo.Value" label="GIÁ TRỊ"
+                [validationerror]="'Value' | validationerror:validationErrors" format="HH:mm" [required]="true">
+            </app-timepicker>
+
+            <app-datetimepicker *ngIf="type==7" id="datetimepicker" fxFlex="100%" fxFlex.sm="100%" label="GIÁ TRỊ"
+                [(model)]="thongSoMacDinhVo.Value" [required]="true"
+                [validationerror]="'Value' | validationerror:validationErrors">
+            </app-datetimepicker>
+
+            <app-textmask *ngIf="type==8" id="texboxmask" fxFlex="100%" fxFlex.sm="100%"
+                [(model)]="thongSoMacDinhVo.Value" label="GIÁ TRỊ" label="GIÁ TRỊ" [required]="true">
+            </app-textmask>
+
+            <app-textbox *ngIf="type==9" id="Value" label="GIÁ TRỊ" fxFlex="100%" fxFlex.sm="100%" [required]="false"
+                [(model)]="thongSoMacDinhVo.Value" [validationerror]="'Value' | validationerror:validationErrors"
+                label="GIÁ TRỊ">
+            </app-textbox>
+
+            <fieldset fxFlex="100%" class="mb-3" *ngIf="type==10">
+                <legend>THÔNG TIN GIÁ</legend>
+                <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+                        <table width="100%">
+                            <tr>
+                                <th width="100px">kEYID<span class="red">*</span></th>
+                                <th>DISPLAYNAME <span class="red">*</span></th>
+                                <th width="100px">DATATYPE</th>
+                                <th width="50px"></th>
+                            </tr>
+                            <tr *ngFor="let item of thongSoMacDinhVo.CauHinhDanhSachChiTiets;let i = index">
+                                <td valign="top">
+                                    <app-textbox id="keyid" label="KEYID" [required]="true" placeholder="KEYID"
+                                        [(model)]="item.KeyId"
+                                        [validationerror]="'CauHinhDanhSachChiTiets['+i+'].KeyId' | validationerror:validationErrors">
+                                    </app-textbox>
+                                </td>
+                                <td valign="top">
+                                    <app-textbox id="dis-playname" label="DISPLAYNAME" [required]="true"
+                                        placeholder="DISPLAYNAME" [(model)]="item.DisplayName"
+                                        [validationerror]="'CauHinhDanhSachChiTiets['+i+'].DisplayName' | validationerror:validationErrors">
+                                    </app-textbox>
+                                </td>
+                                <td valign="top">
+                                    <app-textbox id="datatype" label="DATATYPE" placeholder="DATATYPE"
+                                        [(model)]="item.DataType"
+                                        [validationerror]="'CauHinhDanhSachChiTiets['+i+'].DataType' | validationerror:validationErrors">
+                                    </app-textbox>
+                                </td>
+                                <td valign="top"><button mat-icon-button
+                                        (click)="xoaGrids(thongSoMacDinhVo.CauHinhDanhSachChiTiets,item)">
+                                        <mat-icon>delete_outline</mat-icon>
+                                    </button></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" align="center"><button mat-stroked-button
+                                        (click)="themGrids(thongSoMacDinhVo.CauHinhDanhSachChiTiets)">
+                                        <mat-icon>add</mat-icon> Thêm mới
+                                    </button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+            <div *ngIf="type==11"  fxFlex="100%" fxFlex.sm="100%" >
+                <img [src]="thongSoMacDinhVo.Value" alt="" style="max-width:100%;max-height:500px"/>
+            </div>
+            <app-upload *ngIf="type==11" id="Value" label="GIÁ TRỊ" fxFlex="100%" fxFlex.sm="100%" [required]="false"
+                [(model)]="thongSoMacDinhVo.Value" [required]="true" (modelChange)="changeTapTin($event)"  [multiple]="false"
+                [validationerror]="'Value' | validationerror:validationErrors">
+            </app-upload>
+        </div>
+    </div>
+    <!-- </ng-scrollbar> -->
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

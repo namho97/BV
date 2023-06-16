@@ -1,0 +1,24 @@
+mat-form-field{
+  mat-icon{
+      &:hover{
+          cursor: pointer;
+      }
+  }
+  .mat-clear{
+      position: absolute;
+      top: 3px;
+      right: 20px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      display: none;
+      mat-icon{
+          font-size: 15px;
+      }
+  }
+  &:hover{
+      .mat-clear{
+          display: block;
+      }
+  }
+}

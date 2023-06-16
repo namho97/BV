@@ -1,0 +1,155 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row column" fxLayoutGap="0%">
+        <fieldset fxFlex="100%" class="mb-3">
+          <legend>THÔNG TIN HÀNH CHÍNH</legend>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid" >            
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+                
+                <app-textbox-search-table  *ngIf="!isUpdate" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="MaNguoiBenh" label="TÌM KIẾM NGƯỜI BỆNH"
+                placeholder="TÌM KIẾM NGƯỜI BỆNH" [(model)]="lichHenVo.MaNguoiBenh" fieldSelected="MaNguoiBenh" maxLength="100" [isAutoFocus]="true"
+                [columns]="[{ label: 'MÃ NB', property: 'MaNguoiBenh', type: 'text',width:70, visible: true },
+                { label: 'HỌ TÊN', property: 'HoTen', type: 'text',width:160, visible: true },
+                { label: 'GT', property: 'GioiTinh', type: 'text',width:40, visible: true },
+                { label: 'NS', property: 'NamSinh', type: 'text',width:40, visible: true },
+                { label: 'SỐ ĐIỆN THOẠI', property: 'SoDienThoai', type: 'text',width:90, visible: true },
+                { label: 'ĐỊA CHỈ', property: 'DiaChi', type: 'text',minWidth:300, visible: true }]"
+                [groupByColumns]="[]"
+                [sortByColumn]="{field:'MaNguoiBenh',dir:'asc'}"
+                [dataSource]="{
+                  Data:[
+                  {'Id':1,'MaNguoiBenh':'22052611','HoTen':'ĐẶNG THỊ NGỌC BÍCH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':2,'MaNguoiBenh':'22052612','HoTen':'NGUYỄN THỊ NGỌC','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':3,'MaNguoiBenh':'22052613','HoTen':'HÀ NGUYÊN KHÔI','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':4,'MaNguoiBenh':'22052614','HoTen':'PHẠM VĂN TÍNH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':5,'MaNguoiBenh':'22052615','HoTen':'HÀ HOÀI ANH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':1,'MaNguoiBenh':'22052611','HoTen':'ĐẶNG THỊ NGỌC BÍCH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':2,'MaNguoiBenh':'22052612','HoTen':'NGUYỄN THỊ NGỌC','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':3,'MaNguoiBenh':'22052613','HoTen':'HÀ NGUYÊN KHÔI','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':4,'MaNguoiBenh':'22052614','HoTen':'PHẠM VĂN TÍNH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':5,'MaNguoiBenh':'22052615','HoTen':'HÀ HOÀI ANH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'}                  
+                  ],
+                  TotalRowCount:10
+                }"
+                (extRowSelect)="chonMaNguoiBenh($event)"           
+                [validationerror]="'MaNguoiBenh' | validationerror:validationErrors">
+                </app-textbox-search-table>
+                <app-textbox  *ngIf="isUpdate" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="MaNguoiBenh" label="MÃ NB"
+                placeholder="MÃ NB" [(model)]="lichHenVo.MaNguoiBenh"
+                [disabled]="true">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NguoiTiepNhan" label="NGƯỜI TIẾP NHẬN"
+                placeholder="NGƯỜI TIẾP NHẬN" [(model)]="lichHenVo.NguoiTiepNhan"
+                [disabled]="true">
+                </app-textbox>
+                <app-datetimepicker fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NgayTiepNhan" label="NGÀY TIẾP NHẬN"
+                placeholder="NGÀY TIẾP NHẬN" [(model)]="lichHenVo.NgayTiepNhan"
+                [disabled]="true">
+                </app-datetimepicker>
+              </div>
+            </div>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HoTen" label="HỌ VÀ TÊN" [required]="true"
+              placeholder="HỌ VÀ TÊN" [(model)]="lichHenVo.HoTen"
+              maxLength="100" [validationerror]="'HoTen' | validationerror:validationErrors">
+            </app-textbox>
+    
+            <app-select fxFlex="33%" fxFlex.gt-sm="14%" fxFlex.sm="14%" id="NamSinh" label="NĂM SINH" [required]="true"
+              [items]="danhSachNamSinhs" [(model)]="lichHenVo.NamSinh"
+              [validationerror]="'NamSinh' | validationerror:validationErrors">
+            </app-select>
+            <app-select fxFlex="33%" fxFlex.gt-sm="13%" fxFlex.sm="13%" id="ThangSinh" label="THÁNG SINH"
+              [items]="danhSachThangSinhs" [(model)]="lichHenVo.ThangSinh"
+              [validationerror]="'ThangSinh' | validationerror:validationErrors" [disabled]="lichHenVo.NamSinh==null"
+              (modelChange)="modelThangSinhChange()">
+            </app-select>
+            <app-select fxFlex="34%" fxFlex.gt-sm="13%" fxFlex.sm="13%" id="NgaySinh" label="NGÀY SINH"
+              [items]="danhSachNgaySinhs" [(model)]="lichHenVo.NgaySinh"
+              [validationerror]="'NgaySinh' | validationerror:validationErrors" [disabled]="lichHenVo.ThangSinh==null">
+            </app-select>
+    
+            <app-radio fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="GioiTinh" label="GT"
+              [items]="[{Value:1,Text:'Nam'},{Value:2,Text:'Nữ'}]" [(model)]="lichHenVo.GioiTinh"
+              [validationerror]="'GioiTinh' | validationerror:validationErrors">
+            </app-radio>
+    
+            <app-textbox type="number" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="SoDienThoai"
+              label="SỐ ĐIỆN THOẠI" placeholder="SỐ ĐIỆN THOẠI" [required]="true"
+              [(model)]="lichHenVo.SoDienThoai"
+              [validationerror]="'SoDienThoai' | validationerror:validationErrors">
+            </app-textbox>
+    
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="TinhThanh" label="TỈNH/THÀNH"
+               url="QuanTriNhomHanhChinhDonViHanhChinh/GetTinhThanhLookup" [(model)]="lichHenVo.TinhThanhId"
+              [validationerror]="'TinhThanhId' | validationerror:validationErrors">
+            </app-select>
+    
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="QuanHuyen" label="QUẬN/HUYỆN"
+               url="Common/GetQuanHuyenLookup"
+              [queryInfo]="{ParameterDependencies:'{TinhThanhId: '+(lichHenVo.TinhThanhId==null?0:lichHenVo.TinhThanhId)+'}'}"
+              [bind]="false" [(model)]="lichHenVo.QuanHuyenId"
+              [validationerror]="'QuanHuyenId' | validationerror:validationErrors"
+              [disabled]="lichHenVo.TinhThanhId==null">
+            </app-select>
+    
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="PhuongXa" label="PHƯỜNG/XÃ"
+               url="QuanTriNhomHanhChinhDonViHanhChinh/GetPhuongXaLookup"
+              [queryInfo]="{ParameterDependencies:'{TinhThanhId: '+(lichHenVo.TinhThanhId==null?0:lichHenVo.TinhThanhId)+', QuanHuyenId: '+(lichHenVo.QuanHuyenId==null?0:lichHenVo.QuanHuyenId)+'}'}"
+              [bind]="false" [(model)]="lichHenVo.PhuongXaId"
+              [validationerror]="'PhuongXaId' | validationerror:validationErrors"
+              [disabled]="lichHenVo.QuanHuyenId==null">
+            </app-select>
+    
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="KhomAp" label="KHU PHỐ/THÔN XÓM"
+              url="Common/GetKhomApLookup"
+              [queryInfo]="{ParameterDependencies:'{TinhThanhId: '+(lichHenVo.TinhThanhId==null?0:lichHenVo.TinhThanhId)+', QuanHuyenId: '+(lichHenVo.QuanHuyenId==null?0:lichHenVo.QuanHuyenId)+', PhuongXaId: '+(lichHenVo.PhuongXaId==null?0:lichHenVo.PhuongXaId)+'}'}"
+              [bind]="false" [(model)]="lichHenVo.KhomApId"
+              [validationerror]="'KhomApId' | validationerror:validationErrors" [disabled]="lichHenVo.PhuongXaId==null">
+            </app-select>
+    
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="DiaChi" label="SỐ NHÀ, ĐƯỜNG PHỐ"
+              placeholder="SỐ NHÀ, ĐƯỜNG PHỐ" [(model)]="lichHenVo.SoNha">
+            </app-textbox>
+    
+          </div>
+        </fieldset>
+        <fieldset fxFlex="100%" class="mb-3">
+          <legend>THÔNG TIN LỊCH HẸN</legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >           
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="ThongTinLichHen_SoThuTu" label="SỐ THỨ TỰ"
+              placeholder="SỐ THỨ TỰ" [(model)]="lichHenVo.SoThuTu"
+              maxLength="100" [validationerror]="'SoThuTu' | validationerror:validationErrors">
+            </app-textbox>
+    
+            <app-timepicker fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="ThongTinLichHen_GioHenTu"
+              label="GIỜ HẸN TỪ" placeholder="GIỜ HẸN TỪ" 
+              [(model)]="lichHenVo.GioHenTu"
+              [validationerror]="'GioHenTu' | validationerror:validationErrors">
+            </app-timepicker>
+            <app-timepicker fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="ThongTinLichHen_GioHenDen"
+              label="GIỜ HẸN ĐẾN" placeholder="GIỜ HẸN ĐẾN" 
+              [(model)]="lichHenVo.GioHenDen"
+              [validationerror]="'GioHenDen' | validationerror:validationErrors">
+            </app-timepicker>
+    
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="ThongTinLichHen_HinhThucHen" label="HÌNH THỨC HẸN"
+              [items]="[{KeyId:1,DisplayName:'Điện thoại'},{KeyId:2,DisplayName:'Zalo'},{KeyId:3,DisplayName:'Facebook'},{KeyId:4,DisplayName:'Web'}]"
+               [(model)]="lichHenVo.HinhThucHen"
+              [validationerror]="'HinhThucHen' | validationerror:validationErrors">
+            </app-select>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+</ng-scrollbar>
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

@@ -1,0 +1,341 @@
+<div class="form-content">
+  <ng-container  *ngIf="dangKyKhamVo!=null && isUpdate">
+    <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;position: absolute; right: 0;top: 0;" *ngIf="dangKyKhamVo.TrangThai!=5" class="bg"
+    [ngClass]="{'grey': dangKyKhamVo.TrangThai==1,'orange': dangKyKhamVo.TrangThai==2}">{{dangKyKhamVo.TrangThaiHienThi}}</span>
+    <button style="position: absolute; right: 0;top: 0;" mat-stroked-button color="warn" (click)="nguoiBenhDaDen(dangKyKhamVo)" *ngIf="dangKyKhamVo.TrangThai==5"
+    matTooltip="Người bệnh đã đến ?">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYEAYAAACw5+G7AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAABgAAAAYADwa0LPAAAAB3RJTUUH5gkPASwQfP4x5QAAArlJREFUWMPtVj1IW1EUPucmUALRl5doUIMIDhYhbUUoaGoHIQoKhqANiqBDcevQQVDUDG5qSbtFNP0B6aIpRuJUEoqtmohGbVPEoHTTQYn6nu1kk7zTwUaLLdjE50+L33LhnnPPd77D/eAAXOM/w2xU59V58/ICxBNPvb3JM3kvN59SrkIzMxzHcTyPXxO6hC4UgnXUova4YYwkgolgW9sUccSR0ViJ+7iPonhWXiaXAAVTMAUzm2EL67DuD5MuRhOaDIYbOYpaRa3ZnLwOBHie54kCjzV+jX94+NIEwCOpXWrf3j4tTTLSHM1tbclFK5sA0yfRLtqnp9FJG7QxNPRbwkfIh/zBwYp3giiIs7OyDe68MP0sqzurOzd3YSzblm3LyTkZX8jL6Mro0umSXyjIa8Ka8MBAqjxnNvEUAQAolUq1tkZbU1QEbxPBRFClAog5Y06Ag595hyY3GLCXIUOVKn4X5mG+o+Oo0EvqpE6fD+pT48d0G58z8DzPNzeTGrSgdTrpFezBnkbz1wWeQCEUShLuQwEU9Peb3gsewdPTk2ofKXsg8IAjjkpKpA9QBVUjI/Sc1mhtcxNuk4Us4+OnFnCTm9wul5SpYApWXJxu42kLgDcMGFitsA1+8CuV8VvUR30WC9ZjKZb6fKc9x1VcxdWlpfuvd0I7ofX1dBtPX8DJAivgAAem/RUvXADpqYmaJibgCzRCYyzGCHdx1+slDy3TcnX1lRdQERXHxLFwGO6AGtStrXATy7HcYIDPOImTDQ1XXkAS90oEh+AYHf2uF0JCSK+Hb+Qkp93+zwhIohIBAOJxfIpRjEajR4EX5CFPJHJ0nhNk20ZPQnpIVrK2tBxPChmyxUW5eeRb5i4J1wIuG7J5gA6ojMoiEXCDG9wuF64wG7P9Ymrj4QpBB5AJmedn6mtcNH4AodQWeErcrhUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDktMTVUMDE6NDQ6MTYrMDA6MDDKrhsjAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA5LTE1VDAxOjQ0OjE2KzAwOjAwu/OjnwAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyMi0wOS0xNVQwMTo0NDoxNiswMDowMOzmgkAAAAAASUVORK5CYII=" alt="Người bệnh đã đến"> {{dangKyKhamVo.TrangThaiHienThi}}
+    </button>
+  </ng-container>
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row column" fxLayoutGap="0%">
+
+        <app-checkbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="ĐĂNG KÝ LỊCH HẸN KHÁM (Dành cho người bệnh chưa đến)" customClass="red text-bold mb-2"
+        [(model)]="dangKyKhamVo.LaDangKyHenKham" (modelChange)="laDangKyHenKhamChange($event)"></app-checkbox>
+
+      <fieldset fxFlex="100%" class="mb-3" *ngIf="dangKyKhamVo.LaDangKyHenKham" style="background-color: #fce4ec;">
+        <legend>THÔNG TIN LỊCH HẸN</legend>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+
+          <app-datepicker fxFlex="50%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NgayHenKham" label="NGÀY HẸN"
+            placeholder="NGÀY HẸN" [(model)]="dangKyKhamVo.NgayHenKham" [required]="true"
+            [validationerror]="'NgayHenKham' | validationerror:validationErrors">
+          </app-datepicker>
+          <app-timepicker fxFlex="50%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="GioHenKham" label="GIỜ HẸN TỪ" [disabled]="dangKyKhamVo.NgayHenKham==null"
+            placeholder="GIỜ HẸN TỪ" [(model)]="dangKyKhamVo.GioHenKham" [modelIsNumber]="true" [required]="true"
+            [validationerror]="'GioHenKham' | validationerror:validationErrors">
+          </app-timepicker>
+          <!-- <app-timepicker fxFlex="50%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="GioHenDen" label="GIỜ HẸN ĐẾN"
+            placeholder="GIỜ HẸN ĐẾN" [(model)]="dangKyKhamVo.GioHenDen"
+            [validationerror]="'GioHenDen' | validationerror:validationErrors">
+          </app-timepicker> -->
+
+          <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HinhThucHen" label="HÌNH THỨC HẸN TỪ"
+            url="Common/GetHinhThucHenLookup"
+            [(model)]="dangKyKhamVo.HinhThucHen"
+            [validationerror]="'HinhThucHen' | validationerror:validationErrors">
+          </app-select>
+        </div>
+      </fieldset>
+        <fieldset fxFlex="100%" class="mb-3">
+          <legend>THÔNG TIN HÀNH CHÍNH</legend>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <div fxLayout="row wrap" fxLayoutGap="10px grid">
+
+                <!-- <app-textbox-search-table *ngIf="!isUpdate" fxFlex="100%" fxFlex.gt-sm="34%" fxFlex.sm="34%"
+                  id="MaNguoiBenh" label="TÌM KIẾM NGƯỜI BỆNH" placeholder="TÌM KIẾM NGƯỜI BỆNH" [showIconAddOrEdit]="true" tooltipIconAdd="Người bệnh mới" (addEvent)="taoNguoiBenhMoi()"
+                  [(model)]="dangKyKhamVo.MaNguoiBenh" fieldSelected="MaNguoiBenh" maxLength="100" [isAutoFocus]="true"
+                  [columns]="[{ label: 'MÃ NB', property: 'MaNguoiBenh', type: 'text',width:70, visible: true },
+                { label: 'HỌ TÊN', property: 'HoTen', type: 'text',width:160, visible: true },
+                { label: 'GT', property: 'GioiTinh', type: 'text',width:40, visible: true },
+                { label: 'NS', property: 'NamSinh', type: 'text',width:40, visible: true },
+                { label: 'SỐ ĐIỆN THOẠI', property: 'SoDienThoai', type: 'text',width:90, visible: true },
+                { label: 'ĐỊA CHỈ', property: 'DiaChi', type: 'text',minWidth:300, visible: true }]"
+                  [groupByColumns]="[]" [sortByColumn]="{field:'MaNguoiBenh',dir:'asc'}" [dataSource]="{
+                  Data:[
+                  {'Id':1,'MaNguoiBenh':'22052611','HoTen':'ĐẶNG THỊ NGỌC BÍCH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':2,'MaNguoiBenh':'22052612','HoTen':'NGUYỄN THỊ NGỌC','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':3,'MaNguoiBenh':'22052613','HoTen':'HÀ NGUYÊN KHÔI','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':4,'MaNguoiBenh':'22052614','HoTen':'PHẠM VĂN TÍNH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':5,'MaNguoiBenh':'22052615','HoTen':'HÀ HOÀI ANH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':1,'MaNguoiBenh':'22052611','HoTen':'ĐẶNG THỊ NGỌC BÍCH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':2,'MaNguoiBenh':'22052612','HoTen':'NGUYỄN THỊ NGỌC','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':3,'MaNguoiBenh':'22052613','HoTen':'HÀ NGUYÊN KHÔI','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':4,'MaNguoiBenh':'22052614','HoTen':'PHẠM VĂN TÍNH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'},
+                  {'Id':5,'MaNguoiBenh':'22052615','HoTen':'HÀ HOÀI ANH','GioiTinh':'Nữ','NamSinh':1988,'SoDienThoai':'0856781221','DiaChi':'15 Nguyễn Trãi, Phường 1, Quận 1, TP Hồ Chí Minh'}
+                  ],
+                  TotalRowCount:10
+                }" (extRowSelect)="chonMaNguoiBenh($event)"
+                  [validationerror]="'MaNguoiBenh' | validationerror:validationErrors">
+                </app-textbox-search-table> -->
+                <!-- <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="MaNguoiBenh" (modelChange)="timNguoiBenh(0,$event)" (onKeyChange)="onKey($event)"
+                  label="MÃ NB" placeholder="MÃ NB" [(model)]="dangKyKhamVo.MaNguoiBenh" [disabled]="isUpdate">
+                </app-textbox> -->
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="SoChungMinhThu" [isAutoFocus]="true"
+                  label="CCCD" placeholder="CCCD" [(model)]="dangKyKhamVo.SoChungMinhThu" icon="qr_code_scanner"
+                  iconTooltip="Quét mã CCCD" (modelChange)="timNguoiBenh(3,$event)" (onKeyChange)="onKey($event)"
+                  [validationerror]="'SoChungMinhThu' | validationerror:validationErrors">
+                </app-textbox>
+
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HoTen" label="HỌ VÀ TÊN"
+                  [required]="true" placeholder="HỌ VÀ TÊN" [(model)]="dangKyKhamVo.HoTen" maxLength="100" [upperCase]="true"
+                  (modelChange)="timNguoiBenh(1,$event)" (onKeyChange)="onKey($event)"
+                  [validationerror]="'HoTen' | validationerror:validationErrors">
+                </app-textbox>
+
+                <app-textbox type="number" fxFlex="{{isUpdate?'100%':'80%'}}" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="SoDienThoai"
+                  label="SỐ ĐIỆN THOẠI" placeholder="SỐ ĐIỆN THOẠI" [required]="true"
+                  [(model)]="dangKyKhamVo.SoDienThoai" (modelChange)="timNguoiBenh(2,$event)"
+                  (onKeyChange)="onKey($event)" [validationerror]="'SoDienThoai' | validationerror:validationErrors">
+                </app-textbox>
+
+                <div fxFlex="20%" fxFlex.gt-sm="10%" fxFlex.sm="10%" *ngIf="!isUpdate">
+                  <button mat-stroked-button style="padding: 8px 12px;" color="primary" matTooltip="Hiển thị kết quả tìm kiếm" (click)="hienThiKetQuaTimKiem()">
+                    <mat-icon matBadge="{{totalResultSearch}}">search</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <app-datepicker fxFlex="60%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NgayThangNamSinh" label="NGÀY SINH (Đầy đủ)"
+            [(model)]="dangKyKhamVo.NgayThangNamSinh" [required]="true" (modelChange)="ngayThangNamSinhChange($event)"
+            [validationerror]="'NgayThangNamSinh' | validationerror:validationErrors">
+          </app-datepicker>
+
+          <app-textbox fxFlex="40%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NamSinh" label="NĂM SINH"
+            type="number" [(model)]="dangKyKhamVo.NamSinh" [required]="true"
+            [validationerror]="'NamSinh' | validationerror:validationErrors" [disabled]="dangKyKhamVo.NgayThangNamSinh!=null">
+          </app-textbox>
+
+            <!-- <app-select fxFlex="33%" fxFlex.gt-sm="14%" fxFlex.sm="14%" id="NamSinh" label="NĂM SINH" [required]="true"
+              [items]="danhSachNamSinhs" [(model)]="dangKyKhamVo.NamSinh"
+              [validationerror]="'NamSinh' | validationerror:validationErrors">
+            </app-select>
+            <app-select fxFlex="33%" fxFlex.gt-sm="13%" fxFlex.sm="13%" id="ThangSinh" label="THÁNG SINH"
+              [items]="danhSachThangSinhs" [(model)]="dangKyKhamVo.ThangSinh"
+              [validationerror]="'ThangSinh' | validationerror:validationErrors" [disabled]="dangKyKhamVo.NamSinh==null"
+              (modelChange)="modelThangSinhChange()">
+            </app-select>
+            <app-select fxFlex="34%" fxFlex.gt-sm="13%" fxFlex.sm="13%" id="NgaySinh" label="NGÀY SINH"
+              [items]="danhSachNgaySinhs" [(model)]="dangKyKhamVo.NgaySinh"
+              [validationerror]="'NgaySinh' | validationerror:validationErrors"
+              [disabled]="dangKyKhamVo.ThangSinh==null">
+            </app-select> -->
+
+            <app-radio fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="GioiTinh" label="GT"
+              [items]="[{Value:1,Text:'Nam'},{Value:2,Text:'Nữ'}]" [(model)]="dangKyKhamVo.GioiTinh"
+              [validationerror]="'GioiTinh' | validationerror:validationErrors">
+            </app-radio>
+
+            <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NgheNghiep"
+              label="NGHỀ NGHIỆP" placeholder="NGHỀ NGHIỆP" [(model)]="dangKyKhamVo.NgheNghiep"
+              url="QuanTriNhomHanhChinhNgheNghiep/GetLookup"
+              urlSave="QuanTriNhomHanhChinhNgheNghiep/SaveDataFromAutocomplete"
+              [validationerror]="'NgheNghiep' | validationerror:validationErrors">
+            </app-autocomplete>
+
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HoVaTenNguoiGiamHo"
+              label="HỌ VÀ TÊN NGƯỜI GIÁM HỘ" placeholder="HỌ VÀ TÊN NGƯỜI GIÁM HỘ"
+              [(model)]="dangKyKhamVo.HoVaTenNguoiGiamHo"
+              [validationerror]="'HoVaTenNguoiGiamHo' | validationerror:validationErrors">
+            </app-textbox>
+
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="TinhThanh" label="TỈNH/THÀNH"
+              url="QuanTriNhomHanhChinhDonViHanhChinh/GetTinhThanhLookup" [(model)]="dangKyKhamVo.TinhThanhId"
+              [(modelText)]="dangKyKhamVo.TinhThanhTen"
+              [validationerror]="'TinhThanhId' | validationerror:validationErrors"              
+              [showIconAddOrEdit]="true"
+              tooltipIconAdd="Thêm tỉnh/thành mới vào danh mục" tooltipIconEdit="Cập nhật tỉnh/thành vào danh mục"
+              componentAddTitle="THÊM TỈNH/THÀNH MỚI VÀO DANH MỤC" componentEditTitle="CẬP NHẬT TỈNH/THÀNH VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+              [componentAddOrEdit]="themTinhThanhMoiTemplate" [componentAddOrEditContext]="{$implicit:dangKyKhamVo.TinhThanhId}">
+              <ng-template #themTinhThanhMoiTemplate let-dataItem>
+                <app-don-vi-hanh-chinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}" [isUpdate]="dataItem!=null && dataItem>0" capHanhChinhDefault="1"
+                  (dataChange)="themHoacSuaTinhThanhLuuChange($event)">
+                </app-don-vi-hanh-chinh-chi-tiet>
+              </ng-template>
+            </app-select>
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="QuanHuyen" label="QUẬN/HUYỆN"
+              url="QuanTriNhomHanhChinhDonViHanhChinh/GetQuanHuyenLookup"
+              [queryInfo]="{TinhThanhId: (dangKyKhamVo.TinhThanhId==null?0:dangKyKhamVo.TinhThanhId)}" [bind]="false"
+              [(model)]="dangKyKhamVo.QuanHuyenId"  [(modelText)]="dangKyKhamVo.QuanHuyenTen"
+              [validationerror]="'QuanHuyenId' | validationerror:validationErrors"
+              [disabled]="dangKyKhamVo.TinhThanhId==null"          
+              [showIconAddOrEdit]="true"
+              tooltipIconAdd="Thêm quận/huyện mới vào danh mục" tooltipIconEdit="Cập nhật quận/huyện vào danh mục"
+              componentAddTitle="THÊM QUẬN/HUYỆN MỚI VÀO DANH MỤC" componentEditTitle="CẬP NHẬT QUẬN/HUYỆN VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+              [componentAddOrEdit]="themQuanHuyenMoiTemplate" [componentAddOrEditContext]="{$implicit:dangKyKhamVo.QuanHuyenId}">
+              <ng-template #themQuanHuyenMoiTemplate let-dataItem>
+                <app-don-vi-hanh-chinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}" [isUpdate]="dataItem!=null && dataItem>0" capHanhChinhDefault="2"
+                  [tinhThanhIdDefault]="dangKyKhamVo.TinhThanhId"
+                  (dataChange)="themHoacSuaQuanHuyenLuuChange($event)">
+                </app-don-vi-hanh-chinh-chi-tiet>
+              </ng-template>
+            </app-select>
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="PhuongXa" label="PHƯỜNG/XÃ"
+              url="QuanTriNhomHanhChinhDonViHanhChinh/GetPhuongXaLookup"
+              [queryInfo]="{TinhThanhId: (dangKyKhamVo.TinhThanhId==null?0:dangKyKhamVo.TinhThanhId), QuanHuyenId: (dangKyKhamVo.QuanHuyenId==null?0:dangKyKhamVo.QuanHuyenId)}"
+              [bind]="false" [(model)]="dangKyKhamVo.PhuongXaId" [(modelText)]="dangKyKhamVo.PhuongXaTen"
+              [validationerror]="'PhuongXaId' | validationerror:validationErrors"
+              [disabled]="dangKyKhamVo.QuanHuyenId==null"          
+              [showIconAddOrEdit]="true"
+              tooltipIconAdd="Thêm phường/xã mới vào danh mục" tooltipIconEdit="Cập nhật phường/xã vào danh mục"
+              componentAddTitle="THÊM PHƯỜNG/XÃ MỚI VÀO DANH MỤC" componentEditTitle="CẬP NHẬT PHƯỜNG/XÃ VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+              [componentAddOrEdit]="themPhuongXaMoiTemplate" [componentAddOrEditContext]="{$implicit:dangKyKhamVo.PhuongXaId}">
+              <ng-template #themPhuongXaMoiTemplate let-dataItem>
+                <app-don-vi-hanh-chinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}" [isUpdate]="dataItem!=null && dataItem>0" capHanhChinhDefault="3"
+                  [tinhThanhIdDefault]="dangKyKhamVo.TinhThanhId"
+                  [quanHuyenIdDefault]="dangKyKhamVo.QuanHuyenId"
+                  (dataChange)="themHoacSuaPhuongXaLuuChange($event)">
+                </app-don-vi-hanh-chinh-chi-tiet>
+              </ng-template>
+            </app-select>
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="KhomAp" label="KHU PHỐ/THÔN XÓM"
+              url="QuanTriNhomHanhChinhDonViHanhChinh/GetKhomApLookup"
+              [queryInfo]="{TinhThanhId: (dangKyKhamVo.TinhThanhId==null?0:dangKyKhamVo.TinhThanhId), QuanHuyenId: (dangKyKhamVo.QuanHuyenId==null?0:dangKyKhamVo.QuanHuyenId), PhuongXaId: (dangKyKhamVo.PhuongXaId==null?0:dangKyKhamVo.PhuongXaId)}"
+              [bind]="false" [(model)]="dangKyKhamVo.KhomApId" [(modelText)]="dangKyKhamVo.KhomApTen"
+              [validationerror]="'KhomApId' | validationerror:validationErrors"
+              [disabled]="dangKyKhamVo.PhuongXaId==null"          
+              [showIconAddOrEdit]="true"
+              tooltipIconAdd="Thêm khu phố/thôn xóm mới vào danh mục" tooltipIconEdit="Cập nhật khu phố/thôn xóm vào danh mục"
+              componentAddTitle="THÊM KHU  PHỐ/THÔN XÓM MỚI VÀO DANH MỤC" componentEditTitle="CẬP NHẬT KHU  PHỐ/THÔN XÓM VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+              [componentAddOrEdit]="themThonXomMoiTemplate" [componentAddOrEditContext]="{$implicit:dangKyKhamVo.KhomApId}">
+              <ng-template #themThonXomMoiTemplate let-dataItem>
+                <app-don-vi-hanh-chinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}" [isUpdate]="dataItem!=null && dataItem>0" capHanhChinhDefault="4"
+                  [tinhThanhIdDefault]="dangKyKhamVo.TinhThanhId"
+                  [quanHuyenIdDefault]="dangKyKhamVo.QuanHuyenId"
+                  [phuongXaIdDefault]="dangKyKhamVo.PhuongXaId"
+                  (dataChange)="themHoacSuaThonXomLuuChange($event)">
+                </app-don-vi-hanh-chinh-chi-tiet>
+              </ng-template>
+            </app-select>
+
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="DiaChi" label="SỐ NHÀ, ĐƯỜNG PHỐ"
+              placeholder="SỐ NHÀ, ĐƯỜNG PHỐ" [(model)]="dangKyKhamVo.SoNha">
+            </app-textbox>
+
+          </div>
+        </fieldset>
+        <fieldset fxFlex="100%" class="mb-3">
+          <legend>THÔNG TIN TIẾP NHẬN</legend>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+
+            <app-datetimepicker fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="ThoiDiemTiepNhan" label="TIẾP NHẬN LÚC"
+              placeholder="TIẾP NHẬN LÚC" [(model)]="dangKyKhamVo.ThoiDiemTiepNhan" [required]="true"
+              [validationerror]="'ThoiDiemTiepNhan' | validationerror:validationErrors">
+            </app-datetimepicker>
+            <app-textbox *ngIf="isUpdate" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="TenNhanVienTiepNhan" label="NGƯỜI TIẾP NHẬN"
+              placeholder="NGƯỜI TIẾP NHẬN" [(model)]="dangKyKhamVo.TenNhanVienTiepNhan"
+              [validationerror]="'TenNhanVienTiepNhan' | validationerror:validationErrors"
+              [disabled]="true">
+            </app-textbox>
+            <app-textboxnumeric fxFlex="50%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="SoThuTu" label="SỐ THỨ TỰ" min="0" [required]="true"
+              placeholder="SỐ THỨ TỰ" [(model)]="dangKyKhamVo.SoThuTu" maxLength="100" customClass="input-blue input-bold"
+              [validationerror]="'SoThuTu' | validationerror:validationErrors">
+            </app-textboxnumeric>
+            <div fxFlex="50%" fxFlex.gt-sm="20%" fxFlex.sm="20%">
+              <button mat-stroked-button color="primary" style="padding: 8px 12px;width: 100%;" (click)="laySoThuTuMoiNhat()">
+                <mat-icon>refresh</mat-icon>  Cấp STT mới nhất
+              </button>
+            </div>
+            <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="LyDoTiepNhan" label="LÝ DO KHÁM BỆNH"
+              placeholder="LÝ DO KHÁM BỆNH" [(model)]="dangKyKhamVo.LyDoTiepNhan"
+              url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:9}"  
+              urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" [paramSaveAutocomplete]="{Loai:9,Value:dangKyKhamVo.LyDoTiepNhan}"
+              [validationerror]="'LyDoTiepNhan' | validationerror:validationErrors">
+            </app-autocomplete>
+            <app-money *ngIf="!isUpdate" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="TienKham" label="TIỀN KHÁM"
+              placeholder="TIỀN KHÁM" [(model)]="dangKyKhamVo.TienKham" customClass="input-red input-bold"
+              icon="{{dangKyKhamVo.TienKhamGoc !=dangKyKhamVo.TienKham?'save':''}}" iconTooltip="Cập nhật giá thành mặc định" (onIconClick)="luuTienKhamClick()">
+            </app-money>
+            <app-checkbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="ĐO CHỈ SỐ SINH TỒN"
+              [(model)]="dangKyKhamVo.DoChiSoSinhTon"  *ngIf="!dangKyKhamVo.LaDangKyHenKham && formFrom==1"></app-checkbox>
+            <fieldset fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="mb-3" *ngIf="dangKyKhamVo.DoChiSoSinhTon && !dangKyKhamVo.LaDangKyHenKham && formFrom==1">
+              <legend>THÔNG TIN CHỈ SỐ SINH TỒN</legend>
+
+              <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                <app-textbox  fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="NhietDo" label="NHIỆT ĐỘ (°C)"
+                  placeholder="NHIỆT ĐỘ (°C)" [(model)]="dangKyKhamVo.ChiSoSinhTonViewModel.NhietDo" iconType="2"
+                  [iconSuffix]="false"
+                  icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFGSURBVEiJzZWxTsMwEIa/69AF5QGgfQsQDxFegL0De1kr0YGVHQkxIrHzAp4r9SWqgjoTsbAcQ67FSmwThwjxS6c/Tpyzft/vM6pKKIApcA+8GU9jc1MxIo4F8AGcGS8Sc+NIKKiAwp4LoOqjQCxBCyKiqiqxcVeM7GcnImrh8vchjr9R4CVxQytIFVljY74tXFkcbAzMgVdg3rJphoK9hU8sfBtfAw/GvRUcLOzZ+CWkYD/BAWrh/ITNcWjxX52DJvvfOmzlP3BRk3+qQbLZZSh4ApYiUohIASypCzuYgug5aOXp4KLWAoN205CLchC8cETkAtg2Xm/tfRaCCkRkDTwDY+CWug18Apeqepq1QqTAFTABdsCN8YQet1pMwQp4BI6om9YddUObqer5EApKYANcAcfGG6DMVZA6ByWwAt6Ns5OrKl95ib+/MU2cXAAAAABJRU5ErkJggg=="
+                  [validationerror]="'NhietDo' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox-double fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="HuyetAp" label="HUYẾT ÁP (mmHg)"
+                placeholder="HUYẾT ÁP (mmHg)" [(model1)]="dangKyKhamVo.ChiSoSinhTonViewModel.HuyetApTamThu" 
+                [(model2)]="dangKyKhamVo.ChiSoSinhTonViewModel.HuyetApTamTruong" iconType="2"
+                [iconSuffix]="false"
+                icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJjSURBVEiJrdVNiI5RFAfw37zGAjM+IsUYQ/IVkWxslElmgUhSdkQRJV8bEWsLNSvKwsKGlIVomAUikclXLEYxhQyJRIyZfA2Lc1+eeTzvGOVft+49595zzr3nf87lNzaiDbdxFY0qYyiOoDONwxjSz367cSyzaRyuYFGF/afQjvlptONkJePVuI/BOfl4cZM8xiaDdRiJ9WnennR9UMI0PMDXnO4lhhU4GIUajElBdKZ5DYYXORiC7gJDldCBd9iSor6Y5m/xJL+5+h8M78cCbMBmnMaBpFuO1fhe5GAOFuJogdGGpH+ANTiOpXgt2PYq7buD0UVRVWMH1qG3QH8CzViML/goyPAI0zEh7avB40oOvmJqxmAZhwR1RxScqxK521hwrg9KmQhqcrpaUVCSsW8Z3S5RlGPSaMPOSjfIYhtmoyUja8AFUVxlzBHPVL5ND+YOxMFZ3MAzLEuyN6KYnmJTkn1IDm8lB1+wvchBKbeuE32lKiPrTsazaBWtYSVWpHnrQG5wQ3D9bziajM9IwdxVTPNfN+j1Z5H0+pO63SLhPVgiSPAJTUlWiHuCQUNz8tGit1zPyOoFY6ak0eZ3LezFTVGA+8oHqkVin4jE5jETazPr56K1N6f1TtHs9oj8NYkCPCmY97BK9PNNor/k0YJL6CrQlTER80ROZmFrkpcwrYQf+rImiw14349x4i9ZJQrxfgp0M86LYtWQovzfGIfHJfH2tZj8nx2cwbVBadEhPvHL/v4kA0E9JuFF9u0bcVDwukPkZiDoEqy5nXNwDiuKkluv4PPuB7WiD9Xn5J/R9BNBzoJX7eJ22wAAAABJRU5ErkJggg=="
+                [validationerror]="'HuyetAp' | validationerror:validationErrors">
+              </app-textbox-double>
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="NhipTho" label="NHỊP THỞ (lần/phút)"
+                  placeholder="NHỊP THỞ (lần/phút)" [(model)]="dangKyKhamVo.ChiSoSinhTonViewModel.NhipTho" iconType="2"
+                  [iconSuffix]="false"
+                  icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJdSURBVEiJldZbiI1RFAfwnxlkJiYhjVwjjTxhxuVJ8yJyLQrl8uyREnIbSiM1D568Eg2RB3KJUqLInRflUi6JB+SSpITxsPbRdjjfOfOvr/N9a/3X+u/L2muferWjAa0YhvfoqSWovgZOH2zGHjRhKraiEXd6McCK2IftSaiEOuxM9qoYjAkVfBNwuiD2DEYVJa/DCHRU8C/FkYL4Y5hXTeARWjDkP/5FOF8Q/wlDiwT6imrYhaNYicl4gLFi+vkSNeAk9qfvmbhVJJBjHm7iOS6IZTuO4WW8S6KahuI6+tUqQFRKC9owBofRXsY5iHFiFnOrJeybvY/BbkzCKVGez9CFjxggqqaEaVhfq0CLqJYNuJb5X+Ap7qfkm5K9Ga+rJc8FDmA1npT5D+EhOnEjs/fH91oFRmMGRmYCDZiO2ZiFD3iVxb1KnLNJ+Cpu41u5QB0GojuR+oh9uCA28B5WYYW/m1sPliffvcS9KCovbyn/YDO2Zd/9sFich3GigkpVNBrz0yBL2IGN5TPIsRB7M1+3aNEnxLqX0D/ZZop2UcrTiSVFAj/wK713iYrqwOOU6Fx6jokW0yEOW1eK+ZlyVBQoYQ4G4Q0WiN6/BRPTsyXZFiROU4qpisvp9zCmYA0+463oT+vS8yDZPifO1BST5ygUuIzx4pC1i41ty3htydaeOOPLYv+g0hIRTa9RLBVxDyt7H5Q4zyslKRJoFie5SfSpd5nvnSjTpsRp7q1AD9biC5aJaX/N/F9xRdx4XxL3v/8yyk9dK+6Kjlq6a5/iZYWBjBVVRbSPx1kO8BsTdYIjfaxruAAAAABJRU5ErkJggg=="
+                  [validationerror]="'NhipTho' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Mach" label="MẠCH (nhịp/phút)"
+                  placeholder="MẠCH (nhịp/phút)" [(model)]="dangKyKhamVo.ChiSoSinhTonViewModel.Mach" iconType="2"
+                  [iconSuffix]="false"
+                  icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHRSURBVEiJtdRNiE5xFAbw39wXI8wX8cooUcykCRuShbAwykLKLCSKjYVsZ0m2EqVsLBBLZCOm5GN8RxY+IhvZ+MxQmixksPj/37pzu/fO6+11Vvee85znOefccw//2VpyfDPRj8X4jVe4gW8Z3HRsQB9a8RZD+JgGJannVhzGRczCHdxHNy7gGGZgCg7iCnrxBNdj/hmcREe26mm4hp0l3W7FQ9zFnpzuV8WuNkfMnHTwNLaUkKcLaSuIDWAv2rFa6LAC63CiDvJ6bQgLcQjbCHNb2kSBZTiHKi4nWICXBeBEGEvWygp6Fjk/oy3BnxLwftzK+NbguTDrFcZvYs2+Ct/qZxIBlQKBfvwwfiM24j168BibcvI6MYrJlVjFO3zKgKZit/BfzMWL6D+AB1gU8+bhaib3C15jpAVLhDGNZUArsRxnMSjsfjvOYzi+D+AofhVMYHQSdmF2TnAMR/BGGAdhpYcxEsWeYn1Obg++40PauR1rCyo5FZOOx866hI+dZ33CialmAx24WVDRDuwTZl+0EITbdBvziwBFIlU8Eo5ew+QTidxTfAzrJp9IpCnk/yLSMHk9IjXy7kbJy0SaRp4n0nTymnXhknB3mk7esP0Fqjhdvsk2lWYAAAAASUVORK5CYII="
+                  [validationerror]="'Mach' | validationerror:validationErrors">
+                </app-textbox>
+
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="ChieuCao" label="CHIỀU CAO (cm)" placeholder="CHIỀU CAO (cm)"
+                  [(model)]="dangKyKhamVo.ChiSoSinhTonViewModel.ChieuCao" iconType="2" [iconSuffix]="false" (modelChange)="tinhBMI()"
+                  icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHNSURBVEiJvdXfi01RFAfwjx+pYcaPa8iPofxoUN54JESRPHqhvJD8BzxOPCjPnniQ8iQTxYMoKUTJzLz6df2aMSUyTDH3jYe9rzn3OPveczG+ddpr7fU9a+219jrrMMWYVpKzAJ8LbGvwI8pfijgzWjjfg0vYgWN4gLGMfQhLsAUVDJQ48C904R46ot6L6znOC5zAopST6U0C9OIxJqL+PAbNYhxP4to2unDfZAbr/J7BB9xGz58EgN14hKu4g1U5+wB2xWd9kYNWXbQY84RsJvAatYy9iitRHsLlvIOZCcezcVFIvYrvWI6FuIHTkTdLaOFTeN/isA3ow4GE7Ty2RvmhULYy31MDBrEZR3P7Z3EQF6Le8pJTbfoVnUJZstiIUbyL+if0Yy+2tRPgnyF1yWXRjf04jJEiQiqDClZiQ9Q3xXWF0ElLo14VZtRouyc7GV/uj/rduA4L/b4vo5/DspSjVIn6otPtuf2XwmSto4ZXOCTMqmtlA5TFuMkRPVxE+Nsu6sFxPMWzqQgwgjP4mCI0C1DBWqGM9W7qznHmYyfmppw0myGduJnh1PAWRzKcN7gV5UGho0oHqNs7hGk6B99y9tUZeUzj//r/4Cf8AVT0mgTXgwAAAABJRU5ErkJggg=="
+                  [validationerror]="'ChieuCao' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="CanNang" label="CÂN NẶNG (kg)" placeholder="CÂN NẶNG (kg)"
+                  [(model)]="dangKyKhamVo.ChiSoSinhTonViewModel.CanNang" iconType="2" [iconSuffix]="false" (modelChange)="tinhBMI()"
+                  icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIQSURBVEiJ7dZbaA5gGAfw3w7YjKaRJRJl0dbsSo5NKIfduBAJRRm3oiQ1V45XalFSUmRytqJlLYsbYVJskihJXEyZnIpyuHifr77a6ZNduPCvt/f7nud9/v/nfd7nfb8vT24Yi9WoRAEe4hq6BwssyIF8C3bjFu6iA8OwJ4Q7BgrOG4R8G0pxHz9RFvb3Mc/FBzTmkGgvVOAiqlCCdSiKsTZslTiPyf2RFMa8EWswPMs3RSrPeqk8Z8Neilp8xHwcQzteZsV+wwWchjockc6jBPmx6BLGozorsBFPMTu+V2NcrBUcY2I+iuWFWIm90kHWxq5WYASmYzG68As1eId70vmtws1IrAitkf0dHEJDPkbhExZiKVqwBK9itGFWZFgXQ+yiLda8jUSag2NBcI7OlCNTN7gRO2hGPebhefi+4nN8foY52CoddF0kB98zpNkCGXRhKjoxQ+r9nj7W9Uh3YBoeYVKI9kKT1BnXs2wzcSXsV7FdKmUGI7EzfGWxtirL3xKxTYX6xuMQPoHNUn3PhK8IP6S2rcdxnMKTvoj6E4DLeI1zuI0GvAhfhdR9TWF/0B/JQAKkJ2IZFmGDdPlIl6oV+6X27ReDCQiC9hh/jL66aEjxX+DfEshH8RBwFmfzFkrPbzkOSu/6l78UKME+TEB3nvTGH8AOOfxLyBHlOIxdmR/9GmzCxCESeIOT6PwNmyVsacIiuSgAAAAASUVORK5CYII="
+                  [validationerror]="'CanNang' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Bmi" label="BMI (kg/m²)" [disabled]="true" placeholder="BMI (kg/m²)"
+                  [(model)]="dangKyKhamVo.ChiSoSinhTonViewModel.Bmi" iconType="2" [iconSuffix]="false"
+                  icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJLSURBVEiJrdVLiI5hFAfw3zeNcSlpxDDul4Uk16QUEiklopGQXMpOjJFi5bJhiWE1LGyUIgsilxUpJbksJBHlspHbIOT2WTznM6/X931j4l9vb+c55/zP5XnPeQuqYxgWYQFGYkicP8NjnMVpPKlEUKhwPgS7sAZFXMa9IC7px2J2yEexO6OvikV4h1fYjP5VbBvQgtfhs7Az8mZ8x4lwzmNVPHkMwKnw3ViJfDl+oE1H65agKWNzJp4SmsIGanAkgvxRyVC046Tf72UP3mNQyAfigcbQ7c3Y10Ql7RicDXAML/3ZlnrcwLR8RpiMa2GTxUDpTtpKByPwTbpQWBxZ5R2roT58Foe8FV+lztiGLzq+liap9OtdCHANH3TcV0NwboDzuJhzaMTUKoTbcDwjTw6fLC5Jg+g5WruQ7Q5p+LZ3YncI9+EztsThqoh8sILTpiDfWUZ3MHxLc7IV72pD6B7vYidZvZEG6VAZXTH3rkM3eKprLfpbtOJpAecwCXf/c4BxuF3APKxXebP+Cw6XO+wtDU63Mrq6TuRyPr9hjrTwiviI1RldrbTv94U8S5rWmSF3x9vg+IWaXIAGqVXrcCHISq0bIy2wleG3LIKWCHugj9w+ywcoYYQ0mZ90fHYTMklMwfyQJ1XgIDIoh2b0jACj8Ajj8SIybcFoPJDWREVUqmCk9A+ow9JMBbekvbVCWmb7MRx9uxpgrTTqvaRBhIm4Iy2wAq7iSuiqtimL6dJuKkp/pdZMEtcxF/0i6GqpxTcxQ6r2YXD8wk/PfHjRLQELkAAAAABJRU5ErkJggg=="
+                  [validationerror]="'Bmi' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="SpO2" label="SpO2 (%)" placeholder="SpO2 (%)"
+                  [(model)]="dangKyKhamVo.ChiSoSinhTonViewModel.SpO2" iconType="2" [iconSuffix]="false"
+                  icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJJSURBVEiJrdVLiM9RFAfwj8d4NGg8QsqjEckGC4yNRwqFlEeRjURNbCZGVkpNsqHYjCJEeZTQJJGJETGUhUiIBWOhlEckGmZYnDv85jf/+c94fOv2u/fcc8+553vO+d1eCmMgJmMsvuNzJ3pdokduvRDV+IYnyXg5RuAs9iW9SZiHAXiFK3jXHQdHsRfTUZKRX8IpLMOBZOx8+k7AetxEDVqzBnsWcFqGjZn1LMxPUVWkKCpxAzNxEgsEjQfzxnoXCgtPM8rNGflFTMU6Qd0KPMZo7EnOl+JCJ3YdxQw0oT6NR1iFhoze+LQ3DLfTGRiE011F8AZjRCLLcCfJN2FRmldiC6pEbmbjYzrTzmY+Bz8Er72TckWST0EpLuO5qK6HgveXWIMXuJ63mY+gRiS4Mt3+azp8P92WoKEpzctFiX5Kui3o1YGTTtCAnahLUbWhLxqT8WFYjBNpbwM2/6mDzXgremGc6J3JOCcoqcVgkYdr2vdPB4ruog+OZWSP0riHM6KhtmK1KOHh2IGJWC765RfySa7HflHrWbSksQ3TREdXCb5Pp3NL8CFPQz6CXbiKlaJx3uMLXmfmRDVtT/M6QV+3MReHi+y3NVytAmXZXRzHnALyfn7fdiRG/Y1xInG3RElmUSkS/F9QjbWZdYmopD5pPVhUT1EU4++ZiKQNpeJxaRYleQQPxNvxVw6GaP9KfRS/CRiK3SIPG4o56Ow9ICh4nlm3Zi7UmL6vcehfHLzPyfJP7KtixilOUSEH/xUT0T8ny/9CusRPG9F+OOh2G+AAAAAASUVORK5CYII="
+                  [validationerror]="'SpO2' | validationerror:validationErrors">
+                </app-textbox>
+              </div>
+            </fieldset>
+          </div>
+        </fieldset>
+        <fieldset fxFlex="100%" *ngIf="isUpdate && dangKyKhamVo.Id!=null && dangKyKhamVo.Id>0">
+          <legend>THÔNG TIN VIỆN PHÍ</legend>
+
+          <app-thu-vien-phi-rut-gon [id]="dangKyKhamVo.Id"></app-thu-vien-phi-rut-gon>
+        </fieldset>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+<div class="form-footer" *ngIf="formFrom==1">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1"><mat-icon *ngIf="isMobile" matTooltip="Quay lại">arrow_back</mat-icon> <span *ngIf="!isMobile">Quay lại</span></button>
+  <!-- <button mat-stroked-button color="warn" (click)="nguoiBenhDaDen()" class="mr-1" *ngIf="dangKyKhamVo.TrangThai==1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYEAYAAACw5+G7AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAABgAAAAYADwa0LPAAAAB3RJTUUH5gkPASwQfP4x5QAAArlJREFUWMPtVj1IW1EUPucmUALRl5doUIMIDhYhbUUoaGoHIQoKhqANiqBDcevQQVDUDG5qSbtFNP0B6aIpRuJUEoqtmohGbVPEoHTTQYn6nu1kk7zTwUaLLdjE50+L33LhnnPPd77D/eAAXOM/w2xU59V58/ICxBNPvb3JM3kvN59SrkIzMxzHcTyPXxO6hC4UgnXUova4YYwkgolgW9sUccSR0ViJ+7iPonhWXiaXAAVTMAUzm2EL67DuD5MuRhOaDIYbOYpaRa3ZnLwOBHie54kCjzV+jX94+NIEwCOpXWrf3j4tTTLSHM1tbclFK5sA0yfRLtqnp9FJG7QxNPRbwkfIh/zBwYp3giiIs7OyDe68MP0sqzurOzd3YSzblm3LyTkZX8jL6Mro0umSXyjIa8Ka8MBAqjxnNvEUAQAolUq1tkZbU1QEbxPBRFClAog5Y06Ag595hyY3GLCXIUOVKn4X5mG+o+Oo0EvqpE6fD+pT48d0G58z8DzPNzeTGrSgdTrpFezBnkbz1wWeQCEUShLuQwEU9Peb3gsewdPTk2ofKXsg8IAjjkpKpA9QBVUjI/Sc1mhtcxNuk4Us4+OnFnCTm9wul5SpYApWXJxu42kLgDcMGFitsA1+8CuV8VvUR30WC9ZjKZb6fKc9x1VcxdWlpfuvd0I7ofX1dBtPX8DJAivgAAem/RUvXADpqYmaJibgCzRCYyzGCHdx1+slDy3TcnX1lRdQERXHxLFwGO6AGtStrXATy7HcYIDPOImTDQ1XXkAS90oEh+AYHf2uF0JCSK+Hb+Qkp93+zwhIohIBAOJxfIpRjEajR4EX5CFPJHJ0nhNk20ZPQnpIVrK2tBxPChmyxUW5eeRb5i4J1wIuG7J5gA6ojMoiEXCDG9wuF64wG7P9Ymrj4QpBB5AJmedn6mtcNH4AodQWeErcrhUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDktMTVUMDE6NDQ6MTYrMDA6MDDKrhsjAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA5LTE1VDAxOjQ0OjE2KzAwOjAwu/OjnwAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyMi0wOS0xNVQwMTo0NDoxNiswMDowMOzmgkAAAAAASUVORK5CYII=" alt="Người bệnh đã đến"> NB ĐẾN</button> -->
+  <button mat-raised-button color="warn" *ngIf="isUpdate" (click)="huyDangKy()" class="mr-1"><mat-icon *ngIf="isMobile" matTooltip="HỦY ĐĂNG KÝ">cancel</mat-icon> <span *ngIf="!isMobile">HỦY ĐĂNG KÝ</span></button>
+
+  <button *ngIf="!isUpdate && dangKyKhamVo.TienKham>0 && !dangKyKhamVo.LaDangKyHenKham" mat-raised-button color="warn" type="button" style="float: right;"
+  (click)="luuVaThuTien()"><mat-icon *ngIf="isMobile" matTooltip="ĐĂNG KÝ VÀ THU TIỀN KHÁM">save</mat-icon><mat-icon *ngIf="isMobile" matTooltip="ĐĂNG KÝ VÀ THU TIỀN KHÁM">price_check</mat-icon> <span *ngIf="!isMobile">ĐĂNG KÝ VÀ THU TIỀN KHÁM</span></button>
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" class="mr-1" type="button" style="float: right;"
+    (click)="luu()"><mat-icon *ngIf="isMobile" matTooltip="ĐĂNG KÝ">save</mat-icon> <span *ngIf="!isMobile">ĐĂNG KÝ</span></button>
+  <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()"><mat-icon *ngIf="isMobile" matTooltip="CẬP NHẬT">save</mat-icon> <span *ngIf="!isMobile">CẬP NHẬT</span></button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> <mat-icon *ngIf="isMobile" matTooltip="NHẬP LẠI">restart_alt</mat-icon> <span *ngIf="!isMobile">NHẬP LẠI</span></button>
+</div>
+
+<div class="form-footer" *ngIf="formFrom==2">
+  <button mat-raised-button color="primary" class="float-right ml-1" (click)="batDauKham()"
+  *ngIf="!dangKyKhamVo.LaDangKyHenKham">BẮT ĐẦU KHÁM</button>
+  <button mat-raised-button color="warn" class="float-right ml-1" (click)="luu()"
+    *ngIf="dangKyKhamVo.LaDangKyHenKham">ĐĂNG KÝ</button>
+  <button mat-button class="float-right" (click)="huy()">HỦY</button>
+</div>
+

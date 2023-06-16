@@ -1,0 +1,55 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ma" label="MÃ" [required]="true"
+                    placeholder="MÃ" [(model)]="nhaCungCapVo.Ma" maxLength="50"
+                    [validationerror]="'Ma' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ten" label="TÊN" [required]="true"
+                    placeholder="TÊN" [(model)]="nhaCungCapVo.Ten" maxLength="250"
+                    [validationerror]="'Ten' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="MaSoThue" label="MÃ SỐ THUẾ"
+                    placeholder="MÃ SỐ THUẾ" [(model)]="nhaCungCapVo.MaSoThue" maxLength="25" [required]="true"
+                    [validationerror]="'MaSoThue' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="TaiKhoanNganHang" label="TÀI KHOẢN NGÂN HÀNG"
+                    placeholder="TÀI KHOẢN NGÂN HÀNG" [(model)]="nhaCungCapVo.TaiKhoanNganHang" maxLength="25" [required]="true"
+                    [validationerror]="'TaiKhoanNganHang' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="NguoiDaiDien" label="NGƯỜI ĐẠI DIỆN"
+                    placeholder="NGƯỜI ĐẠI DIỆN" [(model)]="nhaCungCapVo.NguoiDaiDien" maxLength="100" [required]="true"
+                    [validationerror]="'NguoiDaiDien' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="NguoiLienHe" label="NGƯỜI LIÊN HỆ"
+                    placeholder="NGƯỜI LIÊN HỆ" [(model)]="nhaCungCapVo.NguoiLienHe" maxLength="100" [required]="true"
+                    [validationerror]="'NguoiLienHe' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox type="number" fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="SoDienThoaiLienHe" 
+                    label="SỐ ĐIỆN THOẠI LIÊN HỆ" maxLength="25" [required]="true" placeholder="SỐ ĐIỆN THOẠI LIÊN HỆ" [required]="true"
+                    [(model)]="nhaCungCapVo.SoDienThoaiLienHe"
+                    [validationerror]="'SoDienThoaiLienHe' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="EmailLienHe" label="EMAIL LIÊN HỆ"
+                    placeholder="EMAIL LIÊN HỆ" [(model)]="nhaCungCapVo.EmailLienHe" maxLength="250" [required]="true"
+                    [validationerror]="'EmailLienHe' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="DiaChi" label="ĐỊA CHỈ" [required]="true"
+                    placeholder="ĐỊA CHỈ" [(model)]="nhaCungCapVo.DiaChi" maxLength="250"
+                    [validationerror]="'DiaChi' | validationerror:validationErrors">
+                </app-textbox>
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

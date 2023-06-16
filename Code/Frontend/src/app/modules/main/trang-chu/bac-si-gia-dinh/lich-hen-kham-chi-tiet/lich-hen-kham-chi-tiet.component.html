@@ -1,0 +1,39 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>LỊCH HẸN KHÁM CỦA NGÀY <strong class="red">{{data.NgayHenKham}}</strong></div>
+  <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content style="max-height:660px">
+  <app-table #tableLichHenKham masterName="tableLichHenKham" [columns]="columns" height="500" urlGetData="TrangChuBacSiGiaDinh/GetDataLichHenKhamTheoNgay"
+  [documentType]="documentType" [headerTemplate]="headerTemplate" [groupByColumns]="groupByColumns"
+  [sortByColumn]="sortByColumn" [showIndex]="false" [showCheckbox]="false">
+</app-table>
+
+<ng-template #headerTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <!-- <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="HoTen" label="MÃ NB"
+        [(model)]="timKiemModel.MaNguoiBenh" (keyup)="onKey($event)"></app-textbox> -->
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HoTen" label="HỌ TÊN"
+        [(model)]="timKiemModel.HoTen" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" label="GIỚI TÍNH" [multiple]="true"
+        url="Common/GetGioiTinhLookup" [(model)]="timKiemModel.GioiTinhs">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="DienThoai" label="ĐIỆN THOẠI"
+        [(model)]="timKiemModel.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem"><mat-icon>search</mat-icon> Tìm kiếm</button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+</mat-dialog-content>
+
+<!-- <mat-dialog-actions>
+  <button type="button" mat-stroked-button style="margin-left: auto;" mat-dialog-close>Đóng</button>
+</mat-dialog-actions> -->

@@ -1,0 +1,23 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>CẤU HÌNH BẢNG</div>
+</div>
+
+<mat-dialog-content>
+  <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >           
+    <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="SoDong" label="SỐ DÒNG"
+       [(model)]="tableVo.SoDong" type="number" required="true"
+      [validationerror]="'SoDong' | validationerror:validationErrors">
+    </app-textbox>          
+    <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="SoCot" label="SỐ CỘT"
+       [(model)]="tableVo.SoCot" type="number" required="true"
+      [validationerror]="'SoCot' | validationerror:validationErrors">
+    </app-textbox>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div style="text-align: right;width: 100%;">
+    <button type="button" mat-button  mat-dialog-close class="mr-1">Đóng</button>
+    <button type="button" mat-raised-button color="primary" (click)="create()">TẠO</button>
+  </div>
+</mat-dialog-actions>

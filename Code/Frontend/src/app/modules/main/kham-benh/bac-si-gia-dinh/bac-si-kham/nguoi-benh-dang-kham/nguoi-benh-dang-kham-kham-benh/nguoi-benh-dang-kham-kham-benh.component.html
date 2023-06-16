@@ -1,0 +1,163 @@
+  <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+    <!-- <app-textbox fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="BenhSu" label="BỆNH SỬ"
+                      placeholder="BỆNH SỬ" [(model)]="khamLamSangVo.BenhSu"
+                      [validationerror]="'BenhSu' | validationerror:validationErrors">
+                    </app-textbox> -->
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+
+            <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="100%">
+              <fieldset>
+                <legend>CHỈ SỐ SINH TỒN
+                </legend>
+                <div fxLayout="row wrap" fxLayoutGap="10px grid"
+                  *ngIf="khamLamSangVo.ChiSoSinhTon!=null">
+                  <app-textbox  fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="NhietDo" label="NHIỆT ĐỘ (°C)"
+                    placeholder="NHIỆT ĐỘ (°C)" [(model)]="khamLamSangVo.ChiSoSinhTon.NhietDo" iconType="2"
+                    [iconSuffix]="false"
+                    icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFGSURBVEiJzZWxTsMwEIa/69AF5QGgfQsQDxFegL0De1kr0YGVHQkxIrHzAp4r9SWqgjoTsbAcQ67FSmwThwjxS6c/Tpyzft/vM6pKKIApcA+8GU9jc1MxIo4F8AGcGS8Sc+NIKKiAwp4LoOqjQCxBCyKiqiqxcVeM7GcnImrh8vchjr9R4CVxQytIFVljY74tXFkcbAzMgVdg3rJphoK9hU8sfBtfAw/GvRUcLOzZ+CWkYD/BAWrh/ITNcWjxX52DJvvfOmzlP3BRk3+qQbLZZSh4ApYiUohIASypCzuYgug5aOXp4KLWAoN205CLchC8cETkAtg2Xm/tfRaCCkRkDTwDY+CWug18Apeqepq1QqTAFTABdsCN8YQet1pMwQp4BI6om9YddUObqer5EApKYANcAcfGG6DMVZA6ByWwAt6Ns5OrKl95ib+/MU2cXAAAAABJRU5ErkJggg=="
+                    [validationerror]="'NhietDo' | validationerror:validationErrors">
+                  </app-textbox>
+                  <app-textbox-double fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="HuyetAp" label="HUYẾT ÁP (mmHg)"
+                    placeholder="HUYẾT ÁP (mmHg)" [(model1)]="khamLamSangVo.ChiSoSinhTon.HuyetApTamThu" [(model2)]="khamLamSangVo.ChiSoSinhTon.HuyetApTamTruong" iconType="2"
+                    [iconSuffix]="false"
+                    icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJjSURBVEiJrdVNiI5RFAfw37zGAjM+IsUYQ/IVkWxslElmgUhSdkQRJV8bEWsLNSvKwsKGlIVomAUikclXLEYxhQyJRIyZfA2Lc1+eeTzvGOVft+49595zzr3nf87lNzaiDbdxFY0qYyiOoDONwxjSz367cSyzaRyuYFGF/afQjvlptONkJePVuI/BOfl4cZM8xiaDdRiJ9WnennR9UMI0PMDXnO4lhhU4GIUajElBdKZ5DYYXORiC7gJDldCBd9iSor6Y5m/xJL+5+h8M78cCbMBmnMaBpFuO1fhe5GAOFuJogdGGpH+ANTiOpXgt2PYq7buD0UVRVWMH1qG3QH8CzViML/goyPAI0zEh7avB40oOvmJqxmAZhwR1RxScqxK521hwrg9KmQhqcrpaUVCSsW8Z3S5RlGPSaMPOSjfIYhtmoyUja8AFUVxlzBHPVL5ND+YOxMFZ3MAzLEuyN6KYnmJTkn1IDm8lB1+wvchBKbeuE32lKiPrTsazaBWtYSVWpHnrQG5wQ3D9bziajM9IwdxVTPNfN+j1Z5H0+pO63SLhPVgiSPAJTUlWiHuCQUNz8tGit1zPyOoFY6ak0eZ3LezFTVGA+8oHqkVin4jE5jETazPr56K1N6f1TtHs9oj8NYkCPCmY97BK9PNNor/k0YJL6CrQlTER80ROZmFrkpcwrYQf+rImiw14349x4i9ZJQrxfgp0M86LYtWQovzfGIfHJfH2tZj8nx2cwbVBadEhPvHL/v4kA0E9JuFF9u0bcVDwukPkZiDoEqy5nXNwDiuKkluv4PPuB7WiD9Xn5J/R9BNBzoJX7eJ22wAAAABJRU5ErkJggg=="
+                    [validationerror]="'HuyetAp' | validationerror:validationErrors">
+                  </app-textbox-double>
+                  <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="NhipTho" label="NHỊP THỞ (lần/phút)"
+                    placeholder="NHỊP THỞ (lần/phút)" [(model)]="khamLamSangVo.ChiSoSinhTon.NhipTho" iconType="2"
+                    [iconSuffix]="false"
+                    icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJdSURBVEiJldZbiI1RFAfwnxlkJiYhjVwjjTxhxuVJ8yJyLQrl8uyREnIbSiM1D568Eg2RB3KJUqLInRflUi6JB+SSpITxsPbRdjjfOfOvr/N9a/3X+u/L2muferWjAa0YhvfoqSWovgZOH2zGHjRhKraiEXd6McCK2IftSaiEOuxM9qoYjAkVfBNwuiD2DEYVJa/DCHRU8C/FkYL4Y5hXTeARWjDkP/5FOF8Q/wlDiwT6imrYhaNYicl4gLFi+vkSNeAk9qfvmbhVJJBjHm7iOS6IZTuO4WW8S6KahuI6+tUqQFRKC9owBofRXsY5iHFiFnOrJeybvY/BbkzCKVGez9CFjxggqqaEaVhfq0CLqJYNuJb5X+Ap7qfkm5K9Ga+rJc8FDmA1npT5D+EhOnEjs/fH91oFRmMGRmYCDZiO2ZiFD3iVxb1KnLNJ+Cpu41u5QB0GojuR+oh9uCA28B5WYYW/m1sPliffvcS9KCovbyn/YDO2Zd/9sFich3GigkpVNBrz0yBL2IGN5TPIsRB7M1+3aNEnxLqX0D/ZZop2UcrTiSVFAj/wK713iYrqwOOU6Fx6jokW0yEOW1eK+ZlyVBQoYQ4G4Q0WiN6/BRPTsyXZFiROU4qpisvp9zCmYA0+463oT+vS8yDZPifO1BST5ygUuIzx4pC1i41ty3htydaeOOPLYv+g0hIRTa9RLBVxDyt7H5Q4zyslKRJoFie5SfSpd5nvnSjTpsRp7q1AD9biC5aJaX/N/F9xRdx4XxL3v/8yyk9dK+6Kjlq6a5/iZYWBjBVVRbSPx1kO8BsTdYIjfaxruAAAAABJRU5ErkJggg=="
+                    [validationerror]="'NhipTho' | validationerror:validationErrors">
+                  </app-textbox>
+                  <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Mach" label="MẠCH (nhịp/phút)"
+                    placeholder="MẠCH (nhịp/phút)" [(model)]="khamLamSangVo.ChiSoSinhTon.Mach" iconType="2"
+                    [iconSuffix]="false"
+                    icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHRSURBVEiJtdRNiE5xFAbw39wXI8wX8cooUcykCRuShbAwykLKLCSKjYVsZ0m2EqVsLBBLZCOm5GN8RxY+IhvZ+MxQmixksPj/37pzu/fO6+11Vvee85znOefccw//2VpyfDPRj8X4jVe4gW8Z3HRsQB9a8RZD+JgGJannVhzGRczCHdxHNy7gGGZgCg7iCnrxBNdj/hmcREe26mm4hp0l3W7FQ9zFnpzuV8WuNkfMnHTwNLaUkKcLaSuIDWAv2rFa6LAC63CiDvJ6bQgLcQjbCHNb2kSBZTiHKi4nWICXBeBEGEvWygp6Fjk/oy3BnxLwftzK+NbguTDrFcZvYs2+Ct/qZxIBlQKBfvwwfiM24j168BibcvI6MYrJlVjFO3zKgKZit/BfzMWL6D+AB1gU8+bhaib3C15jpAVLhDGNZUArsRxnMSjsfjvOYzi+D+AofhVMYHQSdmF2TnAMR/BGGAdhpYcxEsWeYn1Obg++40PauR1rCyo5FZOOx866hI+dZ33CialmAx24WVDRDuwTZl+0EITbdBvziwBFIlU8Eo5ew+QTidxTfAzrJp9IpCnk/yLSMHk9IjXy7kbJy0SaRp4n0nTymnXhknB3mk7esP0Fqjhdvsk2lWYAAAAASUVORK5CYII="
+                    [validationerror]="'Mach' | validationerror:validationErrors">
+                  </app-textbox>
+
+                  <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="ChieuCao" label="CHIỀU CAO (cm)" placeholder="CHIỀU CAO (cm)"
+                    [(model)]="khamLamSangVo.ChiSoSinhTon.ChieuCao" iconType="2" [iconSuffix]="false" (modelChange)="tinhBMI()"
+                    icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHNSURBVEiJvdXfi01RFAfwjx+pYcaPa8iPofxoUN54JESRPHqhvJD8BzxOPCjPnniQ8iQTxYMoKUTJzLz6df2aMSUyTDH3jYe9rzn3OPveczG+ddpr7fU9a+219jrrMMWYVpKzAJ8LbGvwI8pfijgzWjjfg0vYgWN4gLGMfQhLsAUVDJQ48C904R46ot6L6znOC5zAopST6U0C9OIxJqL+PAbNYhxP4to2unDfZAbr/J7BB9xGz58EgN14hKu4g1U5+wB2xWd9kYNWXbQY84RsJvAatYy9iitRHsLlvIOZCcezcVFIvYrvWI6FuIHTkTdLaOFTeN/isA3ow4GE7Ty2RvmhULYy31MDBrEZR3P7Z3EQF6Le8pJTbfoVnUJZstiIUbyL+if0Yy+2tRPgnyF1yWXRjf04jJEiQiqDClZiQ9Q3xXWF0ElLo14VZtRouyc7GV/uj/rduA4L/b4vo5/DspSjVIn6otPtuf2XwmSto4ZXOCTMqmtlA5TFuMkRPVxE+Nsu6sFxPMWzqQgwgjP4mCI0C1DBWqGM9W7qznHmYyfmppw0myGduJnh1PAWRzKcN7gV5UGho0oHqNs7hGk6B99y9tUZeUzj//r/4Cf8AVT0mgTXgwAAAABJRU5ErkJggg=="
+                    [validationerror]="'ChieuCao' | validationerror:validationErrors">
+                  </app-textbox>
+                  <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="CanNang" label="CÂN NẶNG (kg)" placeholder="CÂN NẶNG (kg)"
+                    [(model)]="khamLamSangVo.ChiSoSinhTon.CanNang" iconType="2" [iconSuffix]="false" (modelChange)="tinhBMI()"
+                    icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIQSURBVEiJ7dZbaA5gGAfw3w7YjKaRJRJl0dbsSo5NKIfduBAJRRm3oiQ1V45XalFSUmRytqJlLYsbYVJskihJXEyZnIpyuHifr77a6ZNduPCvt/f7nud9/v/nfd7nfb8vT24Yi9WoRAEe4hq6BwssyIF8C3bjFu6iA8OwJ4Q7BgrOG4R8G0pxHz9RFvb3Mc/FBzTmkGgvVOAiqlCCdSiKsTZslTiPyf2RFMa8EWswPMs3RSrPeqk8Z8Neilp8xHwcQzteZsV+wwWchjockc6jBPmx6BLGozorsBFPMTu+V2NcrBUcY2I+iuWFWIm90kHWxq5WYASmYzG68As1eId70vmtws1IrAitkf0dHEJDPkbhExZiKVqwBK9itGFWZFgXQ+yiLda8jUSag2NBcI7OlCNTN7gRO2hGPebhefi+4nN8foY52CoddF0kB98zpNkCGXRhKjoxQ+r9nj7W9Uh3YBoeYVKI9kKT1BnXs2wzcSXsV7FdKmUGI7EzfGWxtirL3xKxTYX6xuMQPoHNUn3PhK8IP6S2rcdxnMKTvoj6E4DLeI1zuI0GvAhfhdR9TWF/0B/JQAKkJ2IZFmGDdPlIl6oV+6X27ReDCQiC9hh/jL66aEjxX+DfEshH8RBwFmfzFkrPbzkOSu/6l78UKME+TEB3nvTGH8AOOfxLyBHlOIxdmR/9GmzCxCESeIOT6PwNmyVsacIiuSgAAAAASUVORK5CYII="
+                    [validationerror]="'CanNang' | validationerror:validationErrors">
+                  </app-textbox>
+                  <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Bmi" label="BMI (kg/m²)" [disabled]="true" placeholder="BMI (kg/m²)"
+                    [(model)]="khamLamSangVo.ChiSoSinhTon.Bmi" iconType="2" [iconSuffix]="false"
+                    icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJLSURBVEiJrdVLiI5hFAfw3zeNcSlpxDDul4Uk16QUEiklopGQXMpOjJFi5bJhiWE1LGyUIgsilxUpJbksJBHlspHbIOT2WTznM6/X931j4l9vb+c55/zP5XnPeQuqYxgWYQFGYkicP8NjnMVpPKlEUKhwPgS7sAZFXMa9IC7px2J2yEexO6OvikV4h1fYjP5VbBvQgtfhs7Az8mZ8x4lwzmNVPHkMwKnw3ViJfDl+oE1H65agKWNzJp4SmsIGanAkgvxRyVC046Tf72UP3mNQyAfigcbQ7c3Y10Ql7RicDXAML/3ZlnrcwLR8RpiMa2GTxUDpTtpKByPwTbpQWBxZ5R2roT58Foe8FV+lztiGLzq+liap9OtdCHANH3TcV0NwboDzuJhzaMTUKoTbcDwjTw6fLC5Jg+g5WruQ7Q5p+LZ3YncI9+EztsThqoh8sILTpiDfWUZ3MHxLc7IV72pD6B7vYidZvZEG6VAZXTH3rkM3eKprLfpbtOJpAecwCXf/c4BxuF3APKxXebP+Cw6XO+wtDU63Mrq6TuRyPr9hjrTwiviI1RldrbTv94U8S5rWmSF3x9vg+IWaXIAGqVXrcCHISq0bIy2wleG3LIKWCHugj9w+ywcoYYQ0mZ90fHYTMklMwfyQJ1XgIDIoh2b0jACj8Ajj8SIybcFoPJDWREVUqmCk9A+ow9JMBbekvbVCWmb7MRx9uxpgrTTqvaRBhIm4Iy2wAq7iSuiqtimL6dJuKkp/pdZMEtcxF/0i6GqpxTcxQ6r2YXD8wk/PfHjRLQELkAAAAABJRU5ErkJggg=="
+                    [validationerror]="'Bmi' | validationerror:validationErrors">
+                  </app-textbox>
+                  <app-textbox fxFlex="50%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="SpO2" label="SpO2 (%)" placeholder="SpO2 (%)"
+                    [(model)]="khamLamSangVo.ChiSoSinhTon.SpO2" iconType="2" [iconSuffix]="false"
+                    icon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJJSURBVEiJrdVLiM9RFAfwj8d4NGg8QsqjEckGC4yNRwqFlEeRjURNbCZGVkpNsqHYjCJEeZTQJJGJETGUhUiIBWOhlEckGmZYnDv85jf/+c94fOv2u/fcc8+553vO+d1eCmMgJmMsvuNzJ3pdokduvRDV+IYnyXg5RuAs9iW9SZiHAXiFK3jXHQdHsRfTUZKRX8IpLMOBZOx8+k7AetxEDVqzBnsWcFqGjZn1LMxPUVWkKCpxAzNxEgsEjQfzxnoXCgtPM8rNGflFTMU6Qd0KPMZo7EnOl+JCJ3YdxQw0oT6NR1iFhoze+LQ3DLfTGRiE011F8AZjRCLLcCfJN2FRmldiC6pEbmbjYzrTzmY+Bz8Er72TckWST0EpLuO5qK6HgveXWIMXuJ63mY+gRiS4Mt3+azp8P92WoKEpzctFiX5Kui3o1YGTTtCAnahLUbWhLxqT8WFYjBNpbwM2/6mDzXgremGc6J3JOCcoqcVgkYdr2vdPB4ruog+OZWSP0riHM6KhtmK1KOHh2IGJWC765RfySa7HflHrWbSksQ3TREdXCb5Pp3NL8CFPQz6CXbiKlaJx3uMLXmfmRDVtT/M6QV+3MReHi+y3NVytAmXZXRzHnALyfn7fdiRG/Y1xInG3RElmUSkS/F9QjbWZdYmopD5pPVhUT1EU4++ZiKQNpeJxaRYleQQPxNvxVw6GaP9KfRS/CRiK3SIPG4o56Ow9ICh4nlm3Zi7UmL6vcehfHLzPyfJP7KtixilOUSEH/xUT0T8ny/9CusRPG9F+OOh2G+AAAAAASUVORK5CYII="
+                    [validationerror]="'SpO2' | validationerror:validationErrors">
+                  </app-textbox>
+                </div>
+              </fieldset>
+            </div>
+            <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+              <fieldset>
+                <legend>TIỀN SỬ BỆNH
+                </legend>
+                <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+                  <app-textarea fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" label="BẢN THÂN"
+                    [(model)]="khamLamSangVo.TienSuBenhBanThan"></app-textarea>
+                  <app-textarea fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" label="GIA ĐÌNH"
+                    [(model)]="khamLamSangVo.TienSuBenhGiaDinh"></app-textarea>
+                  <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="DỊ ỨNG"
+                    [(model)]="khamLamSangVo.TienSuDiUng"></app-textarea>
+
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+          <fieldset>
+            <legend>KHÁM TỔNG QUÁT</legend>
+            <div fxLayout="row wrap" fxLayoutGap="10px grid">
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="LyDoKhamBenh" label="LÝ DO KHÁM BỆNH"         
+              url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:9}"  [bind]="false"
+              urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" [paramSaveAutocomplete]="{Loai:9,Value:khamLamSangVo.LyDoKhamBenh}"
+                placeholder="LÝ DO KHÁM BỆNH" [(model)]="khamLamSangVo.LyDoKhamBenh">
+              </app-autocomplete>
+              <app-autocomplete type="textarea" fxFlex="100%" fxFlex.gt-sm="80%" fxFlex.sm="80%" id="TongTrang"
+                label="TỔNG TRẠNG"
+                url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:1}"  [bind]="false"
+                urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" [paramSaveAutocomplete]="{Loai:1,Value:khamLamSangVo.TongTrang}"
+                placeholder="TỔNG TRẠNG" [(model)]="khamLamSangVo.TongTrang"
+                [validationerror]="'TongTrang' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-checkbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="Khám chi tiết các bộ phận"
+                [(model)]="khamLamSangVo.CoKhamChiTietCacBoPhan"></app-checkbox>
+            </div>
+          </fieldset>
+        </div>
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" *ngIf="khamLamSangVo.CoKhamChiTietCacBoPhan">
+          <fieldset>
+            <legend>KHÁM CÁC BỘ PHẬN</legend>
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" fxLayoutGap.lt-sm="10px">
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanTimMach" label="TIM MẠCH"
+                placeholder="TIM MẠCH" [(model)]="khamLamSangVo.BoPhanTimMach" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanTimMach' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanHoHap" label="HÔ HẤP"
+                placeholder="HÔ HẤP" [(model)]="khamLamSangVo.BoPhanHoHap" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanHoHap' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanTieuHoa" label="TIÊU HÓA"
+                placeholder="TIÊU HÓA" [(model)]="khamLamSangVo.BoPhanTieuHoa" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanTieuHoa' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanTietNieu" label="TIẾT NIỆU"
+                placeholder="TIẾT NIỆU" [(model)]="khamLamSangVo.BoPhanTietNieu" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanTietNieu' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanThanKinh" label="THẦN KINH"
+                placeholder="THẦN KINH" [(model)]="khamLamSangVo.BoPhanThanKinh" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanThanKinh' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanPhuKhoa" label="PHỤ KHOA"
+                placeholder="PHỤ KHOA" [(model)]="khamLamSangVo.BoPhanPhuKhoa" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanPhuKhoa' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanDaLieu" label="DA LIỄU"
+                placeholder="DA LIỄU" [(model)]="khamLamSangVo.BoPhanDaLieu" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanDaLieu' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanTaiMuiHong" label="TAI MŨI HỌNG"
+                placeholder="TAI MŨI HỌNG" [(model)]="khamLamSangVo.BoPhanTaiMuiHong" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanTaiMuiHong' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanMat" label="MẮT"
+                placeholder="MẮT" [(model)]="khamLamSangVo.BoPhanMat" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanMat' | validationerror:validationErrors">
+              </app-autocomplete>
+              <app-autocomplete fxFlex="100%" fxFlex.gt-sm="20%"
+                fxFlex.sm="20%" type="textarea" class="full-width" id="BoPhanCoXuongKhop" label="CƠ XƯƠNG KHỚP"
+                placeholder="CƠ XƯƠNG KHỚP" [(model)]="khamLamSangVo.BoPhanCoXuongKhop" [items]="[{DisplayName:'Bình thường'}]"
+                [validationerror]="'BoPhanCoXuongKhop' | validationerror:validationErrors">
+              </app-autocomplete>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>

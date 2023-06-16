@@ -1,0 +1,88 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>TIẾP NHẬN</a>
+        <a class="active">ĐĂNG KÝ KHÁM</a>
+      </div>
+      <button mat-raised-button class="btn-dang-ky-moi" color="warn" matTooltip="Đăng ký khám mới" (click)="table.create()">
+        <mat-icon>person_add</mat-icon><span> ĐĂNG KÝ MỚI</span>
+      </button>
+
+    </div>
+    <div class="grid-content">
+      <app-table #tableDangKyKham masterName="tableDangKyKham" [columns]="columns"
+        [documentType]="documentType" [headerTemplate]="headerTemplate" [groupByColumns]="groupByColumns"
+        [sortByColumn]="sortByColumn" [showIndex]="false" [showCheckbox]="false"
+        (extDataItemSelected)="extDataItemSelected($event)">
+      </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">{{dataChon!=null && dataChon.Id>0?"THÔNG TIN CHI TIẾT":"ĐĂNG KÝ MỚI"}} </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-dang-ky-kham-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()"></app-dang-ky-kham-chi-tiet>
+    </div>
+  </div>
+</div>
+
+<ng-template #headerTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <!-- <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="HoTen" label="MÃ NB"
+        [(model)]="timKiemModel.MaNguoiBenh" (keyup)="onKey($event)"></app-textbox> -->
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HoTen" label="HỌ TÊN"
+        [(model)]="timKiemModel.HoTen" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" label="GIỚI TÍNH" [multiple]="true"
+        url="Common/GetGioiTinhLookup" [(model)]="timKiemModel.GioiTinhs">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="DienThoai" label="ĐIỆN THOẠI"
+        [(model)]="timKiemModel.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="NgayTiepNhanTu"
+        label="TIẾP NHẬN TỪ" [(model)]="timKiemModel.NgayTiepNhanTu" (keyup)="onKey($event)"></app-datetimepicker>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="NgayTiepNhanDen"
+        label="TIẾP NHẬN ĐẾN" [(model)]="timKiemModel.NgayTiepNhanDen" (keyup)="onKey($event)"></app-datetimepicker>
+        <app-select style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="TrangThais"
+        url="Common/GetTrangThaiDangKyKhamLookup" [multiple]="true"
+        label="TRẠNG THÁI" [(model)]="timKiemModel.TrangThais" ></app-select>
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem"><mat-icon>search</mat-icon> Tìm kiếm</button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #tinhTrangDenTemplate let-dataItem>
+  <span *ngIf="dataItem.TrangThaiDenId==1" class="green">{{dataItem.TrangThaiDen}}</span>
+  <button mat-stroked-button color="warn" (click)="nguoiBenhDaDen(dataItem)" *ngIf="dataItem.TrangThaiDenId==2" matTooltip="Người bệnh đã đến ?" style="padding-left:5px ;padding-right:5px;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYEAYAAACw5+G7AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAABgAAAAYADwa0LPAAAAB3RJTUUH5gkPASwQfP4x5QAAArlJREFUWMPtVj1IW1EUPucmUALRl5doUIMIDhYhbUUoaGoHIQoKhqANiqBDcevQQVDUDG5qSbtFNP0B6aIpRuJUEoqtmohGbVPEoHTTQYn6nu1kk7zTwUaLLdjE50+L33LhnnPPd77D/eAAXOM/w2xU59V58/ICxBNPvb3JM3kvN59SrkIzMxzHcTyPXxO6hC4UgnXUova4YYwkgolgW9sUccSR0ViJ+7iPonhWXiaXAAVTMAUzm2EL67DuD5MuRhOaDIYbOYpaRa3ZnLwOBHie54kCjzV+jX94+NIEwCOpXWrf3j4tTTLSHM1tbclFK5sA0yfRLtqnp9FJG7QxNPRbwkfIh/zBwYp3giiIs7OyDe68MP0sqzurOzd3YSzblm3LyTkZX8jL6Mro0umSXyjIa8Ka8MBAqjxnNvEUAQAolUq1tkZbU1QEbxPBRFClAog5Y06Ag595hyY3GLCXIUOVKn4X5mG+o+Oo0EvqpE6fD+pT48d0G58z8DzPNzeTGrSgdTrpFezBnkbz1wWeQCEUShLuQwEU9Peb3gsewdPTk2ofKXsg8IAjjkpKpA9QBVUjI/Sc1mhtcxNuk4Us4+OnFnCTm9wul5SpYApWXJxu42kLgDcMGFitsA1+8CuV8VvUR30WC9ZjKZb6fKc9x1VcxdWlpfuvd0I7ofX1dBtPX8DJAivgAAem/RUvXADpqYmaJibgCzRCYyzGCHdx1+slDy3TcnX1lRdQERXHxLFwGO6AGtStrXATy7HcYIDPOImTDQ1XXkAS90oEh+AYHf2uF0JCSK+Hb+Qkp93+zwhIohIBAOJxfIpRjEajR4EX5CFPJHJ0nhNk20ZPQnpIVrK2tBxPChmyxUW5eeRb5i4J1wIuG7J5gA6ojMoiEXCDG9wuF64wG7P9Ymrj4QpBB5AJmedn6mtcNH4AodQWeErcrhUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDktMTVUMDE6NDQ6MTYrMDA6MDDKrhsjAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA5LTE1VDAxOjQ0OjE2KzAwOjAwu/OjnwAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyMi0wOS0xNVQwMTo0NDoxNiswMDowMOzmgkAAAAAASUVORK5CYII=" alt="Người bệnh đã đến"> {{dataItem.TrangThaiDen}}</button>
+</ng-template>
+<ng-template #hoTenTemplate let-dataItem>
+  <a (click)="tableDangKyKham.view(dataItem.Id)" [ngStyle]="{'color':dataItem.TrangThaiDenId==2?'#C60909':''}" matTooltip="{{dataItem.TrangThaiDenId==2?'Người bệnh chưa đến':''}}">{{dataItem.HoTen}}</a>
+  <!-- <button mat-icon-button color="warn" (click)="nguoiBenhDaDen(dataItem)" *ngIf="dataItem.TrangThaiDenId==2" matTooltip="Người bệnh đã đến"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYEAYAAACw5+G7AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAABgAAAAYADwa0LPAAAAB3RJTUUH5gkPASwQfP4x5QAAArlJREFUWMPtVj1IW1EUPucmUALRl5doUIMIDhYhbUUoaGoHIQoKhqANiqBDcevQQVDUDG5qSbtFNP0B6aIpRuJUEoqtmohGbVPEoHTTQYn6nu1kk7zTwUaLLdjE50+L33LhnnPPd77D/eAAXOM/w2xU59V58/ICxBNPvb3JM3kvN59SrkIzMxzHcTyPXxO6hC4UgnXUova4YYwkgolgW9sUccSR0ViJ+7iPonhWXiaXAAVTMAUzm2EL67DuD5MuRhOaDIYbOYpaRa3ZnLwOBHie54kCjzV+jX94+NIEwCOpXWrf3j4tTTLSHM1tbclFK5sA0yfRLtqnp9FJG7QxNPRbwkfIh/zBwYp3giiIs7OyDe68MP0sqzurOzd3YSzblm3LyTkZX8jL6Mro0umSXyjIa8Ka8MBAqjxnNvEUAQAolUq1tkZbU1QEbxPBRFClAog5Y06Ag595hyY3GLCXIUOVKn4X5mG+o+Oo0EvqpE6fD+pT48d0G58z8DzPNzeTGrSgdTrpFezBnkbz1wWeQCEUShLuQwEU9Peb3gsewdPTk2ofKXsg8IAjjkpKpA9QBVUjI/Sc1mhtcxNuk4Us4+OnFnCTm9wul5SpYApWXJxu42kLgDcMGFitsA1+8CuV8VvUR30WC9ZjKZb6fKc9x1VcxdWlpfuvd0I7ofX1dBtPX8DJAivgAAem/RUvXADpqYmaJibgCzRCYyzGCHdx1+slDy3TcnX1lRdQERXHxLFwGO6AGtStrXATy7HcYIDPOImTDQ1XXkAS90oEh+AYHf2uF0JCSK+Hb+Qkp93+zwhIohIBAOJxfIpRjEajR4EX5CFPJHJ0nhNk20ZPQnpIVrK2tBxPChmyxUW5eeRb5i4J1wIuG7J5gA6ojMoiEXCDG9wuF64wG7P9Ymrj4QpBB5AJmedn6mtcNH4AodQWeErcrhUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDktMTVUMDE6NDQ6MTYrMDA6MDDKrhsjAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA5LTE1VDAxOjQ0OjE2KzAwOjAwu/OjnwAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyMi0wOS0xNVQwMTo0NDoxNiswMDowMOzmgkAAAAAASUVORK5CYII=" alt="Người bệnh đã đến"></button> -->
+</ng-template>
+<ng-template #laDangKyHenTruocTemplate let-dataItem>
+  <div class="text-center">
+    <app-checkbox [(model)]="dataItem.LaDangKyHenTruoc" disabled="true" style="display: inline-block;margin-right: 5px;"></app-checkbox>
+    <!-- <button mat-stroked-button color="primary" (click)="nguoiBenhDaDen(dataItem)" *ngIf="dataItem.TrangThaiDenId==2" matTooltip="Người bệnh đã đến"><mat-icon>how_to_reg</mat-icon> NB đến</button> -->
+  </div>
+</ng-template>
+<ng-template #actionTemplate let-dataItem>
+  <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_horiz</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="huyDangKy(dataItem)">Hủy đăng ký</button>
+  </mat-menu>
+</ng-template>
+<ng-template #tinhTrangTemplate let-dataItem>
+  <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;" *ngIf="dataItem.LoaiTrangThaiYeuCauTiepNhan!=5" class="bg"
+  [ngClass]="{'grey': dataItem.LoaiTrangThaiYeuCauTiepNhan==1,'orange': dataItem.LoaiTrangThaiYeuCauTiepNhan==2}">{{dataItem.TrangThaiYeuCauTiepNhan}}</span>
+  <button mat-stroked-button color="warn" (click)="nguoiBenhDaDen(dataItem)" *ngIf="dataItem.LoaiTrangThaiYeuCauTiepNhan==5"
+  matTooltip="Người bệnh đã đến ?">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYEAYAAACw5+G7AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAABgAAAAYADwa0LPAAAAB3RJTUUH5gkPASwQfP4x5QAAArlJREFUWMPtVj1IW1EUPucmUALRl5doUIMIDhYhbUUoaGoHIQoKhqANiqBDcevQQVDUDG5qSbtFNP0B6aIpRuJUEoqtmohGbVPEoHTTQYn6nu1kk7zTwUaLLdjE50+L33LhnnPPd77D/eAAXOM/w2xU59V58/ICxBNPvb3JM3kvN59SrkIzMxzHcTyPXxO6hC4UgnXUova4YYwkgolgW9sUccSR0ViJ+7iPonhWXiaXAAVTMAUzm2EL67DuD5MuRhOaDIYbOYpaRa3ZnLwOBHie54kCjzV+jX94+NIEwCOpXWrf3j4tTTLSHM1tbclFK5sA0yfRLtqnp9FJG7QxNPRbwkfIh/zBwYp3giiIs7OyDe68MP0sqzurOzd3YSzblm3LyTkZX8jL6Mro0umSXyjIa8Ka8MBAqjxnNvEUAQAolUq1tkZbU1QEbxPBRFClAog5Y06Ag595hyY3GLCXIUOVKn4X5mG+o+Oo0EvqpE6fD+pT48d0G58z8DzPNzeTGrSgdTrpFezBnkbz1wWeQCEUShLuQwEU9Peb3gsewdPTk2ofKXsg8IAjjkpKpA9QBVUjI/Sc1mhtcxNuk4Us4+OnFnCTm9wul5SpYApWXJxu42kLgDcMGFitsA1+8CuV8VvUR30WC9ZjKZb6fKc9x1VcxdWlpfuvd0I7ofX1dBtPX8DJAivgAAem/RUvXADpqYmaJibgCzRCYyzGCHdx1+slDy3TcnX1lRdQERXHxLFwGO6AGtStrXATy7HcYIDPOImTDQ1XXkAS90oEh+AYHf2uF0JCSK+Hb+Qkp93+zwhIohIBAOJxfIpRjEajR4EX5CFPJHJ0nhNk20ZPQnpIVrK2tBxPChmyxUW5eeRb5i4J1wIuG7J5gA6ojMoiEXCDG9wuF64wG7P9Ymrj4QpBB5AJmedn6mtcNH4AodQWeErcrhUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDktMTVUMDE6NDQ6MTYrMDA6MDDKrhsjAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA5LTE1VDAxOjQ0OjE2KzAwOjAwu/OjnwAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyMi0wOS0xNVQwMTo0NDoxNiswMDowMOzmgkAAAAAASUVORK5CYII=" alt="Người bệnh đã đến"> {{dataItem.TrangThaiYeuCauTiepNhan}}
+</button>
+</ng-template>

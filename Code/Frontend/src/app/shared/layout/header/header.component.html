@@ -1,0 +1,96 @@
+<mat-toolbar color="default">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <a class="logo">
+    <span><img src="assets/img/logo.png" alt="IoT Truyền Thông" /> </span>
+    <span class="name">CAMINO <span style="color:#ACD703;vertical-align: initial;">CLINIC</span></span>
+  </a>
+  <div fxFlex fxLayout fxLayoutAlign="start" fxHide.xs *ngIf="navigationitems!=null" style="margin-top: -2px;">
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">THAO TÁC NHANH</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="view('/tiep-nhan-nguoi-benh/bac-si-gia-dinh/dang-ky-kham',{id:0})"><mat-icon>person_add</mat-icon> Tiếp nhận</button>
+      <button mat-menu-item (click)="view('/kham-benh/bac-si-gia-dinh/bac-si-kham',{})"><mat-icon>medical_services</mat-icon> Khám bệnh</button>
+    </mat-menu>
+    <div style="width:450px;max-width:calc(100% - 200px);display:inline-block;">
+      <app-textbox placeHolder="Nhập chính xác Mã BN, Mã TN, Họ tên để tìm kiếm..." floatLabel="always" icon="search" customClass="search-function in-header" [(model)]="searchString" (keyup)="onKey($event)" (onIconClick)="search()"></app-textbox>
+    </div>
+    <!-- <ul class="menu">
+      <li *ngFor="let item of navigationitems">
+        <ng-container *ngIf="item.children!=null && item.children.length>0">
+          <button #button mat-button [ngClass]="{'active': isActive(item.route)}" [matMenuTriggerFor]="levelOne"
+            #levelOneTrigger="matMenuTrigger" (mouseenter)="buttonEnter(levelOneTrigger)"
+            (mouseleave)="buttonLeave(levelOneTrigger, button)">
+            {{item.label}}
+          </button>
+          <mat-menu #levelOne="matMenu" (mouseleave)="trigger.closeMenu()" [hasBackdrop]="false">
+            <span (mouseenter)="menuenter()" (mouseleave)="menuLeave(levelOneTrigger, button)">
+              <ng-container *ngFor="let itemChild of getChilds(item)">
+                <ng-container *ngIf="itemChild!=null && itemChild.children!=null && itemChild.children.length>0">
+                  <button mat-menu-item class="menu-child" [ngClass]="{'active': isActive(itemChild.route)}"
+                    [matMenuTriggerFor]="levelTwo" #levelTwoTrigger="matMenuTrigger">{{itemChild.label}}</button>
+                  <mat-menu #levelTwo="matMenu" [hasBackdrop]="false">
+                    <span (mouseenter)="menu2enter()"
+                      (mouseleave)="menu2Leave(levelOneTrigger,levelTwoTrigger, button)">
+                      <ng-container *ngFor="let itemChildChild of getChilds(itemChild)">
+                        <a routerLink="{{itemChildChild.route}}" class="menu-child"
+                          [ngClass]="{'active': isActive(itemChildChild.route)}" *ngIf="itemChildChild.type=='link'">
+                          <button mat-menu-item>{{itemChildChild.label}}</button>
+                        </a>
+                        <a (click)="showPopup(itemChildChild)" class="menu-child"
+                          [ngClass]="{'active': isActive(itemChildChild.route)}" *ngIf="itemChildChild.type=='popup'">
+                          <button mat-menu-item>{{itemChildChild.label}}</button>
+                        </a>
+                      </ng-container>
+                    </span>
+                  </mat-menu>
+                </ng-container>
+                <ng-container *ngIf="!(itemChild.children!=null && itemChild.children.length>0)">
+                  <a *ngIf="itemChild.type=='link'" routerLink="{{itemChild.route}}" class="menu-child"
+                    [ngClass]="{'active': isActive(itemChild.route)}">
+                    <button mat-menu-item>{{itemChild.label}}</button>
+                  </a>
+                  <a *ngIf="itemChild.type=='popup'" (click)="showPopup(itemChild)" class="menu-child"
+                    [ngClass]="{'active': isActive(itemChild.route)}">
+                    <button mat-menu-item>{{itemChild.label}}</button>
+                  </a>
+                </ng-container>
+              </ng-container>
+            </span>
+          </mat-menu>
+        </ng-container>
+        <ng-container *ngIf="!(item.children!=null && item.children.length>0)">
+          <button mat-stroked-button *ngIf="item.type=='link'" [ngClass]="{'active': isActive(item.route)}" style="border:none"
+            routerLink="{{item.route}}">
+            {{item.label}}
+          </button>
+          <button mat-stroked-button *ngIf="item.type=='popup'" [ngClass]="{'active': isActive(item.route)}" style="border:none"
+            (click)="showPopup(item)">
+            {{item.label}}
+          </button>
+        </ng-container>
+
+      </li>
+    </ul> -->
+  </div>
+  <span class="example-spacer"></span>
+  <div fxFlex fxLayout fxLayoutAlign="end">
+    <p class="mb-0" style="display: flex;align-items:center;">
+      <span style="font-size: 15px;" fxHide.xs *ngIf="currentAccessUser!=null">Xin chào,
+        <b>{{currentAccessUser.UserName}}</b></span>
+      <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menuAccount">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </p>
+
+  </div>
+  <mat-menu #menuAccount="matMenu">
+    <button mat-menu-item fxHide.gt-sm *ngIf="currentAccessUser!=null"><span>Xin chào,
+        <b>{{currentAccessUser.UserName}}</b></span></button>
+    <button mat-menu-item (click)="account()">Thông tin tài khoản</button>
+    <button mat-menu-item (click)="doiMatKhau()">Đổi mật khẩu</button>
+    <button mat-menu-item (click)="dangXuat()">Đăng xuất</button>
+  </mat-menu>
+</mat-toolbar>

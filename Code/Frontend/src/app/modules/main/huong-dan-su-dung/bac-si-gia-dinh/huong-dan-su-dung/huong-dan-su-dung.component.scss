@@ -1,0 +1,141 @@
+
+.header{        
+    position: relative;
+    .btn-tiep-nhan-moi{
+        position: absolute;
+        right: 5px;
+        top: 1.5px;
+        @media (max-width: 575px) {
+            span{
+                display: none;
+            }
+        }
+    }
+    .btn-huong-dan-su-dung-mobile{
+        position: absolute;
+        right: 70px;
+        top: 1.5px;
+        @media (max-width: 575px) {
+            span{
+                display: none;
+            }
+        }
+    }
+}
+.grid-content{
+    .left{
+        width: 400px;
+        height: 100%;
+        float: left;
+        border-right: 1px solid rgba(0, 0, 0, 0.12);
+        position: relative;
+        .btn-hide-huong-dan-su-dung{
+            position: absolute;
+            z-index: 99999;
+            right: 5px;
+            bottom: 5px;        
+        }
+        @media (max-width: 575px) {
+            width: 100%;
+            border-right: none;
+        }
+        .header-template {
+            width: calc(100% - 5px);
+        }
+    }
+    .middle{
+        display: none;
+        width: 0;
+        height: 100%;
+        float: left;
+        border-right: 1px solid rgba(0, 0, 0, 0.12);
+        background-color: rgb(230, 255, 255);
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        vertical-align: middle;
+        text-align: center;
+        position: relative;
+        span{
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 30px;
+        }
+        button{
+            margin-top: 10px;
+            left: -5px;
+            position: absolute;
+        }
+        &:hover{
+            background-color: #01adef;
+            cursor: pointer;
+            span{
+                color: white;
+            }
+            button{
+                color: white;
+            }
+        }
+    }
+    .right{
+        width: calc(100% - 401px);
+        height: 100%;
+        float: left;
+        @media (max-width: 575px) {
+            width: 100%;
+        }
+        .header{
+            height: 55px;
+            .title{
+                line-height: 55px;
+            }
+            .btn-huong-dan-su-dung,.btn-huong-dan-su-dung-mobile{
+                margin-left:10px;height: 48px;top: 3px;
+            }
+            .slc-nguoi-benh-dang-kham{
+                display: inline-block;width:300px;font-size:13px;margin-left:5px;margin-top:3px;
+            }
+            .btn-tiep-theo{
+                height: 48px;top: -3px;
+            }
+        }
+    }
+
+    @media (max-width: 575px) {
+        .left{
+            width: 100%;
+        }
+        .right{
+            width: 0%;
+        }
+    }
+    &.has-detail{
+        @media (max-width: 575px) {
+            .left{
+                display: none;
+            }
+            .right{
+                width: calc(100% - 1px);
+            }
+        }
+    }
+    &.hide-left{
+        .left{
+            display: none;
+        }
+        .middle{
+            width:30px;
+            display: block;
+            @media (max-width: 575px) {
+                width:0;
+                display: none;
+            }
+        }
+        .right{
+            width: calc(100% - 31px);
+            @media (max-width: 575px) {
+                width: calc(100% - 1px);
+            }
+        }
+
+    }
+}

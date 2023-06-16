@@ -1,0 +1,53 @@
+<div class="form-content">
+    <!-- <ng-scrollbar fxLayout="row column" fxLayoutGap="0%"> -->
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ma" label="MÃ" [required]="true"
+                placeholder="MÃ" [(model)]="quocGiaVo.Ma" maxLength="20"
+                [validationerror]="'Ma' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ten" label="TÊN" [required]="true"
+                placeholder="TÊN" [(model)]="quocGiaVo.Ten" maxLength="250"
+                [validationerror]="'Ten' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="ten-viet-tat" label="TÊN VIẾT TẮT"
+                [required]="true" placeholder="TÊN VIẾT TẮT" [(model)]="quocGiaVo.TenVietTat" maxLength="50"
+                [validationerror]="'TenVietTat' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ma-so-dien-thoai"
+                label="MÃ SỐ ĐIỆN THOẠI QUỐC TẾ" [required]="true" placeholder="MÃ SỐ ĐIỆN THOẠI QUỐC TẾ"
+                [(model)]="quocGiaVo.MaDienThoaiQuocTe" maxLength="100"
+                [validationerror]="'MaDienThoaiQuocTe' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="quoc-tich" label="QUỐC TỊCH"
+                [required]="true" placeholder="QUỐC TỊCH" [(model)]="quocGiaVo.QuocTich" maxLength="250"
+                [validationerror]="'QuocTich' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="thu-do" label="THỦ ĐÔ" [required]="true"
+                placeholder="THỦ ĐÔ" [(model)]="quocGiaVo.ThuDo" maxLength="50"
+                [validationerror]="'ThuDo' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textboxnumeric fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="chau-luc" [required]="true" min="1"
+                [(model)]="quocGiaVo.ChauLuc" label="CHÂU LỤC"
+                [validationerror]="'ChauLuc' | validationerror:validationErrors">
+            </app-textboxnumeric>
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="HIỆU LỰC" [required]="true"
+                [items]="[{KeyId:1,DisplayName:'Đang sử dụng'},{KeyId:2,DisplayName:'Không sử dụng'}]"
+                [(model)]="quocGiaVo.HieuLucId" (modelChange)="hieuLucChange($event)"
+                [validationerror]="'HieuLuc' | validationerror:validationErrors">
+            </app-select>
+
+        </div>
+    </div>
+    <!-- </ng-scrollbar> -->
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

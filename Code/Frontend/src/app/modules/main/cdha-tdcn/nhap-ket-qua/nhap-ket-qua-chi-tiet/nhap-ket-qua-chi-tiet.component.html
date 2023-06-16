@@ -1,0 +1,111 @@
+<div class="form-content">
+  <div fxLayout="row column" fxLayoutGap="10px grid">
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0 grid" id="scrollbarContent">
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row column" fxLayoutGap="0%">
+          <fieldset fxFlex="100%" class="mb-3" style="background-color: #e6ffff;position: relative;">
+            <legend>THÔNG TIN HÀNH CHÍNH</legend>
+            <ul class="inline">
+              <li>Mã TN: <strong>2204050036</strong></li>
+              <li>Mã NB: <strong>22036936</strong></li>
+              <li>Họ tên: <strong>NGUYỄN THỊ LAN</strong></li>
+              <li>Giới tính: <strong>Nữ</strong></li>
+              <li>Tuổi: <strong>31</strong></li>
+              <li>SĐT: <strong>035 276 3599</strong></li>
+              <li>Dân tộc: <strong>Kinh</strong></li>
+              <li>Nghề nghiệp: <strong>Công nhân</strong></li>
+              <li>Địa chỉ: <strong>203 Quang Trung, Phường Quang Trung, Quận Hà Đông, Thành phố Hà Nội</strong></li>
+              <li>Số BHYT: <strong>5623659865986458</strong></li>
+              <li>Mức hưởng: <strong class="blue">20%</strong></li>
+              <li>Ngày hiệu lực: <strong>05/04/2022</strong></li>
+            </ul>
+          </fieldset>
+          <fieldset fxFlex="100%">
+            <legend>THÔNG TIN KẾT QUẢ</legend>
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+              <app-textbox-search-table fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="DichVu"
+                label="DỊCH VỤ CỦA NB" placeholder="DỊCH VỤ CỦA NB" [(model)]="nhapKetQuaVo.DichVu" fieldSelected="Ten"
+                maxLength="100" [required]="true"
+                [columns]="[{ label: 'TÊN', property: 'Ten', type: 'text',minWidth:300, visible: true,notEllipsis:true },
+            { label: 'TRẠNG THÁI', property: 'TrangThai', type: 'text',width:130, visible: true,template:this.trangThaiTemplate }]" [groupByColumns]="[]"
+                [sortByColumn]="{field:'Ten',dir:'asc'}" [dataSource]="{
+              Data:[
+              {'Id':1,'Ten':'Chụp Xquang sọ thẳng/nghiêng (D.R 2 phim)','TrangThai':'Chưa thực hiện','LoaiTrangThai':1},       
+              {'Id':1,'Ten':'Chụp Xquang sọ thẳng/nghiêng (D.R 2 phim)','TrangThai':'Đã thực hiện','LoaiTrangThai':2}             
+              ],
+              TotalRowCount:2
+            }" (extRowSelect)="chonDichVu($event)" [validationerror]="'DichVu' | validationerror:validationErrors">
+              </app-textbox-search-table>
+              <app-textbox fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%" id="TenKetQua" label="TÊN KẾT QUẢ"
+                [(model)]="nhapKetQuaVo.TenKetQua" [required]="true" [upperCase]="true"
+                [validationerror]="'TenKetQua' | validationerror:validationErrors">
+              </app-textbox>
+              <app-textbox fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%" id="TenKyThuat" label="TÊN KỸ THUẬT"
+                [(model)]="nhapKetQuaVo.TenKyThuat" [validationerror]="'TenKyThuat' | validationerror:validationErrors">
+              </app-textbox>
+              <app-editor fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDungKetQua" label="NỘI DUNG KẾT QUẢ"
+                [(model)]="nhapKetQuaVo.NoiDungKetQua" [required]="true" [showToolbar]="false"
+                [validationerror]="'NoiDungKetQua' | validationerror:validationErrors">
+              </app-editor>
+              <app-editor fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDungKetLuan"
+                label="NỘI DUNG KẾT LUẬN" [(model)]="nhapKetQuaVo.NoiDungKetLuan" [required]="true"
+                [showToolbar]="false" [validationerror]="'NoiDungKetLuan' | validationerror:validationErrors">
+              </app-editor>
+              <app-upload fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="HinhAnhDinhKems"
+                label="HÌNH ẢNH ĐÍNH KÈM" [(model)]="nhapKetQuaVo.HinhAnhDinhKems" [multiple]="true"
+                [allowedExtensions]="['.jpg', '.jpeg', '.png']" [showThumbImageOnly]="true"
+                [validationerror]="'HinhAnhDinhKems' | validationerror:validationErrors">
+              </app-upload>
+
+              <app-datetimepicker fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%" id="NgayThucHien"
+                label="NGÀY THỰC HIỆN" placeholder="NGÀY THỰC HIỆN" [(model)]="nhapKetQuaVo.NgayThucHien"
+                [required]="true" [validationerror]="'NgayThucHien' | validationerror:validationErrors">
+              </app-datetimepicker>
+              <app-select fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%" id="NguoiThucHien" label="NGƯỜI THỰC HIỆN"
+                placeholder="NGƯỜI THỰC HIỆN"
+                [items]="[{KeyId:1,DisplayName:'Nguyễn Văn A'},{KeyId:2,DisplayName:'Nguyễn Văn B'}]"
+                [(model)]="nhapKetQuaVo.NguoiThucHien" [required]="true"
+                [validationerror]="'NguoiThucHien' | validationerror:validationErrors">
+              </app-select>
+
+              <app-textbox fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="GhiChu" label="GHI CHÚ"
+                [(model)]="nhapKetQuaVo.GhiChu" [validationerror]="'GhiChu' | validationerror:validationErrors">
+              </app-textbox>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </ng-scrollbar>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <fieldset>
+      <legend>PHIẾU IN</legend>
+      <iframe [srcdoc]="getContentIn() | safe" frameBorder="0" id="iframeXemPhieuIn"></iframe>
+    </fieldset>
+  </div>
+  </div>
+</div>
+<div class="form-footer">  
+  <div fxLayout="row column" fxLayoutGap="0 grid">
+    <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+      <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+      <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+      <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+        NHẬT</button>
+      <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+    </div>
+    <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+      <app-print-button buttonType="mat-stroked-button" color="primary" icon="print" class="float-right"
+        [htmlContent]="getContentIn()" label="In kết quả"></app-print-button>
+    </div>
+  </div>
+
+</div>
+
+
+<ng-template #trangThaiTemplate let-dataItem>
+  <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;" class="bg"
+    [ngClass]="{'grey':dataItem.LoaiTrangThai==1,'green': dataItem.LoaiTrangThai==2}">{{dataItem.TrangThai}}</span>
+</ng-template>

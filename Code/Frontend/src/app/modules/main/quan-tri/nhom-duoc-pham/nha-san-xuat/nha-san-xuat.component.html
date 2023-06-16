@@ -1,0 +1,72 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM DƯỢC PHẨM</a>
+        <a class="active">NHÀ SẢN XUẤT</a>
+      </div>
+        <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="table.create()">
+        <mat-icon>add</mat-icon>
+    </button>
+    </div>
+    <div class="grid-content">
+      <app-table #tableNhaSanXuat masterName="tableNhaSanXuat" [columns]="columnsNhaSanXuat"
+        [documentType]="documentTypeNhaSanXuat" [groupByColumns]="groupByColumnsNhaSanXuat"
+        [headerTemplate]="headerNhaSanXuatTemplate" [sortByColumn]="sortByColumnNhaSanXuat" [showIndex]="false"
+        [showCheckbox]="false" (extDataItemSelected)="extDataItemSelected($event)">
+      </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-nha-san-xuat-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)" (quayLaiChange)="quayLaiChange()"
+        (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-nha-san-xuat-chi-tiet>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #headerNhaSanXuatTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ma" label="MÃ"
+        [(model)]="nhaSanXuatQueryInfo.Ma" (keyup)="onKey($event)"></app-textbox>
+      
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ten" label="TÊN"
+        [(model)]="nhaSanXuatQueryInfo.Ten" (keyup)="onKey($event)"></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="email" label="EMAIL"
+        [(model)]="nhaSanXuatQueryInfo.Email" (keyup)="onKey($event)"></app-textbox>
+
+        <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="email" label="SỐ ĐIỆN THOẠI"
+        [(model)]="nhaSanXuatQueryInfo.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+
+
+
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem">
+          <mat-icon>search</mat-icon> Tìm kiếm
+        </button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem">
+          <mat-icon>clear</mat-icon> Hủy tìm kiếm
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #trangThaiTemplate let-dataItem>
+  <button *ngIf="dataItem.HieuLuc != true" (click)="updateNhaSanXuat(dataItem.Id,dataItem.HieuLuc)" mat-menu-item>
+    <mat-icon style="color: red;">clear</mat-icon>Ngừng sử dụng
+  </button>
+  <button *ngIf="dataItem.HieuLuc == true" (click)="updateNhaSanXuat(dataItem.Id,dataItem.HieuLuc)" mat-menu-item>
+    <mat-icon color="primary">done</mat-icon>Đang sử dụng
+  </button>
+</ng-template>

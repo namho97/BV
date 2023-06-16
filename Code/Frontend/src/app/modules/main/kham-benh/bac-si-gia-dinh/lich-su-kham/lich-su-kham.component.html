@@ -1,0 +1,69 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>KHÁM BỆNH</a>
+        <a class="active">LỊCH SỬ KHÁM</a>
+      </div>
+    </div>
+    <div class="grid-content">
+      <app-table  #tableLichSuKham masterName="tableLichSuKham" [columns]="columnsLichSuKham"
+       [documentType]="documentTypeLichSuKham"
+      [groupByColumns]="groupByColumnsLichSuKham"  [headerTemplate]="headerLichSuKhamTemplate"
+      [sortByColumn]="sortByColumnLichSuKham" [showIndex]="false" [showCheckbox]="false"
+      (extDataItemSelected)="extDataItemSelected($event)">
+    </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-lich-su-kham-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()" (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-lich-su-kham-chi-tiet>
+    </div>
+  </div>
+</div>
+
+
+<!-- Dã hoàn thành -->
+
+<ng-template #headerLichSuKhamTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <!-- <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaTiepNhan" label="MÃ TN"
+        [(model)]="lichSuKhamQueryInfo.MaTiepNhan" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaNguoiBenh" label="MÃ NB"
+        [(model)]="lichSuKhamQueryInfo.MaNguoiBenh" (keyup)="onKey($event)"></app-textbox> -->
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HoTen" label="HỌ TÊN"
+        [(model)]="lichSuKhamQueryInfo.HoTen" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="GioiTinhs" label="GIỚI TÍNH" [multiple]="true"
+        url="Common/GetGioiTinhLookup" [(model)]="lichSuKhamQueryInfo.GioiTinhs">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="DienThoai" label="ĐIỆN THOẠI"
+        [(model)]="lichSuKhamQueryInfo.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="NgayHoanThanhTu"
+        label="HOÀN THÀNH TỪ" [(model)]="lichSuKhamQueryInfo.NgayHoanThanhTu" (keyup)="onKey($event)"></app-datetimepicker>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="NgayHoanThanhDen"
+        label="HOÀN THÀNH ĐẾN" [(model)]="lichSuKhamQueryInfo.NgayHoanThanhDen" (keyup)="onKey($event)"></app-datetimepicker>
+
+        <app-select style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="TrangThais"
+        url="Common/GetTinhTrangLichSuKhamLookup" [multiple]="true"
+        label="TRẠNG THÁI" [(model)]="lichSuKhamQueryInfo.TrangThais" ></app-select>
+        <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+          <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem"><mat-icon>search</mat-icon> Tìm kiếm</button>
+        </div>
+        <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+          <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+        </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #maTiepNhanTemplate let-dataItem>
+  <a (click)="chonNguoiBenhXemChiTiet(dataItem)">{{dataItem.MaTiepNhan}}</a>
+</ng-template>
+<ng-template #tinhTrangTemplate let-dataItem>
+  <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;" class="bg" [ngClass]="{'green':dataItem.TrangThai==3,'red': dataItem.TrangThai==4}">{{dataItem.TrangThaiHienThi}}</span>
+</ng-template>

@@ -1,0 +1,75 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM NGƯỜI BỆNH</a>
+        <a class="active">NGƯỜI BỆNH</a>
+      </div>
+      <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="table.create()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="grid-content">
+      <app-table #tableNguoiBenh masterName="tableNguoiBenh" [columns]="columnsNguoiBenh"
+        [documentType]="documentTypeNguoiBenh" [groupByColumns]="groupByColumnsNguoiBenh"
+        [headerTemplate]="headerNguoiBenhTemplate" [sortByColumn]="sortByColumnNguoiBenh" [showIndex]="false"
+        [showCheckbox]="false" (extDataItemSelected)="extDataItemSelected($event)">
+      </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-nguoi-benh-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)" (quayLaiChange)="quayLaiChange()"
+        (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-nguoi-benh-chi-tiet>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #headerNguoiBenhTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ma"
+        label="MÃ NGƯỜI BỆNH" [(model)]="nguoiBenhQueryInfo.Ma" (keyup)="onKey($event)" ></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="Ten"
+        label="HỌ TÊN" [(model)]="nguoiBenhQueryInfo.HoTen" (keyup)="onKey($event)"></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="nam-sinh"
+        label="NĂM SINH" [(model)]="nguoiBenhQueryInfo.NgayThangNamSinh" (keyup)="onKey($event)"></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="cmt"
+        label="SỐ CHỨNG MINH THƯ" [(model)]="nguoiBenhQueryInfo.SoMinhThu" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" label="GIỚI TÍNH"
+        [items]="[{KeyId:1,DisplayName:'Nam'},{KeyId:2,DisplayName:'Nữ'},{KeyId:3,DisplayName:'Chưa xác định'}]"
+        [(model)]="nguoiBenhQueryInfo.GioiTinhs">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="sdt"
+        label="SỐ ĐIỆN THOẠI" [(model)]="nguoiBenhQueryInfo.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+
+      <!-- <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="dia-chi"
+        label="ĐỊA CHỈ" [(model)]="nguoiBenhQueryInfo.DiaChi"></app-textbox>
+
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="so-nha"
+        label="SỐ NHÀ" [(model)]="nguoiBenhQueryInfo.SoNha"></app-textbox> -->
+
+
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem">
+          <mat-icon>search</mat-icon> Tìm kiếm
+        </button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem">
+          <mat-icon>clear</mat-icon> Hủy tìm kiếm
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

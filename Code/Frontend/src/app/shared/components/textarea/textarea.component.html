@@ -1,0 +1,17 @@
+
+<div class="full-width">
+  <mat-form-field appearance="outline" class="full-width  {{label==null||label==''?'no-label':''}}">
+    <mat-label>{{label}} <span style="color: red;font-weight: bold;" *ngIf="required">*</span></mat-label>
+    <textarea autosize matInput placeholder="{{placeHolder}}"  id="{{id}}" name="{{id}}" [(ngModel)]="model" (ngModelChange)="emit($event)" (blur)="blur()" type="{{type}}"
+    [readonly]="readonly"  [disabled]="disabled" [style.min-height.px]="minHeight" maxlength="{{maxlength}}" [minRows]="1"></textarea>
+    <button tabindex="-1" mat-button *ngIf="model!=null && showIconClear && !disabled"
+          mat-icon-button
+          aria-label="Clear"
+          (click)="reset()"
+          matTooltip="Bỏ chọn"
+          class="mat-textarea-search-clear">
+    <mat-icon>close</mat-icon>
+  </button>   
+  </mat-form-field>
+  <label  id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

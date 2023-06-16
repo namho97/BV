@@ -1,0 +1,11 @@
+<app-table #tableKeToa masterName="tableKeToa" [columns]="columnsKeToa" [dataSource]="dataSourceKeToa"
+[documentType]="documentType" maxHeight="600" [pageable]="false" [groupByColumns]="groupByColumnsKeToa"
+[sortByColumn]="sortByColumnKeToa" [showIndex]="true" [showCheckbox]="false" [noBorderLeft]="false"
+[noBorderRight]="false" [hideHeader]="true" [noBorderTop]="true">
+</app-table>
+<app-print-button buttonType="mat-stroked-button" color="primary" icon="print" class="float-right mt-3"
+[htmlContent]="getContentInToaThuoc()" label="In toa thuốc"></app-print-button>
+
+<ng-template #thuocBHYTTemplate let-dataItem>
+  <app-checkbox [(model)]="dataItem.ThuocBHYT" [disabled]="true"></app-checkbox>
+</ng-template>

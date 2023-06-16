@@ -1,0 +1,34 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>TOA MẪU</div>
+  <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content style="max-height:660px">
+
+  <app-table-expanded #tableToaMau masterName="tableToaMau" [columns]="columnsToaMau" [showIconOpenSearchForm]="false"
+  urlGetData="QuanTriNhomPhongKhamToaThuocMau/GetDataForGridAsync" [additionalSearchObject]="{HieuLuc:true}" [documentType]="documentTypeToaMau"
+  [groupByColumns]="groupByColumnsToaMau" [sortByColumn]="sortByColumnToaMau" [showIndex]="false"
+  [showCheckbox]="false" [useAddDeault]="false" [tableDetailTemplate]="tableDetailTemplate" maxHeight="543">
+  </app-table-expanded>
+
+  <ng-template #tableDetailTemplate let-dataItem>
+    <div class="full-width p-15">
+        <app-table #tableChiTietToaMau masterName="tableChiTietToaMau" [columns]="columnsChiTietToaMau"
+        urlGetData="QuanTriNhomPhongKhamToaThuocMau/GetToaMauChiTietDataForGridAsync"
+        [additionalSearchObject]="{QueryId:dataItem.Id}"
+        [documentType]="documentTypeToaMau"
+        [hideHeader]="true" [useAddDeault]="false" [showIndex]="true" maxHeight="543" [pageable]="false">
+        </app-table>
+    </div>
+  </ng-template>
+
+  <ng-template #actionTemplate let-dataItem>
+    <button mat-stroked-button (click)="chon(dataItem)"><mat-icon>done</mat-icon> Chọn</button>
+  </ng-template>
+</mat-dialog-content>
+
+<!-- <mat-dialog-actions>
+  <button type="button" mat-stroked-button style="margin-left: auto;" mat-dialog-close>Đóng</button>
+</mat-dialog-actions> -->

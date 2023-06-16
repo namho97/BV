@@ -1,0 +1,171 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+  <div fxFlex="100%" fxFlex.gt-sm="35%" fxFlex.sm="35%">
+    <div class="form-content-ke-toa">
+      <ng-scrollbar>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+          <app-radio fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="LOẠI"
+            [items]="[{Value:1,Text:'BHYT'},{Value:2,Text:'KHÔNG BHYT'}]" [(model)]="keToaVo.LoaiBhyt"></app-radio>
+
+          <app-textbox-search-table fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="DuocPham" label="DƯỢC PHẨM"
+            placeholder="DƯỢC PHẨM" [(model)]="keToaVo.Ten" fieldSelected="Ten" maxLength="100" [isAutoFocus]="true"
+            [required]="true" [columns]="[{ label: 'TÊN', property: 'Ten', type: 'text',minWidth:200, visible: true,notEllipsis:true },
+            { label: 'HÀM LƯỢNG', property: 'HamLuong', type: 'text',width:100, visible: true },
+            { label: 'HOẠT CHẤT', property: 'HoatChat', type: 'text',width:100, visible: true },
+            { label: 'ĐVT', property: 'DonViTinh', type: 'text',width:50, visible: true },
+            { label: 'Đ.DÙNG', property: 'DuongDung', type: 'text',width:50, visible: true },
+            { label: 'NSX', property: 'NhaSanXuat', type: 'text',width:100, visible: true },
+            { label: 'TỒN', property: 'TonKho', type: 'text',width:50, visible: true },            
+            { label: 'HSD', property: 'HanSuDung', type: 'text',width:80, visible: true }]" [groupByColumns]="[]"
+            [sortByColumn]="{field:'Ten',dir:'asc'}" [dataSource]="{
+              Data:[
+              {'Id':1,'Ten':'Acemuc kid','HamLuong':'200mg','HoatChat':'Acetylcystein','DonViTinh':'Gói','DuongDung':'Uống','NhaSanXuat':'Công ty Cổ phần Sanofi Việt Nam','TonKho':'152','HanSuDung':'19/01/2023'},       
+              {'Id':1,'Ten':'Acyclovir Stella 200 mg','HamLuong':'200mg','HoatChat':'Acetylcystein','DonViTinh':'Gói','DuongDung':'Uống','NhaSanXuat':'Công ty Cổ phần Sanofi Việt Nam','TonKho':'152','HanSuDung':'19/01/2023'},   
+              {'Id':1,'Ten':'Acyclovir stella 800mg','HamLuong':'200mg','HoatChat':'Acetylcystein','DonViTinh':'Gói','DuongDung':'Uống','NhaSanXuat':'Công ty Cổ phần Sanofi Việt Nam','TonKho':'152','HanSuDung':'19/01/2023'},   
+              {'Id':1,'Ten':'Alaxan','HamLuong':'200mg','HoatChat':'Acetylcystein','DonViTinh':'Gói','DuongDung':'Uống','NhaSanXuat':'Công ty Cổ phần Sanofi Việt Nam','TonKho':'152','HanSuDung':'19/01/2023'},   
+              {'Id':1,'Ten':'Allopurinol Stella 300mg','HamLuong':'200mg','HoatChat':'Acetylcystein','DonViTinh':'Gói','DuongDung':'Uống','NhaSanXuat':'Công ty Cổ phần Sanofi Việt Nam','TonKho':'152','HanSuDung':'19/01/2023'}              
+              ],
+              TotalRowCount:10
+            }" (extRowSelect)="chonDuocPham($event)" [validationerror]="'DuocPham' | validationerror:validationErrors">
+          </app-textbox-search-table>
+          <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" *ngIf="keToaVo.DuocPhamId>0">
+            <fieldset style="background: #e6ffff;">
+              <ul class="inline">
+                <li>Đơn vị tính: <strong>Gói</strong></li>
+                <li>Đường dùng: <strong>Uống</strong></li>
+                <li>Tương tác thuốc:
+                  <strong> Không </strong>
+                </li>
+                <li>Dị ứng thuốc:
+                  <strong> Không </strong>
+                </li>
+                <li>Mức độ: <strong> Không </strong></li>
+                <li>Thuốc đã kê:
+                  <strong> Có </strong>
+                </li>
+                <li> Tồn kho: <strong>
+                    <span> 70 </span>
+                  </strong></li>
+                <li> HSD: <strong><strong
+                     > 19/01/2023 </strong></strong></li>
+              </ul>
+
+            </fieldset>
+          </div>
+          <app-textbox fxFlex="25%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="SoLuong" label="SL" placeholder="SL"
+            [(model)]="keToaVo.SoLuong" [required]="true"
+            [validationerror]="'SoLuong' | validationerror:validationErrors" type="number">
+          </app-textbox>
+          <app-textbox fxFlex="25%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="DonGia" label="ĐG" placeholder="ĐG"
+            [(model)]="keToaVo.DonGia" [validationerror]="'DonGia' | validationerror:validationErrors" [disabled]="true"
+            type="number">
+          </app-textbox>
+          <app-textbox fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="ThanhTien" label="TT" placeholder="TT"
+            [(model)]="keToaVo.ThanhTien" [validationerror]="'ThanhTien' | validationerror:validationErrors"
+            [disabled]="true" type="number">
+          </app-textbox>
+          <app-autocomplete fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="CachDung" label="CÁCH DÙNG"
+            placeholder="CÁCH DÙNG" [(model)]="keToaVo.CachDung" type="textarea"
+            [items]="[{DisplayName:'-Uống ngày 3 lần, mỗi lần 2 viên\r\n-Uống nhiều nước'},{DisplayName:'-Sáng 1, tối 1 sau ăn'}]"
+            [validationerror]="'CachDung' | validationerror:validationErrors">
+          </app-autocomplete>
+          <app-checkbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="Chi tiết phân bổ số lượng"
+            customClass="mb-0" [(model)]="keToaVo.ChiTietSoLuong" (modelChange)="chiTietSoLuongChange($event)"></app-checkbox>
+          <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" *ngIf="keToaVo.ChiTietSoLuong==true">
+            <fieldset>
+              <legend>SÁNG</legend>
+              <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="SoLuongSang" label="SL"
+                  placeholder="SL" [(model)]="keToaVo.SoLuongSang"
+                  [validationerror]="'SoLuongSang' | validationerror:validationErrors" type="number">
+                </app-textbox>
+                <app-timepicker fxFlex="50%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="GioSang" label="GIỜ"
+                  placeholder="GIỜ" [(model)]="keToaVo.GioSang"
+                  [validationerror]="'GioSang' | validationerror:validationErrors">
+                </app-timepicker>
+              </div>
+            </fieldset>
+          </div>
+          <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" *ngIf="keToaVo.ChiTietSoLuong==true">
+            <fieldset>
+              <legend>TRƯA</legend>
+              <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="SoLuongTrua" label="SL"
+                  placeholder="SL" [(model)]="keToaVo.SoLuongTrua"
+                  [validationerror]="'SoLuongTrua' | validationerror:validationErrors" type="number">
+                </app-textbox>
+                <app-timepicker fxFlex="50%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="GioTrua" label="GIỜ"
+                  placeholder="GIỜ" [(model)]="keToaVo.GioTrua"
+                  [validationerror]="'GioTrua' | validationerror:validationErrors">
+                </app-timepicker>
+              </div>
+            </fieldset>
+          </div>
+          <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" *ngIf="keToaVo.ChiTietSoLuong==true">
+            <fieldset>
+              <legend>CHIỀU</legend>
+              <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="SoLuongChieu" label="SL"
+                  placeholder="SL" [(model)]="keToaVo.SoLuongChieu"
+                  [validationerror]="'SoLuongChieu' | validationerror:validationErrors" type="number">
+                </app-textbox>
+                <app-timepicker fxFlex="50%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="GioChieu" label="GIỜ"
+                  placeholder="GIỜ" [(model)]="keToaVo.GioChieu"
+                  [validationerror]="'GioChieu' | validationerror:validationErrors">
+                </app-timepicker>
+              </div>
+            </fieldset>
+          </div>
+          <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" *ngIf="keToaVo.ChiTietSoLuong==true">
+            <fieldset>
+              <legend>TỐI</legend>
+              <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+                <app-textbox fxFlex="50%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="SoLuongToi" label="SL" placeholder="SL"
+                  [(model)]="keToaVo.SoLuongToi" [validationerror]="'SoLuongToi' | validationerror:validationErrors"
+                  type="number">
+                </app-textbox>
+                <app-timepicker fxFlex="50%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="GioToi" label="GIỜ"
+                  placeholder="GIỜ" [(model)]="keToaVo.GioToi"
+                  [validationerror]="'GioToi' | validationerror:validationErrors">
+                </app-timepicker>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </ng-scrollbar>
+    </div>
+
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <button mat-raised-button color="accent" class="mt-2" (click)="chonTuToaMau()">Chọn từ toa mẫu</button>
+        <button mat-raised-button color="primary" class="float-right mt-2">THÊM</button>
+        <button mat-button class="float-right mt-2 mr-1">NHẬP LẠI</button>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="65%" fxFlex.sm="65%">
+    <app-table #tableKeToa masterName="tableKeToa" [columns]="columnsKeToa" [dataSource]="dataSourceKeToa"
+      [documentType]="documentType" heightToolbar="490" [pageable]="false" [groupByColumns]="groupByColumnsKeToa"
+      [sortByColumn]="sortByColumnKeToa" [showIndex]="true" [showCheckbox]="false" [noBorderLeft]="false"
+      [noBorderRight]="false" [hideHeader]="true">
+    </app-table>
+    <app-print-button buttonType="mat-stroked-button" color="primary" icon="print" class="float-right mt-3"
+      [htmlContent]="getContentInToaThuoc()" label="In toa thuốc"></app-print-button>
+
+  </div>
+</div>
+
+
+
+<ng-template #actionKeToaTemplate let-dataItem>
+  <mat-icon color="warn" matTooltip="Xóa">delete_outline</mat-icon>
+  <mat-icon color="accent" matTooltip="Sắp xếp lên">arrow_upward</mat-icon>
+  <mat-icon color="primary" matTooltip="Sắp xếp xuống">arrow_downward</mat-icon>
+</ng-template>
+
+<ng-template #thuocBHYTTemplate let-dataItem>
+  <app-checkbox [(model)]="dataItem.ThuocBHYT" [disabled]="true"></app-checkbox>
+</ng-template>
+
+<ng-template #tenTemplate let-dataItem>
+  <a>{{dataItem.Ten}}</a>
+</ng-template>

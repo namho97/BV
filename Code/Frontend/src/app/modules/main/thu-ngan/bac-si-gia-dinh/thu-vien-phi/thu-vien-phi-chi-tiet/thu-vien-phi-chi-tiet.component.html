@@ -1,0 +1,157 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="m-0">
+        <fieldset fxFlex.lt-sm="100%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex="100%" class="mb-3 fieldset-thong-tin-hanh-chinh">
+          <legend>THÔNG TIN HÀNH CHÍNH</legend>
+          <ul class="inline"
+          *ngIf="dichVuThuVienPhiVo.ThongTinHanhChinh!=null">
+            <li>STT: <strong class="red">{{dichVuThuVienPhiVo.ThongTinHanhChinh.SoThuTu}}</strong></li>
+            <li>Họ tên: <strong class="blue">{{dichVuThuVienPhiVo.ThongTinHanhChinh.HoTen}}</strong></li>
+            <li>CCCD: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.SoChungMinhThu}}</strong></li>
+            <li>Giới tính: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.GioiTinhHienThi}}</strong></li>
+            <li>Ngày sinh: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.NgayThangNamSinh}}</strong></li>
+            <li>Tuổi: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.Tuoi}}</strong></li>
+            <li>SĐT: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.SoDienThoai}}</strong></li>
+            <li>Nghề nghiệp: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.NgheNghiep}}</strong></li>
+            <li>Địa chỉ: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.DiaChiDayDu}}</strong></li>
+            <li>Tiếp nhận lúc: <strong>{{dichVuThuVienPhiVo.ThongTinHanhChinh.ThoiDiemTiepNhanHienThi}}</strong></li>
+          </ul>
+        </fieldset>
+        <div fxFlex.lt-sm="100%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex="30%" *ngIf="!viewOnly">
+          <mat-card style="background-color: #e6ffff;">
+            <mat-card-content id="thu-tien-content">
+                  <div fxLayout="row column" fxLayoutGap="10px grid">
+                    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="text-center mb-3"
+                      style="background-color: #fff;border-radius: 5px;">
+                      <div style="padding: 5px 5px 0 5px;">
+                        <p class="mb-2"><strong> TỔNG THÀNH TIỀN: </strong><strong class="red" style="font-size: 17px;">{{dichVuThuVienPhiVo.TongChuaThu |
+                          currency:'VND'}}</strong></p>
+                        <app-money id="TongThucThu" label="TỔNG THỰC THU" (modelChange)="tongThucThuChange($event)"
+                          customClass="mb-0" placeholder="TỔNG THỰC THU" [required]="true" [(model)]="thuVienPhiVo.TongThucThu"
+                          [validationerror]="'TongThucThu' | validationerror:validationErrors">
+                        </app-money>
+                      </div>
+                    </div>
+                    <app-select fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="HinhThucThanhToan"
+                      label="HÌNH THỨC THANH TOÁN" url="Common/GetHinhThucThanhToanLookup" (modelChange)="hinhThucThanhToanChange($event)"
+                      [(model)]="thuVienPhiVo.HinhThucThanhToan" [multiple]="true" [required]="true"
+                      [validationerror]="'HinhThucThanhToan' | validationerror:validationErrors">
+                    </app-select>
+                    <ng-container
+                      *ngIf="thuVienPhiVo.HinhThucThanhToan!=null && thuVienPhiVo.HinhThucThanhToan.length>0">
+                      <app-money fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="TienMat" label="TIỀN MẶT"
+                        *ngIf="thuVienPhiVo.HinhThucThanhToan.indexOf(1)>=0" placeholder="TIỀN MẶT" [required]="true"
+                        [(model)]="thuVienPhiVo.TienMat" [max]="(thuVienPhiVo.TongThucThu??0)-(thuVienPhiVo.ChuyenKhoan??0)-(thuVienPhiVo.Pos??0)"
+                        [validationerror]="'TienMat' | validationerror:validationErrors">
+                      </app-money>
+                      <app-money fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ChuyenKhoan"
+                        label="CHUYỂN KHOẢN" *ngIf="thuVienPhiVo.HinhThucThanhToan.indexOf(2)>=0"
+                        placeholder="CHUYỂN KHOẢN" [required]="true" [(model)]="thuVienPhiVo.ChuyenKhoan"
+                        [max]="(thuVienPhiVo.TongThucThu??0)-(thuVienPhiVo.TienMat??0)-(thuVienPhiVo.Pos??0)"
+                        [validationerror]="'ChuyenKhoan' | validationerror:validationErrors">
+                      </app-money>
+                      <app-money fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="Pos" label="POS"
+                        [required]="true" *ngIf="thuVienPhiVo.HinhThucThanhToan.indexOf(3)>=0" placeholder="POS"
+                        [max]="(thuVienPhiVo.TongThucThu??0)-(thuVienPhiVo.ChuyenKhoan??0)-(thuVienPhiVo.TienMat??0)"
+                        [(model)]="thuVienPhiVo.Pos" [validationerror]="'Pos' | validationerror:validationErrors">
+                      </app-money>
+                      <app-money fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NguoiBenhDua"
+                        label="NGƯỜI BỆNH ĐƯA" placeholder="NGƯỜI BỆNH ĐƯA" [(model)]="thuVienPhiVo.NguoiBenhDua"
+                        *ngIf="thuVienPhiVo.HinhThucThanhToan.indexOf(1)>=0"
+                        (modelChange)="nguoiBenhDuaModelChange($event)" [min]="(thuVienPhiVo.TongThucThu??0)"
+                        [validationerror]="'NguoiBenhDua' | validationerror:validationErrors">
+                      </app-money>
+                      <app-money fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="TraLai" label="TRẢ LẠI"
+                      *ngIf="thuVienPhiVo.HinhThucThanhToan.indexOf(1)>=0"
+                        [disabled]="true" placeholder="TRẢ LẠI" [(model)]="thuVienPhiVo.TraLai"
+                        [validationerror]="'TraLai' | validationerror:validationErrors">
+                      </app-money>
+                      <app-datetimepicker fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NgayThu"
+                        label="NGÀY THU" placeholder="NGÀY THU" [(model)]="thuVienPhiVo.NgayThu" [required]="true"
+                        [validationerror]="'NgayThu' | validationerror:validationErrors">
+                      </app-datetimepicker>
+                      <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDungThu"
+                        label="NỘI DUNG THU" placeholder="NỘI DUNG THU" [(model)]="thuVienPhiVo.NoiDungThu"
+                        [required]="true" [validationerror]="'NoiDungThu' | validationerror:validationErrors">
+                      </app-textarea>
+                    </ng-container>
+                  </div>
+            </mat-card-content>
+            <mat-card-actions style="overflow: hidden;">
+              <app-checkbox label="Có in phiếu" [(model)]="thuVienPhiVo.CoInPhieu" style="float: left;margin-top:7px;" customClass="mb-0"
+              (modelChange)="coInPhieuChange($event)" [disabled]="thuVienPhiVo.TongThucThu<=0"></app-checkbox>
+              <button type="button" mat-raised-button color="warn" style="float: right;" (click)="thuTien()" [disabled]="thuVienPhiVo.TongThucThu<=0">
+                THU
+                TIỀN</button>
+            </mat-card-actions>
+          </mat-card>
+
+        </div>
+        <div fxFlex.lt-sm="100%" fxFlex.lt-md="{{viewOnly?'100%':'60%'}}'" fxFlex.lt-lg="{{viewOnly?'100%':'65%'}}" fxFlex="{{viewOnly?'100%':'70%'}}">
+          <mat-tab-group style="border:1px solid #ccc;border-radius:5px"
+            (selectedIndexChange)="selectedIndexChange($event)">
+            <mat-tab label="CHƯA THU" *ngIf="!viewOnly">
+              <ng-container *ngIf="tabIndex==0">
+                <app-table #tableDichVuThu masterName="tableDichVuThu" [columns]="columnsDichVuThu"
+                  urlGetData="ThuNganBacSiGiaDinhThuVienPhi/GetDichVuChuaThuDataForGrid" [additionalSearchObject]="{QueryId:data.Id}"
+                 [documentType]="documentTypeDichVuThu" heightToolbar="366"
+                  [pageable]="false" [groupByColumns]="groupByColumnsDichVuThu"
+                  [sortByColumn]="sortByColumnDichVuThu" [showIndex]="true" [showCheckbox]="false"
+                  [hideHeader]="true" [noBorderTop]="true" [hasFooter]="true">
+                </app-table>
+              </ng-container>
+            </mat-tab>
+            <mat-tab label="ĐÃ THU">
+              <ng-container *ngIf="tabIndex==1">
+                <app-table #tableLichSuThu masterName="tableLichSuThu" [columns]="columnsLichSuThu"
+                  urlGetData="ThuNganBacSiGiaDinhThuVienPhi/GetLichSuThuDataForGrid" [additionalSearchObject]="{QueryId:data.Id}"
+                  [documentType]="documentTypeLichSuThu" heightToolbar="366" [pageable]="false"
+                  [groupByColumns]="groupByColumnsLichSuThu" [sortByColumn]="sortByColumnLichSuThu" [showIndex]="false"
+                  [showCheckbox]="false" [hideHeader]="true" [noBorderTop]="true">
+                </app-table>
+              </ng-container>
+            </mat-tab>
+          </mat-tab-group>
+
+        </div>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+<div class="form-footer" *ngIf="!showOnPopup">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+</div>
+<ng-template #donGiaTemplate let-dataItem>
+  <span>{{dataItem.DonGia | currency:'VND'}}</span>
+</ng-template>
+<ng-template #thanhTienTemplate let-dataItem>
+  <span>{{dataItem.ThanhTien | currency:'VND'}}</span>
+</ng-template>
+
+<ng-template #thanhTienFooterTemplate>
+  <strong class="red">{{dichVuThuVienPhiVo.TongChuaThu | currency:'VND'}}</strong>
+</ng-template>
+<ng-template #soTienTemplate let-dataItem>
+  <span>{{dataItem.TongSoTienBangSo | currency:'VND'}}</span>
+</ng-template>
+
+<ng-template #ghiChuTemplate let-dataItem>
+  <ng-container *ngIf="dataItem.DaHuy">
+    <p class="m-0">Ngày hủy: <strong class="red">{{dataItem.NgayHuyHienThi}}</strong></p>
+    <p class="m-0">Người hủy: <strong class="red">{{dataItem.TenNhanVienHuy}}</strong></p>
+    <p class="m-0">Lý do hủy: <strong class="red">{{dataItem.LyDoHuy}}</strong></p>
+  </ng-container>
+</ng-template>
+<ng-template #actionTemplate let-dataItem>
+  <button mat-stroked-button color="warn" (click)="huyPhieu(dataItem)" *ngIf="!dataItem.DaHuy">Hủy phiếu</button>
+</ng-template>
+
+
+<ng-template #soHoaDonTemplate let-dataItem>
+  <app-print-button buttonType="mat-stroked-button" color="{{dataItem.DaHuy?'warn':'primary'}}" icon="print" class="float-right" typeSize="A5"
+              [htmlContent]="getContentInBienLai(dataItem)" label="{{dataItem.SoPhieu}}"></app-print-button>
+              <p class="m-0 red text-center"  *ngIf="dataItem.DaHuy">(Đã hủy)</p>
+</ng-template>
+<app-print-button #btnIn buttonType="mat-stroked-button" color="primary" icon="print" style="display: none;" typeSize="A5"
+            [htmlContent]="getContentInBienLai({TongSoTienBangSo:(thuVienPhiVo.TongThucThu??0),TongSoTienBangChu:(thuVienPhiVo.TongSoTienBangChu),TienMat:(thuVienPhiVo.TienMat??0),ChuyenKhoan:(thuVienPhiVo.ChuyenKhoan??0),Pos:(thuVienPhiVo.Pos??0),NoiDungThu:thuVienPhiVo.NoiDungThu,SoPhieu:thuVienPhiVo.SoPhieu})"></app-print-button>

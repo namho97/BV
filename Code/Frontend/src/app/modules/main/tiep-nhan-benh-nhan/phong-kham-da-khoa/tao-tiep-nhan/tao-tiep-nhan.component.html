@@ -1,0 +1,71 @@
+<div class="panel full-detail">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>TIẾP NHẬN</a>
+        <a class="active">TIẾP NHẬN</a>
+      </div>
+      <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="table.create()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="grid-content">
+      <app-table #tableTaoTiepNhan masterName="tableTaoTiepNhan" [columns]="columns" [dataSource]="dataSource"
+        [documentType]="documentType" [headerTemplate]="headerTemplate" [groupByColumns]="groupByColumns"
+        [sortByColumn]="sortByColumn" [showIndex]="false" [showCheckbox]="false"
+        (extDataItemSelected)="extDataItemSelected($event)" (extOnSearch)="extOnSearch()"
+        (extCheckboxSelection)="extCheckboxSelection($event)">
+      </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>TIẾP NHẬN</a>
+        <a (click)="quayLaiChange()">TIẾP NHẬN</a>
+        <a class="active">{{dataChon!=null && dataChon.Id>0?"THÔNG TIN CHI TIẾT":"TIẾP NHẬN MỚI"}}</a>
+      </div>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-tao-tiep-nhan-shared [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()"></app-tao-tiep-nhan-shared>
+    </div>
+  </div>
+</div>
+
+<ng-template #headerTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaTiepNhan" label="MÃ TN"
+        [(model)]="timKiemModel.MaTiepNhan" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="MaNguoiBenh" label="MÃ NB"
+        [(model)]="timKiemModel.MaNguoiBenh" (keyup)="onKey($event)"></app-textbox>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HoTen" label="HỌ TÊN"
+        [(model)]="timKiemModel.HoTen" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" label="GIỚI TÍNH" [multiple]="true"
+        url="Common/GetGioiTinhLookup">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="DienThoai" label="ĐIỆN THOẠI"
+        [(model)]="timKiemModel.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="TiepNhanTu"
+        label="TIẾP NHẬN TỪ" [(model)]="timKiemModel.TiepNhanTu" (keyup)="onKey($event)"></app-datetimepicker>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 210px;margin-right: 5px;" id="TiepNhanDen"
+        label="TIẾP NHẬN ĐẾN" [(model)]="timKiemModel.TiepNhanDen" (keyup)="onKey($event)"></app-datetimepicker>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem"><mat-icon>search</mat-icon> Tìm kiếm</button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #actionTemplate let-dataItem>
+  <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_horiz</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>In phiếu đăng ký khám</button>
+    <button mat-menu-item>In phiếu khám bệnh</button>
+    <button mat-menu-item>Hủy tiếp nhận</button>
+  </mat-menu>
+</ng-template>

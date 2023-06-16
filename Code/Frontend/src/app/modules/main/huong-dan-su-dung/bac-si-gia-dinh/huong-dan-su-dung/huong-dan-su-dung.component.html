@@ -1,0 +1,33 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a class="active">HƯỚNG DẪN SỬ DỤNG </a>
+      </div>
+    </div>
+    <div class="grid-content">
+      <app-table #table masterName="table" [columns]="columns"
+        [documentType]="documentType" [useAddDeault]="loaiUserSystem"
+        [groupByColumns]="groupByColumns" heightToolbar="207" [pageable]="true" [sortByColumn]="sortByColumn"
+        [showIndex]="false" [showIconOpenSearchForm]="false" [showCheckbox]="false"
+        (extDataItemSelected)="extDataItemSelected($event)">
+      </app-table>
+    </div>
+  </div>
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+      <mat-button-toggle-group *ngIf="dataChon!=null" style="float: right;margin-top:2px" (change)="chon($event)">
+        <mat-button-toggle value="2" matTooltip="Xem hướng dẫn sử dụng" [ngStyle]="{'background':loaiView==2?'#01adef':'','color':loaiView==2?'#fff':''}"><mat-icon>preview</mat-icon></mat-button-toggle>
+        <mat-button-toggle value="1" matTooltip="Sữa hướng dẫn sử dụng" [ngStyle]="{'background':loaiView==1?'#01adef':'','color':loaiView==1?'#fff':''}"><mat-icon>edit</mat-icon></mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="chi-tiet-content">
+      <ng-container *ngIf="dataChon!=null">
+       <app-huong-dan-su-dung-chi-tiet [data]="dataChon" [loaiView]="loaiView" (dataChange)="dataChange($event)" (quayLaiChange)="quayLaiChange()"
+       (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-huong-dan-su-dung-chi-tiet> 
+      </ng-container>
+      <ng-container *ngIf="dataChon==null">(Chưa chọn hướng dẫn)</ng-container>
+    </div>
+  </div>
+</div>

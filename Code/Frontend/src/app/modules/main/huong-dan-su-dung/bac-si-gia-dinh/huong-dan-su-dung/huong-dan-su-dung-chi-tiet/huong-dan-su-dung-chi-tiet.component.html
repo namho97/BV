@@ -1,0 +1,45 @@
+<div class="form-content">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+     
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-1" *ngIf="loaiView== 2">
+        <div [innerHTML]="huongDanSuDungVo.MoTa"></div>
+      </div>
+
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-1"
+        *ngIf="loaiView== 1 || isUpdate == false">
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="ten" label="TÊN" [required]="true"
+          placeholder="TÊN" [(model)]="huongDanSuDungVo.Ten" maxLength="20" [upperCase]="true"
+          [validationerror]="'Ten' | validationerror:validationErrors">
+        </app-textbox>
+        <app-textboxnumeric fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="SoThuTu" label="SỐ THỨ TỰ" [required]="true"
+          placeholder="SỐ THỨ TỰ" [(model)]="huongDanSuDungVo.SoThuTu"
+          [validationerror]="'SoThuTu' | validationerror:validationErrors">
+        </app-textboxnumeric>
+        <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="HIỆU LỰC"
+          [items]="[{KeyId:1,DisplayName:'Đang sử dụng'},{KeyId:2,DisplayName:'Không sử dụng'}]"
+          [(model)]="huongDanSuDungVo.HieuLucId" (modelChange)="hieuLucChange($event)"
+          [validationerror]="'HieuLuc' | validationerror:validationErrors" [required]="true">
+        </app-select>
+        <app-editor fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="MoTa" label="MÔ TẢ" [required]="true"
+          [(model)]="huongDanSuDungVo.MoTa" [showToolbar]="true" [sizeHeight]="true"
+          [validationerror]="'MoTa' | validationerror:validationErrors" >
+        </app-editor>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate && loaiView== 1" mat-raised-button color="primary" type="button" style="float: right;"
+    (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button *ngIf="loaiView != 2" type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP
+    LẠI</button>
+</div>

@@ -1,0 +1,29 @@
+<div class="full-width">
+  <mat-form-field appearance="outline"
+    class="full-width {{label==null||label==''?'no-label':''}} {{disabled?'mat-form-field-disabled':''}} {{customClass}} select-field">
+    <mat-label>{{label}} <span style="color: red;font-weight: bold;" *ngIf="required">*</span></mat-label>
+    <input *ngIf="type!='textarea'" type="type" matInput id="{{id}}" name="{{id}}" [(ngModel)]="model"
+      (ngModelChange)="emit($event)" (blur)="blur()" (keyup)="onKey($event)"  (focus)="onFocus($event)" [readonly]="disabled"  [disabled]="disabled" [matAutocomplete]="auto" [matAutocompleteDisabled]="disabled"
+      [formControl]="filterCtrl">
+    <textarea *ngIf="type=='textarea'" autosize [minRows]="1" matInput id="{{id}}" name="{{id}}" [(ngModel)]="model"
+      (ngModelChange)="emit($event)" (blur)="blur()" (keyup)="onKey($event)"   (focus)="onFocus($event)"  [readonly]="disabled" [disabled]="disabled" [matAutocomplete]="auto" [matAutocompleteDisabled]="disabled"
+      [formControl]="filterCtrl"></textarea>
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option [value]="item.DisplayName" *ngFor="let item of filteredOptions" [ngClass]="item.Class"
+        class="element-ellipsis">{{item.DisplayName}}</mat-option>
+    </mat-autocomplete>
+    <button tabindex="-1" matSuffix mat-icon-button *ngIf="icon!=null && icon!='' && iconSuffix && !showIconSave()" (click)="iconClick()"
+      matTooltip="{{iconTooltip}}" [disabled]="disabled">
+      <mat-icon>{{icon}}</mat-icon>
+    </button>
+    <button tabindex="-1" matSuffix mat-button *ngIf="model!=null && showIconSave() && !disabled" mat-icon-button
+      aria-label="Save" (click)="save()" matTooltip="Lưu dữ liệu vào danh mục sử dụng cho lần sau">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button tabindex="-1" mat-button *ngIf="model!=null && showIconClear && !disabled" mat-icon-button
+      aria-label="Clear" (click)="reset()" matTooltip="Bỏ chọn" class="mat-select-search-clear">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <label id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

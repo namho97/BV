@@ -1,0 +1,13 @@
+<h1 mat-dialog-title class="{{colorClassTitle}}"><mat-icon *ngIf="iconClassTitle!=null">{{iconClassTitle}}</mat-icon> {{title}}</h1>
+<div mat-dialog-content>
+  <div [innerHTML]="message"></div>
+  <div *ngIf="inputReason==true" class="mt-3">
+    <app-textarea class="full-width" id="Reason" label="{{reasonLabel}}" [required]="true" [(model)]="reason"
+      [validationerror]="'Reason' | validationerror:validationErrors"></app-textarea>
+  </div>
+</div>
+
+<div class="full-width mt-5 text-right">
+  <button mat-raised-button class="float-right" color="{{yesColor}}" type="button" (click)="yes()" *ngIf="showButtonYes">{{yesName}}</button>
+  <button mat-button type="button" class="mr-1" (click)="no()" *ngIf="showButtonNo">{{noName}}</button>
+</div>

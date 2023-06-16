@@ -1,0 +1,152 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+                <fieldset fxFlex="100%" class="mb-3">
+                    <legend>THÔNG TIN CHUNG</legend>
+                    <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                        <app-textbox fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%" id="Ten" label="TÊN"
+                            [required]="true" placeholder="TÊN" [(model)]="nhomDichVuThuongDungVo.Ten"
+                            maxLength="250" [validationerror]="'Ten' | validationerror:validationErrors">
+                        </app-textbox>
+                        <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="TÊN BỘ PHẬN"
+                             url="QuanTriNhomPhongKhamNhomDichVuThuongDung/GetLookupBoPhan"
+                            [(model)]="nhomDichVuThuongDungVo.BoPhan">
+                        </app-select>
+                        <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="LOẠI GÓI DỊCH VỤ" [required]="true"
+                             url="QuanTriNhomPhongKhamNhomDichVuThuongDung/GetLookupEnumLoaiGoiDichVu"
+                            [(model)]="nhomDichVuThuongDungVo.LoaiGoiDichVu">
+                        </app-select>
+                        <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="HIỆU LỰC"
+                            [items]="[{KeyId:true,DisplayName:'Đang sử dụng'},{KeyId:false,DisplayName:'Không sử dụng'}]"
+                            [(model)]="nhomDichVuThuongDungVo.HieuLuc" 
+                            [validationerror]="'HieuLuc' | validationerror:validationErrors">
+                        </app-select>
+
+                        <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ghichu" label="MÔ TẢ"
+                            placeholder="MÔ TẢ" [(model)]="nhomDichVuThuongDungVo.MoTa" maxLength="2000">
+                        </app-textbox>
+
+                    </div>
+                </fieldset>
+                <fieldset fxFlex="100%" class="mb-3">
+                    <legend>THÊM DỊCH VỤ</legend>
+                    <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                        <app-radio fxFlex.lt-sm="100%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex="50%"
+                            id="loai-dich-vu" label="LOẠI DỊCH VỤ" (modelChange)="changeTypeLoaiDichVu($event)"
+                            [items]="[{Value:1,Text:'Dịch vụ khám'},{Value:2,Text:'Dịch vụ kỹ thuật'}]"
+                            [(model)]="loaiDV">
+                        </app-radio>
+                        <div fxFlex.lt-sm="100%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex="50%">
+                        </div>
+
+                        <app-select *ngIf="loaiDV == 1" fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%"
+                            label="DỊCH VỤ KHÁM" url="QuanTriNhomPhongKhamDichVuKham/GetLookup" [required]="true"
+                            [(model)]="dichVuThem.DichVuKhamBenhId"
+                            (modelObjectChange)="changeLoaiDichVu($event,loaiDV)"
+                            [validationerror]="'DichVuKhamBenhId' | validationerror:validationErrors">
+                        </app-select>
+
+                        <app-select *ngIf="loaiDV == 2" fxFlex="100%" fxFlex.gt-sm="40%" fxFlex.sm="40%"
+                            label="DỊCH VỤ KỸ THUẬT" url="QuanTriNhomPhongKhamDichVuKyThuat/GetLookup" [required]="true"
+                            [(model)]="dichVuThem.DichVuKyThuatId" (modelObjectChange)="changeLoaiDichVu($event,loaiDV)"
+                            [validationerror]="'DichVuKyThuatId' | validationerror:validationErrors">
+                        </app-select>
+
+                        <app-textboxnumeric *ngIf="loaiDV == 1" id="so-luong" fxFlex="100%" fxFlex.gt-sm="20%"
+                            fxFlex.sm="20%" label="SỐ LƯỢNG" customClass="input-blue" placeholder="SỐ LƯỢNG"
+                            [(model)]="dichVuThem.SoLan" [required]="true" [disabled]="true"
+                            [validationerror]="'SoLan' | validationerror:validationErrors" type="number">
+                        </app-textboxnumeric>
+
+                        <app-textboxnumeric *ngIf="loaiDV == 2" id="so-luong" fxFlex="100%" fxFlex.gt-sm="20%"
+                            fxFlex.sm="20%" label="SỐ LƯỢNG" customClass="input-blue" placeholder="SỐ LƯỢNG"
+                            [(model)]="dichVuThem.SoLan" [required]="true"
+                            (modelChange)="changeSoLanDichVuKyThuat($event)"
+                            [validationerror]="'SoLan' | validationerror:validationErrors" type="number">
+                        </app-textboxnumeric>
+
+                        <app-textboxnumeric id="don-gia" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%"
+                            label="ĐƠN GIÁ" customClass="input-blue" placeholder="ĐƠN GIÁ" [(model)]="dichVuThem.DonGia"
+                            [disabled]="true" type="number">
+                        </app-textboxnumeric>
+
+                        <app-textboxnumeric id="don-gia" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%"
+                            label="THÀNH TIỀN" customClass="input-blue" placeholder="THÀNH TIỀN"
+                            [(model)]="dichVuThem.ThanhTien" [disabled]="true" type="number">
+                        </app-textboxnumeric>
+
+                        <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ghichu" label="GHI CHÚ"
+                            placeholder="GHI CHÚ" [(model)]="dichVuThem.GhiChu" maxLength="2000">
+                        </app-textbox>
+
+                        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="mb-1">
+                            <button mat-raised-button color="primary" type="button" style="float: right;"
+                                (click)="them()">THÊM</button>
+                            <button mat-stroked-button (click)="huy()" style="float: right;" class="mr-1">
+                                Hủy
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <app-table #tableDichVu masterName="tableDichVu" [columns]="columnsNhomDichVuThuongDung"
+                        [dataSource]="dataDichVuThems" [documentType]="documentType" [hideHeader]="true"
+                        [useAddDeault]="false" [showIndex]="true" maxHeight="300" [pageable]="true">
+                    </app-table>
+                </fieldset>
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>
+
+<ng-template #actionTemplate let-dataItem>
+    <button [ngStyle]="{'background':dataItem.IsEdit ==true ?'#A9A9A9':''}" (click)="edit(dataItem)" mat-menu-item
+        matTooltip="Sửa">
+        <mat-icon>edit</mat-icon>
+    </button>
+    <button (click)="xoa(dataItem)" color="primary" mat-icon-button matTooltip="Xóa dòng đang chọn" type="button">
+        <mat-icon class="red">delete_outline</mat-icon>
+    </button>
+</ng-template>
+<ng-template #editTenDVTemplate let-dataItem>
+    <p *ngIf="!dataItem.IsEdit"> {{dataItem.TenDV}}
+    </p>
+    <app-select *ngIf="dataItem.LoaiDichVu == 1 && dataItem.IsEdit == true" label="DỊCH VỤ KHÁM"
+        url="QuanTriNhomPhongKhamDichVuKham/GetLookup" [required]="true" [(model)]="dataItem.DichVuKhamBenhId"
+        (modelObjectChange)="changeLoaiDichVuEdit($event,loaiDV,dataItem)"
+        [validationerror]="'DichVuKhamBenhId' | validationerror:validationErrors">
+    </app-select>
+    <app-select *ngIf="dataItem.LoaiDichVu == 2 && dataItem.IsEdit == true" label="DỊCH VỤ KỸ THUẬT"
+        url="QuanTriNhomPhongKhamDichVuKyThuat/GetLookup" [required]="true" [(model)]="dataItem.DichVuKyThuatId"
+        (modelObjectChange)="changeLoaiDichVuEdit($event,loaiDV,dataItem)"
+        [validationerror]="'DichVuKyThuatId' | validationerror:validationErrors">
+    </app-select>
+</ng-template>
+
+<ng-template #editGhiChuTemplate let-dataItem>
+    <p *ngIf="!dataItem.IsEdit"> {{dataItem.GhiChu}}
+    </p>
+    <app-textbox *ngIf="dataItem.IsEdit == true" id="ghichu" label="GHI CHÚ" placeholder="GHI CHÚ"
+        [(model)]="dataItem.GhiChu" maxLength="2000">
+    </app-textbox>
+</ng-template>
+
+<ng-template #SoLanTemplate let-dataItem>
+    <p *ngIf="!dataItem.IsEdit || loaiDV == 1"> {{dataItem.SoLan}}
+    </p>
+    <app-textboxnumeric *ngIf="loaiDV == 2 && dataItem.IsEdit == true" id="so-luong" label="SỐ LƯỢNG"
+        customClass="input-blue" placeholder="SỐ LƯỢNG" [(model)]="dataItem.SoLan" [required]="true"
+        [validationerror]="'SoLan' | validationerror:validationErrors" type="number">
+    </app-textboxnumeric>
+</ng-template>

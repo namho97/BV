@@ -1,0 +1,36 @@
+<div class="full-width {{showIconSearch?'textbox-has-icon-search':''}}">
+  <mat-form-field appearance="outline" class="full-width {{label==null||label==''?'no-label':''}} {{customClass}}" [floatLabel]="floatLabel">
+    <mat-label><span [innerHTML]="label"></span> <span style="color: red;font-weight: bold;" *ngIf="required"> *</span></mat-label>
+    <button tabindex="-1" matPrefix mat-icon-button class="{{iconType==2?'icon-base-64':''}}" *ngIf="icon!=null && icon!='' && !iconSuffix" (click)="iconClick()" matTooltip="{{iconTooltip}}">
+      <mat-icon *ngIf="iconType==1">{{icon}}</mat-icon>
+      <img *ngIf="iconType==2" src="{{icon}}" alt=""/>
+    </button>
+    <ng-container>
+      <input matInput placeholder="{{placeHolder}}" id="{{id}}{{isAutoFocus ? '-focus': ''}}" name="{{id}}{{isAutoFocus ? '-focus': ''}}" [(ngModel)]="model" maxlength="{{maxLength}}"
+      (ngModelChange)="emit($event)" (blur)="blur()" type="{{type}}" (keyup)="onKey($event)"  (keyup.enter)="onEnter($event)"  onKeyPress="if(this.value.length==maxLength) return false;"
+      [readonly]="readonly" [disabled]="disabled">
+    </ng-container>
+
+      <button tabindex="-1" matSuffix mat-icon-button class="{{iconType==2?'icon-base-64':''}}" *ngIf="icon!=null && icon!='' && iconSuffix" (click)="iconClick()" matTooltip="{{iconTooltip}}">
+        <mat-icon *ngIf="iconType==1">{{icon}}</mat-icon>
+        <img *ngIf="iconType==2" src="{{icon}}" alt=""/>
+      </button>
+      <button tabindex="-1" mat-button *ngIf="model!=null && showIconClear && !disabled"
+            mat-icon-button
+            aria-label="Clear"
+            (click)="reset()"
+            matTooltip="Bỏ chọn"
+            class="mat-textbox-search-clear {{type=='number'?'number':''}}">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <button tabindex="-1" *ngIf="showIconSearch && !disabled"
+  mat-stroked-button
+        color="primary"
+        (click)="search()"
+        matTooltip="Tìm kiếm"
+        class="mat-textbox-search {{showOnHeader?'on-header':''}}">
+  <mat-icon>search</mat-icon>
+</button>
+  <label id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

@@ -1,0 +1,63 @@
+<div fxLayout="row wrap" fxLayoutGap="10px grid" >
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <fieldset>
+      <legend>KẾT QUẢ XÉT NGHIỆM</legend>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >        
+      <app-autocomplete type="textarea"  id="CanLamSangNoiDungKetQuaXetNghiem"
+      url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:2}"  [bind]="false"
+      urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" [paramSaveAutocomplete]="{Loai:2,Value:canLamSanVo.CanLamSangNoiDungKetQuaXetNghiem}"
+       fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="NỘI DUNG" [(model)]="canLamSanVo.CanLamSangNoiDungKetQuaXetNghiem"></app-autocomplete>
+      <app-upload fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="FILE ĐÍNH KÈM" [multiple]="true" [allowedExtensions]="['.jpg', '.jpeg', '.png']" [showThumbImageOnly]="true" [(model)]="canLamSanVo.TaiLieuKetQuaXetNghiem"></app-upload>
+      </div>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">    
+    <fieldset>
+      <legend>KẾT QUẢ X-QUANG</legend>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" > 
+        <app-autocomplete type="textarea" id="CanLamSangNoiDungKetQuaXQuang"
+        url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:3}"    [bind]="false"
+        urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" [paramSaveAutocomplete]="{Loai:3,Value:canLamSanVo.CanLamSangNoiDungKetQuaXQuang}"
+         fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="NỘI DUNG" [(model)]="canLamSanVo.CanLamSangNoiDungKetQuaXQuang"></app-autocomplete>
+        <app-upload fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="FILE ĐÍNH KÈM" [multiple]="true" [allowedExtensions]="['.jpg', '.jpeg', '.png']" [showThumbImageOnly]="true" [(model)]="canLamSanVo.TaiLieuKetQuaXQuang"></app-upload>
+      </div>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <fieldset>
+      <legend>KẾT QUẢ SIÊU ÂM</legend>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" > 
+        <app-autocomplete type="textarea" id="CanLamSangNoiDungKetQuaSieuAm"
+        url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:4}"    [bind]="false"
+        urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" [paramSaveAutocomplete]="{Loai:4,Value:canLamSanVo.CanLamSangNoiDungKetQuaSieuAm}"
+         fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="NỘI DUNG" [(model)]="canLamSanVo.CanLamSangNoiDungKetQuaSieuAm"></app-autocomplete>
+        <app-upload fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="FILE ĐÍNH KÈM" [multiple]="true" [allowedExtensions]="['.jpg', '.jpeg', '.png']" [showThumbImageOnly]="true" [(model)]="canLamSanVo.TaiLieuKetQuaSieuAm"></app-upload>
+      </div>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <fieldset>
+      <legend>KẾT QUẢ ĐIỆN TIM</legend>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" > 
+        <app-autocomplete type="textarea" id="CanLamSangNoiDungKetQuaDienTim"
+        url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:5}"    [bind]="false"
+        urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" [paramSaveAutocomplete]="{Loai:5,Value:canLamSanVo.CanLamSangNoiDungKetQuaDienTim}"
+         fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="NỘI DUNG" [(model)]="canLamSanVo.CanLamSangNoiDungKetQuaDienTim"></app-autocomplete>
+        <app-upload fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="FILE ĐÍNH KÈM" [multiple]="true" [allowedExtensions]="['.jpg', '.jpeg', '.png']" [showThumbImageOnly]="true" [(model)]="canLamSanVo.TaiLieuKetQuaDienTim"></app-upload>
+      </div>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+    <fieldset>
+      <legend>KẾT QUẢ THỦ THUẬT KHÁC</legend>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" > 
+        <app-autocomplete type="textarea" id="CanLamSangNoiDungKetQuaThuThuatKhac"
+        url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:6}"    [bind]="false"
+        urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" [paramSaveAutocomplete]="{Loai:6,Value:canLamSanVo.CanLamSangNoiDungKetQuaThuThuatKhac}"
+         fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="NỘI DUNG" [(model)]="canLamSanVo.CanLamSangNoiDungKetQuaThuThuatKhac"></app-autocomplete>
+        <app-upload fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="FILE ĐÍNH KÈM" [multiple]="true" [allowedExtensions]="['.jpg', '.jpeg', '.png']" [showThumbImageOnly]="true" [(model)]="canLamSanVo.TaiLieuKetQuaThuThuatKhac"></app-upload>
+      </div>
+    </fieldset>
+  </div>
+</div>
+

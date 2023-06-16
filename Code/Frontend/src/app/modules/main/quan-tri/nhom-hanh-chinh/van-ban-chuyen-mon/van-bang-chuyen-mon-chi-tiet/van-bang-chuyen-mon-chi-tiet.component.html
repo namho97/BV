@@ -1,0 +1,39 @@
+<div class="form-content">
+    <!-- <ng-scrollbar fxLayout="row column" fxLayoutGap="0%"> -->
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+          <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ma" label="MÃ" [required]="true"
+            placeholder="MÃ" [(model)]="vanBangChuyenMonVo.Ma" maxLength="20"
+            [validationerror]="'Ma' | validationerror:validationErrors">
+          </app-textbox>
+          <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="Ten" label="TÊN" [required]="true"
+            placeholder="TÊN" [(model)]="vanBangChuyenMonVo.Ten" maxLength="250"
+            [validationerror]="'Ten' | validationerror:validationErrors">
+          </app-textbox>
+          <app-textbox fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="TeVT" label="TÊN VIẾT TẮT" [required]="true"
+          placeholder="TÊN VIẾT TẮT" [(model)]="vanBangChuyenMonVo.TenVietTat" maxLength="50"
+          [validationerror]="'TenVietTat' | validationerror:validationErrors">
+        </app-textbox>
+          <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="HIỆU LỰC"
+           [items]="[{KeyId:1,DisplayName:'Đang sử dụng'},{KeyId:2,DisplayName:'Không sử dụng'}]"
+          [(model)]="vanBangChuyenMonVo.HieuLucId"
+          (modelChange)="hieuLucChange($event)"
+          [validationerror]="'HieuLuc' | validationerror:validationErrors">
+          </app-select>
+
+        <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="mo-ta" label="MÔ TẢ" placeholder="GHI CHÚ"
+            [(model)]="vanBangChuyenMonVo.MoTa" maxLength="2000" >
+        </app-textbox>
+        </div>
+      </div>
+    <!-- </ng-scrollbar> -->
+  </div>
+  <div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+  
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+      (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+      NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+  </div>

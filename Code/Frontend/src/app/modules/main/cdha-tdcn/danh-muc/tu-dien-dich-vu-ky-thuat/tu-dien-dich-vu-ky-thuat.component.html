@@ -1,0 +1,26 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>CĐHA-TDCN</a>
+        <a>DANH MỤC</a>
+        <a class="active">TỪ ĐIỂN DỊCH VỤ KỸ THUẬT</a>
+      </div> 
+    </div>
+    <div class="grid-content">      
+      <app-tree #treeTuDienDichVuKyThuat id="treeTuDienDichVuKyThuat" [dataSource]="dataSource"
+      [(model)]="id" [isExpandAll]="false" heightToolbar="150"  (extOnSelected)="chonTuDien($event)" >
+    </app-tree>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT</h3>
+    </div>
+    <div class="chi-tiet-content">
+      <app-tu-dien-dich-vu-ky-thuat-chi-tiet [data]="id" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()"></app-tu-dien-dich-vu-ky-thuat-chi-tiet>
+    </div>
+  </div>
+</div>

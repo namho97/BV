@@ -1,0 +1,16 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+    <div>BÁO CÁO HẸN KHÁM</div>
+    <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <mat-dialog-content style="height:600px;max-height: 100%;">  
+    <div class="in-bao-cao-content" [innerHTML]="getContentInBaoCao()"></div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions>
+    <app-print-button buttonType="mat-stroked-button" color="primary" icon="print" style="margin-left: auto;"
+      typeSize="A4" [htmlContent]="getContentInBaoCao()" label="In báo cáo"></app-print-button>
+  </mat-dialog-actions>
+  

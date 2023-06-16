@@ -1,0 +1,180 @@
+<div class="form-content">
+  <!-- <ng-scrollbar fxLayout="row column" fxLayoutGap="0%"> -->
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" class="mb-3">
+        <fieldset fxFlex="100%" class="mb-3">
+          <legend>THÔNG TIN CHUNG</legend>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ma" label="MÃ DƯỢC PHẨM"
+              placeholder="MÃ DƯỢC PHẨM" [(model)]="duocPhamVo.Ma" maxLength="100" [required]="true"
+              [validationerror]="'Ma' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ten" label="TÊN DƯỢC PHẨM"
+              [required]="true" placeholder="TÊN DƯỢC PHẨM" [(model)]="duocPhamVo.Ten" maxLength="250"
+              [validationerror]="'Ten' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HoatChat" label="SỐ ĐĂNG KÝ"
+              placeholder="SỐ ĐĂNG KÝ" [(model)]="duocPhamVo.SoDangKy" maxLength="500">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HoatChat" label="HOẠT CHẤT"
+              placeholder="HOẠT CHẤT" [(model)]="duocPhamVo.HoatChat" maxLength="1000"
+              [validationerror]="'HoatChat' | validationerror:validationErrors">
+            </app-textbox>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="HamLuong" label="HÀM LƯỢNG"
+              [required]="true" placeholder="HÀM LƯỢNG" [(model)]="duocPhamVo.HamLuong" maxLength="1000"
+              [validationerror]="'HamLuong' | validationerror:validationErrors">
+            </app-textbox>
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="DonViTinh" label="ĐƠN VỊ TÍNH"
+              placeholder="ĐƠN VỊ TÍNH" [(model)]="duocPhamVo.DonViTinhId" [showIconAddOrEdit]="true" [required]="true"
+              tooltipIconAdd="Thêm đơn vị tính mới vào danh mục" tooltipIconEdit="Cập nhật đơn vị tính vào danh mục"
+              componentAddTitle="THÊM ĐƠN VỊ TÍNH MỚI VÀO DANH MỤC"
+              componentEditTitle="CẬP NHẬT ĐƠN VỊ TÍNH VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+              [componentAddOrEdit]="themDonViTinhTemplate"
+              [componentAddOrEditContext]="{$implicit:duocPhamVo.DonViTinhId}"
+              url="QuanTriNhomDuocPhamDonViTinh/GetLookup"
+              [validationerror]="'DonViTinhId' | validationerror:validationErrors"
+              (modelObjectChange)="donViTinhChange($event)">
+              <ng-template #themDonViTinhTemplate let-dataItem>
+                <app-don-vi-tinh-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+                  [isUpdate]="dataItem!=null && dataItem>0" (dataChange)="themHoacSuaDonViTinhLuuChange($event)">
+                </app-don-vi-tinh-chi-tiet>
+              </ng-template>
+            </app-select>
+            <app-autocomplete type="textarea" fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="QuyCachDongGoi"
+              label="QUY CÁCH" url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:13}" [bind]="false"
+              urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete" maxLength="250"
+              [paramSaveAutocomplete]="{Loai:13,Value:duocPhamVo.QuyCach}" placeholder="TỔNG TRẠNG"
+              [(model)]="duocPhamVo.QuyCach" [validationerror]="'QuyCachDongGoi' | validationerror:validationErrors">
+            </app-autocomplete>
+
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="DuongDung" label="ĐƯỜNG DÙNG"
+              placeholder="ĐƯỜNG DÙNG" [(model)]="duocPhamVo.DuongDungId" [showIconAddOrEdit]="true" [required]="true"
+              tooltipIconAdd="Thêm đường dùng vào danh mục" tooltipIconEdit="Cập nhật đường dùng vào danh mục"
+              componentAddTitle="THÊM ĐƯỜNG DÙNG MỚI VÀO DANH MỤC" componentEditTitle="CẬP NHẬT ĐƯỜNG DÙNG VÀO DANH MỤC"
+              componentAddOrEditWidth="1000px" [componentAddOrEdit]="themDuongDungTemplate"
+              [componentAddOrEditContext]="{$implicit:duocPhamVo.DuongDungId}"
+              url="QuanTriNhomDuocPhamDuongDung/GetLookup"
+              [validationerror]="'DuongDungId' | validationerror:validationErrors"
+              (modelObjectChange)="duongDungChange($event)">
+              <ng-template #themDuongDungTemplate let-dataItem>
+                <app-duong-dung-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+                  [isUpdate]="dataItem!=null && dataItem>0" (dataChange)="themHoacSuaDuongDungLuuChange($event)">
+                </app-duong-dung-chi-tiet>
+              </ng-template>
+            </app-select>
+
+
+
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NhaSanXuat" label="NHÀ SẢN XUẤT"
+              placeholder="NHÀ SẢN XUẤT" [(model)]="duocPhamVo.NhaSanXuatId" [showIconAddOrEdit]="true"
+              tooltipIconAdd="Thêm nhà sản xuất vào danh mục" tooltipIconEdit="Cập nhật nhà sản xuất vào danh mục"
+              componentAddTitle="THÊM NHÀ SẢN XUẤT MỚI VÀO DANH MỤC"
+              componentEditTitle="CẬP NHẬT NHÀ SẢN XUẤT VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+              [componentAddOrEdit]="themNhaSanXuatTemplate"
+              [componentAddOrEditContext]="{$implicit:duocPhamVo.NhaSanXuatId}"
+              url="QuanTriNhomDuocPhamNhaSanXuat/GetLookup"
+              [validationerror]="'NhaSanXuatId' | validationerror:validationErrors"
+              (modelObjectChange)="nhaSXChange($event)">
+              <ng-template #themNhaSanXuatTemplate let-dataItem>
+                <app-nha-san-xuat-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+                  [isUpdate]="dataItem!=null && dataItem>0" (dataChange)="themHoacSuaNhaSanXuatLuuChange($event)">
+                </app-nha-san-xuat-chi-tiet>
+              </ng-template>
+            </app-select>
+
+
+
+
+
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NuocSanXuat" label="NƯỚC SẢN XUẤT"
+              placeholder="NƯỚC SẢN XUẤT" [(model)]="duocPhamVo.NuocSanXuatId" [showIconAddOrEdit]="true"
+              tooltipIconAdd="Thêm nước sản xuất vào danh mục" tooltipIconEdit="Cập nhật nước sản xuất vào danh mục"
+              componentAddTitle="THÊM NƯỚC SẢN XUẤT MỚI VÀO DANH MỤC"
+              componentEditTitle="CẬP NHẬT NƯỚC SẢN XUẤT VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+              [componentAddOrEdit]="themNuocSanXuatTemplate"
+              [componentAddOrEditContext]="{$implicit:duocPhamVo.NuocSanXuatId}"
+              url="QuanTriNhomHanhChinhQuocGia/GetLookup"
+              [validationerror]="'NuocSanXuatId' | validationerror:validationErrors"
+              (modelObjectChange)="nuocSXChange($event)">
+              <ng-template #themNuocSanXuatTemplate let-dataItem>
+                <app-quoc-gia-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+                  [isUpdate]="dataItem!=null && dataItem>0" (dataChange)="themHoacSuaNuocSanXuatLuuChange($event)">
+                </app-quoc-gia-chi-tiet>
+              </ng-template>
+            </app-select>
+
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="tieuchuan" label="TIÊU CHUẨN"
+              placeholder="TIÊU CHUẨN" [(model)]="duocPhamVo.TieuChuan" maxLength="1000"
+              [validationerror]="'HamLuong' | validationerror:validationErrors">
+            </app-textbox>
+            <app-autocomplete fxFlex="100%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="CachDung" label="CÁCH DÙNG"
+              placeholder="CÁCH DÙNG" [(model)]="duocPhamVo.CachDung" type="textarea" url="QuanTriNhomCauHinhNoiDungMau/GetLookup"
+              [queryInfo]="{Loai:8}" urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete"
+              [paramSaveAutocomplete]="{Loai:8,Value:duocPhamVo.CachDung}"
+              [validationerror]="'CachDung' | validationerror:validationErrors">
+            </app-autocomplete>
+            <app-select fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" label="HIỆU LỰC"
+              [items]="[{KeyId:1,DisplayName:'Đang sử dụng'},{KeyId:2,DisplayName:'Không sử dụng'}]"
+              [(model)]="duocPhamVo.HieuLucId" (modelChange)="hieuLucChange($event)"
+              [validationerror]="'HieuLuc' | validationerror:validationErrors"  [required]="true">
+            </app-select>
+            <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ghichu" label="GHI CHÚ"
+              placeholder="GHI CHÚ" [(model)]="duocPhamVo.GhiChu" maxLength="2000">
+            </app-textbox>
+          </div>
+        </fieldset>
+        <fieldset fxFlex="100%" class="mb-3">
+          <legend>THÔNG TIN GIÁ</legend>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <table width="100%" class="table-border table-format">
+                <tr>
+                  <th>ĐƠN GIÁ <span class="red">*</span></th>
+                  <th width="250px">SỬ DỤNG TỪ NGÀY <span class="red">*</span></th>
+                  <th width="250px">SỬ DỤNG ĐẾN NGÀY</th>
+                  <th width="50px"></th>
+                </tr>
+                <tr *ngFor="let item of duocPhamVo.DuocPhamGias;let i=index;">
+                  <td valign="top">
+                    <app-money id="DonGia{{i}}" label="" placeholder="ĐƠN GIÁ" [(model)]="item.Gia"
+                      [validationerror]="'DuocPhamGias['+i+'].Gia' | validationerror:validationErrors"></app-money>
+                  </td>
+                  <td valign="top">
+                    <app-datetimepicker id="TuNgay{{i}}" label="" placeholder="SỬ DỤNG TỪ NGÀY" [(model)]="item.TuNgay"
+                      [validationerror]="'DuocPhamGias['+i+'].TuNgay' | validationerror:validationErrors"></app-datetimepicker>
+                  </td>
+                  <td valign="top">
+                    <app-datetimepicker id="DenNgay{{i}}" label="" placeholder="SỬ DỤNG ĐẾN NGÀY" [(model)]="item.DenNgay"
+                      [validationerror]="'DuocPhamGias['+i+'].DenNgay' | validationerror:validationErrors"></app-datetimepicker>
+                  </td>
+                  <td valign="top"><button mat-icon-button color="warn" (click)="xoaDonGia(duocPhamVo.DuocPhamGias,item)">
+                      <mat-icon>delete_outline</mat-icon>
+                    </button></td>
+                </tr>
+                <tr>
+                  <td colspan="4" align="center"><button mat-stroked-button
+                      (click)="themDonGia(duocPhamVo.DuocPhamGias)">
+                      <mat-icon>add</mat-icon> Thêm giá mới
+                    </button></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  <!-- </ng-scrollbar> -->
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+  <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+    (click)="luu()">LƯU</button>
+  <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;" (click)="capNhat()">CẬP
+    NHẬT</button>
+  <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

@@ -1,0 +1,489 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+  <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+    <fieldset>
+      <legend>CHẨN ĐOÁN</legend>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+        <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="IcdChinhId" label="ICD CHÍNH" [bind]="false"
+          placeholder="ICD CHÍNH" [(model)]="chanDoanDieuTriVo.IcdChinhId" [(modelText)]="chanDoanDieuTriVo.TenIcdChinh"
+          [showIconAddOrEdit]="true" tooltipIconAdd="Thêm icd mới vào danh mục"
+          tooltipIconEdit="Cập nhật icd vào danh mục" componentAddTitle="THÊM ICD MỚI VÀO DANH MỤC"
+          componentEditTitle="CẬP NHẬT ICD VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+          [componentAddOrEdit]="themICDMoiTemplate"
+          [componentAddOrEditContext]="{$implicit:chanDoanDieuTriVo.IcdChinhId}" url="QuanTriNhomPhongKhamIcd/GetLookup"
+          [validationerror]="'IcdChinhId' | validationerror:validationErrors"
+          (modelObjectChange)="modelObjectChangeIcd($event)">
+
+          <ng-template #themICDMoiTemplate let-dataItem>
+            <app-icd-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}" [isUpdate]="dataItem!=null && dataItem>0"
+              (dataChange)="themHoacSuaIcdLuuChange($event)">
+            </app-icd-chi-tiet>
+          </ng-template>
+        </app-select>
+        <!-- <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="IcdKemTheos" label="ICD KÈM THEO"
+          placeholder="ICD KÈM THEO" [(model)]="chanDoanDieuTriVo.IcdKemTheos" [multiple]="true"
+          [showIconAddOrEdit]="true" componentAddTitle="THÊM ICD MỚI" componentAddOrEditWidth="1000px" [componentAddOrEdit]="themICDMoiTemplate" [componentAddOrEditContext]="{$implicit:chanDoanDieuTriVo.IcdKemTheo}"
+          [items]="[{KeyId:1,DisplayName:'Z00 - Khám tổng quát và kiểm tra sức khỏe',Description:'Khám tổng quát và kiểm tra sức khỏe cho những người không có điều gì than phiền về sức khỏe hoặc những người đã có chẩn đoán'},{KeyId:2,DisplayName:'A00 - Bệnh tả',Description:'Bệnh tả'}]"
+          [validationerror]="'IcdKemTheos' | validationerror:validationErrors">
+        </app-select> -->
+        <app-textarea fxFlex="100%" fxFlex.gt-sm="75%" fxFlex.sm="75%" id="NoiDungChanDoan" label="NỘI DUNG CHẨN ĐOÁN"
+          placeholder="NỘI DUNG CHẨN ĐOÁN" [(model)]="chanDoanDieuTriVo.NoiDungChanDoan" [required]="true"
+          [validationerror]="'NoiDungChanDoan' | validationerror:validationErrors">
+        </app-textarea>
+      </div>
+    </fieldset>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+    <fieldset>
+      <legend>ĐIỀU TRỊ</legend>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid">
+        <!-- <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ThuThuat" label="THỦ THUẬT"
+          placeholder="THỦ THUẬT" [(model)]="chanDoanDieuTriVo.ThuThuat"
+          [validationerror]="'ThuThuat' | validationerror:validationErrors">
+        </app-textarea> -->
+        
+        <app-checkbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" label="THỰC HIỆN THÊM DỊCH VỤ KHÁC CÓ TÍNH PHÍ"
+          [(model)]="chanDoanDieuTriVo.ThucHienThemDichVuTinhPhi"
+          [disabled]="chanDoanDieuTriVo.DichVuTinhPhiDaThanhToan" customClass="mb-0"></app-checkbox>
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%"
+          *ngIf="chanDoanDieuTriVo.ThucHienThemDichVuTinhPhi==true">
+          <fieldset>
+            <legend>DỊCH VỤ KHÁC</legend>
+            <div fxLayout="row wrap" fxLayoutGap="10px grid">
+              <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="table-content overflow-auto">
+                <table width="100%" style="table-layout: fixed;" class="table-border table-format">
+                  <tr>
+                    <th [ngStyle]="{'width.px': isMobile?'200':''}">TÊN DỊCH VỤ <span class="red">*</span></th>
+                    <th width="100px">SỐ LƯỢNG <span class="red">*</span></th>
+                    <th width="120px">ĐƠN GIÁ <span class="red">*</span></th>
+                    <th width="150px">THÀNH TIỀN</th>
+                    <th width="130px">TRẠNG THÁI</th>
+                    <th width="50px"></th>
+                  </tr>
+                  <tr *ngFor="let item of chanDoanDieuTriVo.DichVuKyThuatKhacs;let i=index;">
+                    <td valign="top">
+                      <app-autocomplete id="TenDichVuKhac" [required]="true" label="TÊN DỊCH VỤ"
+                        placeholder="TÊN DỊCH VỤ" [(model)]="item.TenDichVuKhac" [disabled]="item.TrangThaiThanhToan==2"
+                        url="QuanTriNhomPhongKhamDichVuKyThuat/GetLookup" type="textarea"
+                        urlSave="QuanTriNhomPhongKhamDichVuKyThuat/SaveDataFromAutocomplete"
+                        [paramSaveAutocomplete]="{Value:item.TenDichVuKhac}"
+                        (modelObjectChange)="tenDichVuKhacModelObjectChange($event,item)"
+                        [validationerror]="'DichVuKyThuatKhacs['+i+'].TenDichVuKhac' | validationerror:validationErrors">
+                      </app-autocomplete>
+                    </td>
+                    <td valign="top">
+                      <app-textboxnumeric id="SoLuongDichVuKhac" [required]="true" label="SỐ LƯỢNG"
+                        placeholder="SỐ LƯỢNG" [(model)]="item.SoLuongDichVuKhac" [disabled]="item.TenDichVuKhac==null || item.TrangThaiThanhToan==2"
+                        (modelChange)="tinhThanhTienDichVuKhac(item)"
+                        [validationerror]="'DichVuKyThuatKhacs['+i+'].SoLuongDichVuKhac' | validationerror:validationErrors">
+                      </app-textboxnumeric>
+                    </td>
+                    <td valign="top">
+                      <app-money id="DonGiaDichVuKhac" [required]="true" label="ĐƠN GIÁ" placeholder="ĐƠN GIÁ"
+                        [(model)]="item.DonGiaDichVuKhac" (modelChange)="tinhThanhTienDichVuKhac(item)" [disabled]="item.TenDichVuKhac==null || item.TrangThaiThanhToan==2"
+                        icon="{{item.DonGiaDichVuKhac !=item.DonGiaDichVuKhacGoc?'save':''}}" iconTooltip="Cập nhật giá thành mặc định"
+                        (onIconClick)="luuDonGiaDichVuKhacClick(item)"
+                        [validationerror]="'DichVuKyThuatKhacs['+i+'].DonGiaDichVuKhac' | validationerror:validationErrors">
+                      </app-money>
+                    </td>
+                    <td valign="top">
+                      <app-money id="ThanhTienDichVuKhac" [disabled]="true" label="THÀNH TIỀN" placeholder="THÀNH TIỀN"
+                        [(model)]="item.ThanhTienDichVuKhac"
+                        [validationerror]="'DichVuKyThuatKhacs['+i+'].ThanhTienDichVuKhac' | validationerror:validationErrors">
+                      </app-money>
+                    </td>
+                    <td valign="top" align="center">
+                      <div class="mt-2">
+                        <span style="border-radius: 15px;padding: 3px 10px;text-align: center;" class="bg" 
+                        [ngClass]="{'green':item.TrangThaiThanhToan==2,'grey': item.TrangThaiThanhToan==1}">{{item.TrangThaiThanhToanHienThi}}</span>
+                      </div>
+                    </td>
+                    <td valign="top"><button mat-icon-button color="warn" (click)="xoaDichVuKhac(item)" *ngIf="item.TrangThaiThanhToan!=2">
+                        <mat-icon>delete_outline</mat-icon>
+                      </button></td>
+                  </tr>
+                  <tr>
+                    <td colspan="6" align="center"><button mat-stroked-button (click)="themDichVuKhac()">
+                        <mat-icon>add</mat-icon> Thêm dịch vụ
+                      </button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <app-radio fxFlex.lt-sm="100%" fxFlex.lt-md="65%" fxFlex.lt-lg="60%" fxFlex="50%" id="CachGiaiQuyet"
+          label="CÁCH GIẢI QUYẾT"
+          [items]="[{Value:1,Text:'KÊ TOA THUỐC'},{Value:2,Text:'KHÔNG TOA'},{Value:3,Text:'NHẬP VIỆN'}]"
+          [(model)]="chanDoanDieuTriVo.CachGiaiQuyet"
+          [validationerror]="'CachGiaiQuyet' | validationerror:validationErrors">
+        </app-radio>
+
+        <div fxFlex.lt-sm="100%" fxFlex.lt-md="35%" fxFlex.lt-lg="40%" fxFlex="50%"
+          *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==1">
+          <!-- <button mat-raised-button color="accent" (click)="chonTuToaMau()" class="mt-1 mb-1">Chọn từ toa
+            mẫu</button> -->
+          <app-select style="width: calc(100% - 110px);float: left;" id="ToaThuocMauId" label="CHỌN TỪ TOA MẪU"
+            placeholder="CHỌN TỪ TOA MẪU" [(model)]="chanDoanDieuTriVo.ToaThuocMauId" iconCustom="list"
+            iconCustomTooltip="Chọn chi tiết toa mẫu" (onIconCustomClick)="chonTuToaMau()" [bind]="false"
+            (modelObjectChange)="toaMauChange($event)" url="QuanTriNhomPhongKhamToaThuocMau/GetLookup"
+            *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==1">
+          </app-select>
+          <mat-button-toggle-group class="float-right" style="width: 97px;">
+            <mat-button-toggle matTooltip="Xem dạng grid" value="1" class="{{viewTypeToaThuoc==1?'active':''}}"
+              (click)="viewTypeToaThuoc=1" style="padding:7px 0px ;">
+              <mat-icon>grid_view</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle matTooltip="Xem dạng table" value="2" class="{{viewTypeToaThuoc==2?'active':''}}"
+              (click)="viewTypeToaThuoc=2" style="padding:7px 0px ;">
+              <mat-icon>table_view</mat-icon>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%"
+          *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==1 && chanDoanDieuTriVo.ToaThuocs!=null">
+          <fieldset>
+            <legend>DANH SÁCH THUỐC</legend>
+
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" *ngIf="viewTypeToaThuoc==1">
+              <div fxFlex.lt-sm="100%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex="33.3%"
+                *ngFor="let item of chanDoanDieuTriVo.ToaThuocs;let i=index;">
+                <fieldset class="thuoc"
+                  [ngStyle]="{'border-color':item.DuocPhamId!=null && item.DuocPhamId>0?'':'red'}">
+                  <legend><button mat-icon-button matTooltip="Xóa thuốc" class="clear-thuoc" color="warn"
+                      *ngIf="item.DuocPhamId!=null && item.DuocPhamId>0" (click)="xoaThuoc(item)">
+                      <mat-icon>clear</mat-icon>
+                    </button><span [ngClass]="{'has-clear':item.DuocPhamId!=null && item.DuocPhamId>0}">THUỐC
+                      {{i+1}}</span></legend>
+
+                  <div fxLayout="row wrap" fxLayoutGap="10px grid" matTooltip="{{item.TrangThaiThanhToan==2?'Đã thanh toán':''}}">
+                    <app-select fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" [disabled]="item.TrangThaiThanhToan==2"
+                      id="DuocPham{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="TÊN" placeholder=""
+                      customClass="input-blue" [(model)]="item.DuocPhamId" [(modelText)]="item.DuocPhamTen"
+                      [showIconAddOrEdit]="true" [required]="true" [bind]="false"
+                      tooltipIconAdd="Thêm dược phẩm mới vào danh mục" tooltipIconEdit="Cập nhật dược phẩm vào danh mục"
+                      componentAddTitle="THÊM DƯỢC PHẨM MỚI VÀO DANH MỤC"
+                      componentEditTitle="CẬP NHẬT DƯỢC PHẨM VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+                      [componentAddOrEdit]="themDuocPhamMoiTemplate" [componentAddOrEditContext]="{$implicit:item}"
+                      url="QuanTriNhomDuocPhamDuocPham/GetLookup" (modelObjectChange)="duocPhamChange($event,item)"
+                      [validationerror]="'ToaThuocs['+i+'].DuocPham' | validationerror:validationErrors">
+                    </app-select>
+                    <app-textbox fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%" [disabled]="item.TrangThaiThanhToan==2"
+                      id="HoatChat{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="HOẠT CHẤT" placeholder=""
+                      [(model)]="item.HoatChat"
+                      [validationerror]="'ToaThuocs['+i+'].HoatChat' | validationerror:validationErrors">
+                    </app-textbox>
+                    <app-textbox fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%" [disabled]="item.TrangThaiThanhToan==2"
+                      id="HamLuong{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="HÀM LƯỢNG" placeholder=""
+                      [(model)]="item.HamLuong"
+                      [validationerror]="'ToaThuocs['+i+'].HamLuong' | validationerror:validationErrors">
+                    </app-textbox>
+                    <app-autocomplete fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%" [disabled]="item.TrangThaiThanhToan==2"
+                      id="DonViTinh{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="ĐVT" placeholder="ĐVT"
+                      [(model)]="item.DonViTinh" url="QuanTriNhomDuocPhamDonViTinh/GetLookup"
+                      urlSave="QuanTriNhomDuocPhamDonViTinh/SaveDataFromAutocomplete"
+                      [validationerror]="'ToaThuocs['+i+'].DonViTinh' | validationerror:validationErrors">
+                    </app-autocomplete>
+                    <app-autocomplete fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%" [disabled]="item.TrangThaiThanhToan==2"
+                      id="DuongDung{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="ĐƯỜNG DÙNG" placeholder=""
+                      [(model)]="item.DuongDung" url="QuanTriNhomDuocPhamDuongDung/GetLookup"
+                      urlSave="QuanTriNhomDuocPhamDuongDung/SaveDataFromAutocomplete"
+                      [validationerror]="'ToaThuocs['+i+'].DuongDung' | validationerror:validationErrors">
+                    </app-autocomplete>
+                    <app-textboxnumeric fxFlex.lt-sm="50%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex.lt-xl="33.3%" [disabled]="item.TrangThaiThanhToan==2"
+                      fxFlex="25%" id="SoLuongSang{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="SÁNG"
+                      placeholder="" [(model)]="item.SoLuongSang" (modelChange)="tinhTongSoLuong(item)"
+                      [validationerror]="'ToaThuocs['+i+'].SoLuongSang' | validationerror:validationErrors"
+                      type="number">
+                    </app-textboxnumeric>
+                    <app-textboxnumeric fxFlex.lt-sm="50%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex.lt-xl="33.3%" [disabled]="item.TrangThaiThanhToan==2"
+                      fxFlex="25%" id="SoLuongTrua{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="TRƯA"
+                      placeholder="" [(model)]="item.SoLuongTrua" (modelChange)="tinhTongSoLuong(item)"
+                      [validationerror]="'ToaThuocs['+i+'].SoLuongTrua' | validationerror:validationErrors"
+                      type="number">
+                    </app-textboxnumeric>
+                    <app-textboxnumeric fxFlex.lt-sm="50%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex.lt-xl="33.3%" [disabled]="item.TrangThaiThanhToan==2"
+                      fxFlex="25%" id="SoLuongChieu{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="CHIỀU"
+                      placeholder="" [(model)]="item.SoLuongChieu" (modelChange)="tinhTongSoLuong(item)"
+                      [validationerror]="'ToaThuocs['+i+'].SoLuongChieu' | validationerror:validationErrors"
+                      type="number">
+                    </app-textboxnumeric>
+                    <app-textboxnumeric fxFlex.lt-sm="50%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex.lt-xl="33.3%" [disabled]="item.TrangThaiThanhToan==2"
+                      fxFlex="25%" id="SoLuongToi{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="TỐI"
+                      placeholder="" [(model)]="item.SoLuongToi" (modelChange)="tinhTongSoLuong(item)"
+                      [validationerror]="'ToaThuocs['+i+'].SoLuongToi' | validationerror:validationErrors"
+                      type="number">
+                    </app-textboxnumeric>
+                    <app-textboxnumeric fxFlex.lt-sm="50%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex.lt-xl="33.3%" [disabled]="item.TrangThaiThanhToan==2"
+                      fxFlex="50%" id="SoNgayDung{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="SỐ NGÀY"
+                      customClass="input-blue" placeholder="" [(model)]="item.SoNgayDung" [required]="true"
+                      (modelChange)="tinhTongSoLuong(item)"
+                      [validationerror]="'ToaThuocs['+i+'].SoNgayDung' | validationerror:validationErrors"
+                      type="number">
+                    </app-textboxnumeric>
+                    <app-textboxnumeric fxFlex.lt-sm="50%" fxFlex.lt-md="50%" fxFlex.lt-lg="50%" fxFlex.lt-xl="33.3%" [disabled]="item.TrangThaiThanhToan==2"
+                      fxFlex="50%" id="SoLuong{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="SL"
+                      customClass="input-blue" placeholder="" [(model)]="item.SoLuong" [required]="true"
+                      (modelChange)="giaModelChange($event,item)"
+                      [validationerror]="'ToaThuocs['+i+'].SoLuong' | validationerror:validationErrors" type="number">
+                    </app-textboxnumeric>
+                    <app-money fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%"
+                      [disabled]="item.DuocPhamId==null||item.DuocPhamId==0||item.TrangThaiThanhToan==2"
+                      id="Gia{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="GIÁ" placeholder=""
+                      [(model)]="item.Gia" (modelChange)="giaModelChange($event,item)"
+                      icon="{{item.Gia !=item.GiaGoc?'save':''}}" iconTooltip="Cập nhật giá thành mặc định"
+                      (onIconClick)="luuTienKhamClick(item)"
+                      [validationerror]="'ToaThuocs['+i+'].Gia' | validationerror:validationErrors">
+                    </app-money>
+                    <app-money fxFlex="50%" fxFlex.gt-sm="50%" fxFlex.sm="50%" [disabled]="true"
+                      id="ThanhTien{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="THÀNH TIỀN" placeholder=""
+                      [(model)]="item.ThanhTien" customClass="input-bold"
+                      [validationerror]="'ToaThuocs['+i+'].HamLuong' | validationerror:validationErrors">
+                    </app-money>
+                    <app-autocomplete fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" [disabled]="item.TrangThaiThanhToan==2"
+                      id="CachDung{{item.Id!=null &&item.Id>0?item.Id:item.IdTemp}}" label="CÁCH DÙNG" placeholder=""
+                      [(model)]="item.CachDung" type="textarea" url="QuanTriNhomCauHinhNoiDungMau/GetLookup"
+                      [queryInfo]="{Loai:8}" urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete"
+                      [paramSaveAutocomplete]="{Loai:8,Value:item.CachDung}"
+                      [validationerror]="'ToaThuocs['+i+'].CachDung' | validationerror:validationErrors">
+                    </app-autocomplete>
+                  </div>
+                </fieldset>
+              </div>
+              <div fxFlex.lt-sm="100%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex="100%" class="text-center">
+                TỔNG CỘNG TIỀN THUỐC: <strong class="red">{{getTongThanhTienThuoc() | currency:'VND'}}</strong>
+              </div>
+            </div>
+            <ng-container *ngIf="viewTypeToaThuoc==2">
+              <app-table #tableKeToa masterName="tableKeToa" [columns]="columnsKeToa" [dataSource]="dataSourceKeToa"
+                [documentType]="documentType" [heightAuto]="true" [pageable]="false"
+                [groupByColumns]="groupByColumnsKeToa" [sortByColumn]="sortByColumnKeToa" [showIndex]="false"
+                [showCheckbox]="false" [noBorderLeft]="false" [noBorderRight]="false" [hideHeader]="true"
+                [hasFooter]="true">
+              </app-table>
+            </ng-container>
+            <app-validationerrorother [validationerror]="'ToaThuocs' | validationerror:validationErrors">
+            </app-validationerrorother>
+          </fieldset>
+        </div>
+
+        <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="BenhVienChuyenDenId" label="BỆNH VIỆN"
+          placeholder="BỆNH VIỆN" [(model)]="chanDoanDieuTriVo.BenhVienChuyenDenId"
+          [(modelText)]="chanDoanDieuTriVo.TenBenhVienChuyenDen" [showIconAddOrEdit]="true" [bind]="false"
+          [required]="true" tooltipIconAdd="Thêm bệnh viện mới vào danh mục"
+          tooltipIconEdit="Cập nhật bệnh viện vào danh mục" componentAddTitle="THÊM BỆNH VIỆN MỚI VÀO DANH MỤC"
+          componentEditTitle="CẬP NHẬT BỆNH VIỆN VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+          [componentAddOrEdit]="themBenhVienMoiTemplate"
+          [componentAddOrEditContext]="{$implicit:chanDoanDieuTriVo.BenhVienChuyenDenId}"
+          url="QuanTriNhomPhongKhamBenhVien/GetLookup"
+          [validationerror]="'BenhVienChuyenDenId' | validationerror:validationErrors"
+          *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==3">
+
+          <ng-template #themBenhVienMoiTemplate let-dataItem>
+            <app-benh-vien-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem}"
+              [isUpdate]="dataItem!=null && dataItem>0" (dataChange)="themHoacSuaBenhVienLuuChange($event)">
+            </app-benh-vien-chi-tiet>
+          </ng-template>
+        </app-select>
+
+        <app-autocomplete type="textarea" fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" id="LyDoNhapVien"
+          label="LÝ DO NHẬP VIỆN" placeholder="LÝ DO NHẬP VIỆN" [(model)]="chanDoanDieuTriVo.LyDoNhapVien"
+          url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:11}"
+          urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete"
+          [paramSaveAutocomplete]="{Loai:11,Value:chanDoanDieuTriVo.LyDoNhapVien}"
+          [validationerror]="'LyDoNhapVien' | validationerror:validationErrors"
+          *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==3">
+        </app-autocomplete>
+
+        <app-autocomplete type="textarea" fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="LoiDan" label="LỜI DẶN"
+          placeholder="LỜI DẶN" [(model)]="chanDoanDieuTriVo.LoiDan" url="QuanTriNhomCauHinhNoiDungMau/GetLookup"
+          [queryInfo]="{Loai:10}" urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete"
+          [paramSaveAutocomplete]="{Loai:10,Value:chanDoanDieuTriVo.LoiDan}"
+          [validationerror]="'LoiDan' | validationerror:validationErrors">
+        </app-autocomplete>
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+          <fieldset>
+            <legend>HẸN TÁI KHÁM</legend>
+            <div fxLayout="row wrap" fxLayoutGap="10px grid">
+              <app-textboxnumeric fxFlex="50%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="KhamLaiSau"
+                label="KHÁM LẠI SAU (ngày)" placeholder="KHÁM LẠI SAU (ngày)" [(model)]="chanDoanDieuTriVo.KhamLaiSau"
+                type="number" (modelChange)="khamLaiSauChange($event)"
+                [validationerror]="'KhamLaiSau' | validationerror:validationErrors">
+              </app-textboxnumeric>
+              <app-datepicker fxFlex="50%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="NgayHenTaiKham"
+                label="NGÀY HẸN TÁI KHÁM" placeholder="NGÀY HẸN TÁI KHÁM" [(model)]="chanDoanDieuTriVo.NgayHenTaiKham"
+                [validationerror]="'NgayHenTaiKham' | validationerror:validationErrors">
+              </app-datepicker>
+              <app-autocomplete type="textarea" fxFlex="100%" fxFlex.gt-sm="60%" fxFlex.sm="60%" id="GhiChuHenTaiKham"
+                label="GHI CHÚ" placeholder="GHI CHÚ" [(model)]="chanDoanDieuTriVo.GhiChuHenTaiKham"
+                url="QuanTriNhomCauHinhNoiDungMau/GetLookup" [queryInfo]="{Loai:7}"
+                urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete"
+                [paramSaveAutocomplete]="{Loai:7,Value:chanDoanDieuTriVo.GhiChuHenTaiKham}"
+                [validationerror]="'GhiChuHenTaiKham' | validationerror:validationErrors">
+              </app-autocomplete>
+            </div>
+          </fieldset>
+        </div>
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%"
+          *ngIf="chanDoanDieuTriVo.CachGiaiQuyet==1 && chanDoanDieuTriVo.ToaThuocs!=null">
+          <button mat-raised-button color="accent" (click)="luuThanhToaMau()">Lưu thành toa mẫu</button>
+          <app-print-button buttonType="mat-stroked-button" color="primary" icon="print" class="float-right"
+            typeSize="A5" [htmlContent]="getContentInToaThuoc()" label="In toa thuốc"></app-print-button>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+<ng-template #themDuocPhamMoiTemplate let-dataItem>
+  <app-duoc-pham-chi-tiet [showOnPopup]="true" [data]="{Id:dataItem.DuocPhamId}"
+    [isUpdate]="dataItem.DuocPhamId!=null && dataItem.DuocPhamId>0"
+    (dataChange)="themHoacSuaDuocPhamLuuChange($event,dataItem)">
+  </app-duoc-pham-chi-tiet>
+</ng-template>
+
+
+
+<ng-template #actionKeToaTemplate let-dataItem>
+  <mat-icon color="warn" matTooltip="Xóa" (click)="xoaThuoc(dataItem)" *ngIf="dataItem.DuocPhamId>0 && dataItem.TrangThaiThanhToan!=2">delete_outline
+  </mat-icon>
+  <mat-icon color="primary" matTooltip="Đã thanh toán" *ngIf="dataItem.TrangThaiThanhToan==2">price_check
+  </mat-icon>
+  <!-- <mat-icon color="accent" matTooltip="Sắp xếp lên">arrow_upward</mat-icon>
+  <mat-icon color="primary" matTooltip="Sắp xếp xuống">arrow_downward</mat-icon> -->
+</ng-template>
+
+<ng-template #thuocBHYTTemplate let-dataItem>
+  <app-checkbox [(model)]="dataItem.ThuocBHYT" [disabled]="true"></app-checkbox>
+</ng-template>
+
+
+<ng-template #tenTemplate let-dataItem let-index="index">
+  <app-select id="DuocPham{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" placeholder=""
+    [(model)]="dataItem.DuocPhamId" [modelText]="dataItem.DuocPhamTen" [bind]="false" [showIconAddOrEdit]="true" [disabled]="dataItem.TrangThaiThanhToan==2"
+    customClass="input-blue" tooltipIconAdd="Thêm dược phẩm mới vào danh mục"
+    tooltipIconEdit="Cập nhật dược phẩm vào danh mục" componentAddTitle="THÊM DƯỢC PHẨM MỚI VÀO DANH MỤC"
+    componentEditTitle="CẬP NHẬT DƯỢC PHẨM VÀO DANH MỤC" componentAddOrEditWidth="1000px"
+    [componentAddOrEdit]="themDuocPhamMoiTemplate" [componentAddOrEditContext]="{$implicit:dataItem}"
+    url="QuanTriNhomDuocPhamDuocPham/GetLookup" (modelObjectChange)="duocPhamChange($event,dataItem)"
+    [validationerror]="'ToaThuocs['+index+'].DuocPham' | validationerror:validationErrors">
+  </app-select>
+</ng-template>
+
+<ng-template #hoatChatTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-textbox id="HoatChat{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" placeholder=""
+      [(model)]="dataItem.HoatChat" [disabled]="dataItem.TrangThaiThanhToan==2"
+      [validationerror]="'ToaThuocs['+index+'].HoatChat' | validationerror:validationErrors">
+    </app-textbox>
+  </div>
+</ng-template>
+<ng-template #hamLuongTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-textbox id="HamLuong{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" placeholder=""
+      [(model)]="dataItem.HamLuong" [disabled]="dataItem.TrangThaiThanhToan==2"
+      [validationerror]="'ToaThuocs['+index+'].HamLuong' | validationerror:validationErrors">
+    </app-textbox>
+  </div>
+</ng-template>
+<ng-template #donViTinhTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-autocomplete id="DonViTinh{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label=""
+      placeholder="L" [(model)]="dataItem.DonViTinh" url="QuanTriNhomDuocPhamDonViTinh/GetLookup"
+      urlSave="QuanTriNhomDuocPhamDonViTinh/SaveDataFromAutocomplete" [disabled]="dataItem.TrangThaiThanhToan==2"
+      [validationerror]="'ToaThuocs['+index+'].DonViTinh' | validationerror:validationErrors">
+    </app-autocomplete>
+  </div>
+</ng-template>
+<ng-template #duongDungTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-autocomplete id="DuongDung{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label=""
+      placeholder="" [(model)]="dataItem.DuongDung" url="QuanTriNhomDuocPhamDuongDung/GetLookup"
+      urlSave="QuanTriNhomDuocPhamDuongDung/SaveDataFromAutocomplete" [disabled]="dataItem.TrangThaiThanhToan==2"
+      [validationerror]="'ToaThuocs['+index+'].DuongDung' | validationerror:validationErrors">
+    </app-autocomplete>
+  </div>
+</ng-template>
+<ng-template #soLuongTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-textboxnumeric id="SoLuong{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label=""
+      customClass="input-blue" placeholder="" [(model)]="dataItem.SoLuong"
+      (modelChange)="giaModelChange($event,dataItem)" [disabled]="dataItem.TrangThaiThanhToan==2"
+      [validationerror]="'ToaThuocs['+index+'].SoLuong' | validationerror:validationErrors" type="number">
+    </app-textboxnumeric>
+  </div>
+</ng-template>
+<ng-template #soNgayDungTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-textboxnumeric id="SoNgayDung{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" [disabled]="dataItem.TrangThaiThanhToan==2"
+      customClass="input-blue" placeholder="" [(model)]="dataItem.SoNgayDung" (modelChange)="tinhTongSoLuong(dataItem)"
+      [validationerror]="'ToaThuocs['+index+'].SoNgayDung' | validationerror:validationErrors" type="number">
+    </app-textboxnumeric>
+  </div>
+</ng-template>
+<ng-template #sangTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-textboxnumeric id="SoLuongSang{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" [disabled]="dataItem.TrangThaiThanhToan==2"
+      placeholder="" [(model)]="dataItem.SoLuongSang" (modelChange)="tinhTongSoLuong(dataItem)"
+      [validationerror]="'ToaThuocs['+index+'].SoLuongSang' | validationerror:validationErrors" type="number">
+    </app-textboxnumeric>
+  </div>
+</ng-template>
+<ng-template #truaTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-textboxnumeric id="SoLuongTrua{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" [disabled]="dataItem.TrangThaiThanhToan==2"
+      placeholder="" [(model)]="dataItem.SoLuongTrua" (modelChange)="tinhTongSoLuong(dataItem)"
+      [validationerror]="'ToaThuocs['+index+'].SoLuongTrua' | validationerror:validationErrors" type="number">
+    </app-textboxnumeric>
+  </div>
+</ng-template>
+<ng-template #chieuTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-textboxnumeric id="SoLuongChieu{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" [disabled]="dataItem.TrangThaiThanhToan==2"
+      placeholder="" [(model)]="dataItem.SoLuongChieu" (modelChange)="tinhTongSoLuong(dataItem)"
+      [validationerror]="'ToaThuocs['+index+'].SoLuongChieu' | validationerror:validationErrors" type="number">
+    </app-textboxnumeric>
+  </div>
+</ng-template>
+<ng-template #toiTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-textboxnumeric id="SoLuongToi{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" [disabled]="dataItem.TrangThaiThanhToan==2"
+      placeholder="" [(model)]="dataItem.SoLuongToi" (modelChange)="tinhTongSoLuong(dataItem)"
+      [validationerror]="'ToaThuocs['+index+'].SoLuongToi' | validationerror:validationErrors" type="number">
+    </app-textboxnumeric>
+  </div>
+</ng-template>
+<ng-template #cachDungTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-autocomplete id="CachDung{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" [disabled]="dataItem.TrangThaiThanhToan==2"
+      placeholder="" [(model)]="dataItem.CachDung" type="textarea" url="QuanTriNhomCauHinhNoiDungMau/GetLookup"
+      [queryInfo]="{Loai:8}" urlSave="QuanTriNhomCauHinhNoiDungMau/SaveDataFromAutocomplete"
+      [paramSaveAutocomplete]="{Loai:8,Value:dataItem.CachDung}"
+      [validationerror]="'ToaThuocs['+index+'].CachDung' | validationerror:validationErrors">
+    </app-autocomplete>
+  </div>
+</ng-template>
+<ng-template #donGiaTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-money [disabled]="dataItem.DuocPhamId==null||dataItem.DuocPhamId==0 ||dataItem.TrangThaiThanhToan==2"
+      id="Gia{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}" label="" placeholder=""
+      [(model)]="dataItem.Gia" (modelChange)="giaModelChange($event,dataItem)"
+      icon="{{dataItem.Gia !=dataItem.GiaGoc?'save':''}}" iconTooltip="Cập nhật giá thành mặc định"
+      (onIconClick)="luuTienKhamClick(dataItem)"
+      [validationerror]="'ToaThuocs['+index+'].Gia' | validationerror:validationErrors">
+    </app-money>
+  </div>
+</ng-template>
+<ng-template #thanhTienTemplate let-dataItem let-index="index">
+  <div style="padding:5px 0;">
+    <app-money [disabled]="true" id="ThanhTien{{dataItem.Id!=null &&dataItem.Id>0?dataItem.Id:dataItem.IdTemp}}"
+      label="" placeholder="" [(model)]="dataItem.ThanhTien" customClass="input-bold"
+      [validationerror]="'ToaThuocs['+index+'].HamLuong' | validationerror:validationErrors">
+    </app-money>
+  </div>
+</ng-template>
+<ng-template #thanhTienFooterTemplate>
+  <strong class="red">{{getTongThanhTienThuoc() | currency:'VND'}}</strong>
+</ng-template>
+<ng-template #donGiaFooterTemplate>
+  TỔNG CỘNG:
+</ng-template>

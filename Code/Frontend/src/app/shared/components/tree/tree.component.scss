@@ -1,0 +1,52 @@
+.tree{
+  .header{
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      padding: 0 5px;
+      font-size: 13px;
+      height: 55px;
+      overflow: hidden;
+      position: relative;
+      .tree-header-content{
+        padding-left: 5px;
+        position: absolute;
+        z-index: 9999;
+        width: calc(100% - 5px);
+        height: auto;
+        min-height: 100%;
+        background: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      }
+      .tree-header-icon{    
+        position: absolute;
+        z-index: 9999;
+        right: 5px;
+        bottom: 5px;
+      }
+      &:hover{
+        .tree-header-icon{   
+          color:#0039cb;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+      &.open-search-form{
+        overflow: initial;
+        .tree-header-content{
+          background-color: #e1f5fe;
+        }
+      }
+  }
+  .content{
+      overflow: auto;
+      mat-icon{    
+          width: 25px !important;
+          min-width: 25px !important;
+      }
+      .total-child{
+          background-color: #f44336;
+          border-radius: 15px;
+          padding: 3px 10px;
+          color: white;
+      }
+  }
+}

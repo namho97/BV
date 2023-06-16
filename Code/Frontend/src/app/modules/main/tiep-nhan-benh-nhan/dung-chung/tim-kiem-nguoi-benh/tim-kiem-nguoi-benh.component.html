@@ -1,0 +1,43 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="space-between center" class="m-0">
+  <div>TÌM KIẾM NGƯỜI BỆNH</div>
+  <button type="button" mat-icon-button (click)="close()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+
+  <app-table #tableTimKiemNguoiBenh masterName="tableTimKiemNguoiBenh" [columns]="columnsTimKiemNguoiBenh"
+  urlGetData="QuanTriNhomNguoiBenhNguoiBenh/GetDataForGridAsync" [documentType]="documentTypeTimKiemNguoiBenh" [headerTemplate]="headerTemplate"
+  [groupByColumns]="groupByColumnsTimKiemNguoiBenh" [sortByColumn]="sortByColumnTimKiemNguoiBenh" [showIndex]="false"
+  [showCheckbox]="false" height="480">
+  </app-table>
+
+  <ng-template #actionTemplate let-dataItem>
+    <button mat-stroked-button (click)="chon(dataItem)"><mat-icon>done</mat-icon> Chọn</button>
+  </ng-template>
+</mat-dialog-content>
+
+<ng-template #headerTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <!-- <app-textbox style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="HoTen" label="MÃ NB"
+        [(model)]="timKiemModel.MaNguoiBenh" (keyup)="onKey($event)"></app-textbox> -->
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="HoTen" label="HỌ TÊN"
+        [(model)]="timKiemModel.HoTen" (keyup)="onKey($event)"></app-textbox>
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 100px;margin-right: 5px;" id="GioiTinhs" label="GIỚI TÍNH" [multiple]="true"
+        url="Common/GetGioiTinhLookup" [(model)]="timKiemModel.GioiTinhs">
+      </app-select>
+      <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="DienThoai" label="ĐIỆN THOẠI"
+        [(model)]="timKiemModel.SoDienThoai" (keyup)="onKey($event)"></app-textbox>
+        <app-textbox style="display: inline-block;margin-bottom: 4px;width: 150px;margin-right: 5px;" id="SoChungMinhThu" label="CCCD"
+          [(model)]="timKiemModel.SoChungMinhThu" (keyup)="onKey($event)"></app-textbox>
+          <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+            <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem"><mat-icon>search</mat-icon> Tìm kiếm</button>
+          </div>
+          <div style="display: inline-block;margin-bottom: 4px;width: 120px;" *ngIf="dangTimKiem">
+            <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem"><mat-icon>clear</mat-icon> Hủy tìm kiếm</button>
+          </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,38 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" label="KHOA PHÒNG" [required]="true"
+                    url="QuanTriNhomKhoaPhongKhoaPhong/GetLookup" [(model)]="khoaPhongNhanVienVo.KhoaPhongId"
+                    [validationerror]="'KhoaPhongId' | validationerror:validationErrors">
+                </app-select>
+
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" label="TÊN NHÂN VIÊN"
+                    url="QuanTriNhomKhoaPhongKhoaPhongPhongKham/GetLookup"
+                    [(model)]="khoaPhongNhanVienVo.KhoaPhongPhongKhamId">
+                </app-select>
+                <app-select fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" label="KHOA PHÒNG - PHÒNG KHÁM"
+                    [required]="true" url="QuanTriNhomNhanVienHoSoNhanVien/GetLookup"
+                    [(model)]="khoaPhongNhanVienVo.NhanVienId"
+                    [validationerror]="'NhanVienId' | validationerror:validationErrors">
+                </app-select>
+                <app-checkbox fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" id="LaPhongLamViecChinh"
+                    label="LÀ PHÒNG LÀM VIỆC CHÍNH" [(model)]="khoaPhongNhanVienVo.LaPhongLamViecChinh">
+                </app-checkbox>
+
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

@@ -1,0 +1,46 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header class="mb-5">
+      <mat-card-title style="border-bottom: none;">
+        <img src="assets/img/logo.png" alt="IoT Truyền Thông" width="150px" />
+        <p style="font-size: 20px;margin-top: 30px;">ĐĂNG NHẬP</p>
+
+      </mat-card-title>
+    </mat-card-header>
+
+    <div class="example-form">
+      <mat-card-content>
+        <app-textbox id="userName" type="number" label="SỐ ĐIỆN THOẠI" placeholder="SỐ ĐIỆN THOẠI" customClass="mb-2"
+          [(model)]="login.userName" (keyup)="onKey($event)" (blurChange)="blurUsernameChange()"
+          [validationerror]="'UserName' | validationerror:validationErrors"></app-textbox>
+        <app-textbox id="password" label="MẬT KHẨU" placeholder="MẬT KHẨU" [(model)]="login.password" type="{{typePassword}}" customClass="mb-2"
+          (keyup)="onKey($event)" [validationerror]="'Password' | validationerror:validationErrors"
+          [icon]="iconEye" [iconTooltip]="iconTooltip" (onIconClick)="passwordEyeClick()"
+          ></app-textbox>
+          
+    
+          <!-- <app-radio  id="UserType" class="mt-1" label=""
+          [items]="[{Value:1,Text:'Bác sĩ gia đình'},{Value:2,Text:'Phòng khám đa khoa'}]" [(model)]="login.UserType"
+          [validationerror]="'UserType' | validationerror:validationErrors">
+        </app-radio> -->
+        <div [ngClass]="{'hide-capcha': !showCaptcha}">
+          <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="login.captchaToken" required
+            [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
+          <label class="red mt-1" [innerHTML]="'CaptchaToken' | validationerror:validationErrors"></label>
+        </div>
+        <!-- <div [ngClass]="{'hide-capcha': !showCaptcha}">
+          <botdetect-captcha captchaStyleName="captChaLogin"></botdetect-captcha>
+          <br />
+          <input id="captChaLogin" name="captChaLogin" ngModel class="captChaLogin" #captChaLogin="ngModel" type="text"
+            label="NHẬP CAPTCHA" placeholder="NHẬP CAPTCHA" (keyup)="onKey($event)">
+          <label class="red mt-1" [innerHTML]="'CaptchaToken' | validationerror:validationErrors"></label>
+        </div> -->
+      </mat-card-content>
+      <button mat-raised-button color="primary" class="btn-block btn-rounded" type="button" (click)="submit()">ĐĂNG NHẬP</button>
+    </div>
+    <!-- <p class="mt-5 text-center"><b>ĐƯỢC TÀI TRỢ BỞI:</b></p>
+    <ul class="inline text-center">
+      <li class="mr-2"><img src="assets/img/nha-tai-tro/xskt-an-giang.png" alt="" style="height: 100px;"/></li>
+    </ul> -->
+  </mat-card>
+</div>

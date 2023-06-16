@@ -1,0 +1,33 @@
+<div class="full-width" id="formField{{id}}">
+    <mat-form-field appearance="outline"  class="full-width  mat-form-field-should-float">
+        <mat-label>{{label}} <span style="color: red;font-weight: bold;" *ngIf="required">*</span></mat-label>
+        <input #file hidden type="file" id="{{id}}" name="{{id}}" [multiple]="multiple" [disabled]="disabled" (change)="inputChange($event)" accept="{{allowedExtensions}}"
+        />
+        <input matInput hidden />
+        <div class="list-files">
+            <mat-list *ngIf="!showThumbImageOnly">
+                <mat-list-item *ngFor="let file of files;let i=index;" [value]="file">
+                    <button mat-button mat-icon-button aria-label="Clear" (click)="remove(file)" matTooltip="Xóa" class="mat-select-search-clear" [disabled]="uploading">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <span *ngIf="file.Error==null && !file.Uploaded"><mat-spinner diameter="20" style="display:inline-block ;" matTooltip="Đang tải file lên"></mat-spinner> {{file.Ten}}</span>
+                    <a *ngIf="file.Error==null && file.Uploaded" (click)="downloadFile(file)" target="_blank">{{file.Ten}}</a>
+                    <a *ngIf="file.Error!=null" matTooltip="{{file.Error}}" class="red">{{file.Ten}}</a>
+                </mat-list-item>
+            </mat-list>
+            <div fxLayout="row column" fxLayoutGap="0 grid" *ngIf="showThumbImageOnly && files!=null && files.length>0">
+                <div  fxFlex="50%" fxFlex.gt-sm="{{widthThumb}}" fxFlex.sm="{{widthThumb}}"  *ngFor="let file of files;let i=index;">
+                    <div  style="position: relative;padding: 5px;" *ngIf="file.Src!=null && file.Src!=''">
+                        <img [src]="file.Src | safeUrl" alt="{{file.Ten}}" style="width: 100%;cursor: pointer;" matTooltip="Xem ảnh" 
+                         (click)="viewImage(file.Src)"/>
+                        <button mat-icon-button aria-label="Clear" (click)="remove(file)" matTooltip="Xóa" class="mat-select-search-clear" [disabled]="uploading" style="position: absolute;right:0;top:0;">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button mat-raised-button color="default" type="button" style="float: right;width: 80px;height: 30px;line-height: 30px;" (click)="file.click()" [disabled]="uploading">Chọn</button>
+    </mat-form-field>
+    <label class="red" [innerHTML]="validationerror"></label>
+</div>

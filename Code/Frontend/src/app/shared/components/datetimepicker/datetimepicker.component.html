@@ -1,0 +1,29 @@
+
+<div class="full-width">
+  <mat-form-field appearance="outline" class="full-width   mat-form-field-should-float">
+    <mat-label>{{label}} <span style="color: red;font-weight: bold;" *ngIf="required">*</span></mat-label>
+    <div fxLayout="row column" fxLayoutGap="0%">
+      <div fxFlex="60%" fxFlex.gt-sm="60%" fxFlex.sm="60%">
+        <input matInput [matDatepicker]="picker" placeholder="{{placeHolder}}"  id="{{id}}-date" name="{{id}}" [(ngModel)]="model" (ngModelChange)="emit($event)" (blur)="blur()"
+        [readonly]="readonly"  [disabled]="disabled || disabledDateOnly" style="width: calc(100% - 40px);vertical-align: initial;"/>
+        <mat-datepicker-toggle tabindex="-1" matSuffix [for]="picker" style="position: absolute;margin-top: -15px;"></mat-datepicker-toggle>
+        <mat-datepicker #picker tabindex="-1"></mat-datepicker>
+      </div>
+      <div fxFlex="40%" fxFlex.gt-sm="40%" fxFlex.sm="40%">
+        <input matInput [(ngModel)]="modelTime"  (ngModelChange)="emit($event)" (blur)="blur()" [ngxMatTimepicker]="pickerTime" style="width:calc(100% - 20px)"
+        [readonly]="readonly" [disabled]="disabled">
+        <ngx-mat-timepicker #pickerTime tabindex="-1"></ngx-mat-timepicker>
+        <button tabindex="-1" mat-icon-button style="right: -15px;margin-top: -15px;position: absolute;" (click)="pickerTime.open()" [disabled]="disabled"><mat-icon>schedule</mat-icon> </button>
+      </div>
+    </div>
+    <button tabindex="-1" mat-button *ngIf="model!=null && showIconClear && !disabled"
+          mat-icon-button
+          aria-label="Clear"
+          (click)="reset()"
+          matTooltip="Bỏ chọn"
+          class="mat-clear">
+    <mat-icon>close</mat-icon>
+  </button>
+  </mat-form-field>
+  <label id="error{{id}}"  class="error" [innerHTML]="validationerror"></label>
+</div>

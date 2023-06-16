@@ -1,0 +1,12 @@
+.btn-dang-ky-moi{
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  @media (max-width: 575px) {
+    right: 5px;
+    left: auto;
+    span{
+      display: none;
+  }
+  }
+}

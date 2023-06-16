@@ -1,0 +1,18 @@
+
+.error{
+    position: relative;
+    color: red;
+}
+.mat-form-field-wrapper{
+    padding-bottom: 5px !important;
+}
+.show-hide-toolbar{
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    border-top: 0;
+    border-right: 0;
+    z-index: 9999;
+    height: 23px;
+    line-height: 23px;
+}

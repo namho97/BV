@@ -1,0 +1,107 @@
+<div class="form-content">
+  <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+    <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%">
+          <fieldset class="mb-3" style="background-color: #e6ffff;position: relative;max-height: 60px; overflow-y: auto;">
+            <legend>THÔNG TIN HÀNH CHÍNH</legend>
+            <ul class="inline">
+              <li>Mã TN: <strong>2204050036</strong></li>
+              <li>Mã NB: <strong>22036936</strong></li>
+              <li>Họ tên: <strong>NGUYỄN THỊ LAN</strong></li>
+              <li>Giới tính: <strong>Nữ</strong></li>
+              <li>Tuổi: <strong>31</strong></li>
+              <li>SĐT: <strong>035 276 3599</strong></li>
+              <li>Dân tộc: <strong>Kinh</strong></li>
+              <li>Nghề nghiệp: <strong>Công nhân</strong></li>
+              <li>Địa chỉ: <strong>203 Quang Trung, Phường Quang Trung, Quận Hà Đông, Thành phố Hà Nội</strong></li>
+              <li>Số BHYT: <strong>5623659865986458</strong></li>
+              <li>Mức hưởng: <strong class="blue">20%</strong></li>
+              <li>Ngày hiệu lực: <strong>05/04/2022</strong></li>
+            </ul>
+          </fieldset>
+        </div>
+        <fieldset fxFlex="100%" class="mb-3">
+          <legend>THÔNG TIN THU CHI</legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%">
+              <div style="border: 1px solid rgba(0, 0, 0, 0.12);border-radius: 5px;padding: 5px;height: calc(100% - 12px);background-color: #e6ffff;">
+              <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+                <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="mt-2 mb-3"><strong>TỔNG SỐ TIỀN CẦN THU: <strong
+                      class="red" style="font-size: 17px;">1.500.000</strong></strong></div>
+                <app-select fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="HinhThuThanhToan"
+                  label="HÌNH THỨC THANH TOÁN"
+                  [items]="[{KeyId:1,DisplayName:'Tiền mặt'},{KeyId:2,DisplayName:'Chuyển khoản'},{KeyId:3,DisplayName:'POS'}]"
+                  [(model)]="thuVienPhiVo.HinhThuThanhToan" [multiple]="true" [required]="true"
+                  [validationerror]="'HinhThuThanhToan' | validationerror:validationErrors">
+                </app-select>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="TienMat" label="TIỀN MẶT"
+                  *ngIf="thuVienPhiVo.HinhThuThanhToan.indexOf(1)>=0" placeholder="TIỀN MẶT" [required]="true"
+                  [(model)]="thuVienPhiVo.TienMat" type="number"
+                  [validationerror]="'TienMat' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="ChuyenKhoan" label="CHUYỂN KHOẢN"
+                  *ngIf="thuVienPhiVo.HinhThuThanhToan.indexOf(2)>=0" placeholder="CHUYỂN KHOẢN" [required]="true"
+                  [(model)]="thuVienPhiVo.ChuyenKhoan" type="number"
+                  [validationerror]="'ChuyenKhoan' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="Pos" label="POS" [required]="true"
+                  *ngIf="thuVienPhiVo.HinhThuThanhToan.indexOf(3)>=0" placeholder="POS" [(model)]="thuVienPhiVo.Pos"
+                  type="number" [validationerror]="'Pos' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NguoiBenhDua" label="NGƯỜI BỆNH ĐƯA"
+                  placeholder="NGƯỜI BỆNH ĐƯA" [(model)]="thuVienPhiVo.NguoiBenhDua" type="number"
+                  [validationerror]="'NguoiBenhDua' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="TraLai" label="TRẢ LẠI"
+                  [disabled]="true" placeholder="TRẢ LẠI" [(model)]="thuVienPhiVo.TraLai" type="number"
+                  [validationerror]="'TraLai' | validationerror:validationErrors">
+                </app-textbox>
+                <app-datepicker fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NgayThu" label="NGÀY THU"
+                  placeholder="NGÀY THU" [(model)]="thuVienPhiVo.NgayThu" [required]="true"
+                  [validationerror]="'NgayThu' | validationerror:validationErrors">
+                </app-datepicker>
+                <app-textarea fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="NoiDungThu" label="NỘI DUNG THU"
+                  placeholder="NỘI DUNG THU" [(model)]="thuVienPhiVo.NoiDungThu" [required]="true"
+                  [validationerror]="'NoiDungThu' | validationerror:validationErrors">
+                </app-textarea>
+                <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">                  
+                  <button type="button" (click)="nhapLai()" mat-raised-button color="primary"  class="mt-1" style="float: right;"> THU TIỀN</button>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div fxFlex="100%" fxFlex.gt-sm="80%" fxFlex.sm="80%">
+              <div style="border: 1px solid rgba(0, 0, 0, 0.12);border-radius: 5px;">
+              <app-table #tableDichVu masterName="tableDichVu" [columns]="columnsDichVu"
+              [dataSource]="dataSourceDichVu" [documentType]="documentType" heightToolbar="352" [pageable]="false"
+              [groupByColumns]="groupByColumnsDichVu" [sortByColumn]="sortByColumnDichVu" [showIndex]="true" [hasFooter]="true"
+              [showCheckbox]="false" [hideHeader]="true" [noBorderTop]="true" [hasSticky]="true">
+            </app-table>
+          </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
+<div class="form-footer">
+  <button mat-stroked-button (click)="quayLai()" class="mr-1">Quay lại</button>
+</div>
+
+<ng-template #thanhTienFooterTemplate>
+  <strong>1.500.000</strong>
+</ng-template>
+<ng-template #bHYTThanhToanFooterTemplate>
+  <strong>1.500.000</strong>
+</ng-template>
+<ng-template #soTienMienGiamFooterTemplate>
+  <strong>0</strong>
+</ng-template>
+<ng-template #daThanhToanFooterTemplate>
+  <strong>0</strong>
+</ng-template>
+<ng-template #nguoiBenhConPhaiThanhToanFooterTemplate>
+  <strong class="red">1.500.000</strong>
+</ng-template>

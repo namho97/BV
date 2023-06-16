@@ -1,0 +1,48 @@
+<div class="full-width {{showIconAddOrEdit ||iconCustom?'select-has-icon-add':''}}">
+  <mat-form-field appearance="outline" class="full-width {{label==null||label==''?'no-label':''}} {{customClass}} select-field">
+    <mat-label>{{label}} <span style="color: red;font-weight: bold;" *ngIf="required">*</span></mat-label>
+    <mat-select openOnKeyup *ngIf="!multiple" matNativeControl id="{{id}}" name="{{id}}" [(ngModel)]="model"
+      (ngModelChange)="emit($event)" (selectionChange)="selectionChange($event)" (openedChange)="openedChange($event)" (blur)="blur()" [disabled]="disabled">
+      <mat-option>
+        <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="{{placeHolderSearch}}"></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngIf="filteredOptions==null||filteredOptions.length==0">-- Không có dữ liệu --</mat-option>
+      <mat-option [value]="item.KeyId" *ngFor="let item of filteredOptions" [ngClass]="item.Class">{{item.DisplayName}}</mat-option>
+    </mat-select>
+    <mat-select openOnKeyup *ngIf="multiple" multiple matNativeControl id="{{id}}" name="{{id}}" [(ngModel)]="model"
+      (ngModelChange)="emit($event)" (selectionChange)="selectionChange($event)" (openedChange)="openedChange($event)" (blur)="blur()" [disabled]="disabled">
+      <mat-option>
+        <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="{{placeHolderSearch}}"></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngIf="filteredOptions==null||filteredOptions.length==0">-- Không có dữ liệu --</mat-option>
+      <mat-option [value]="item.KeyId" *ngFor="let item of filteredOptions" [ngClass]="item.Class">{{item.DisplayName}}</mat-option>
+    </mat-select>
+    <button tabindex="-1" mat-button *ngIf="model!=null && showIconClear && !disabled"
+          mat-icon-button
+          aria-label="Clear"
+          (click)="reset()"
+          matTooltip="Bỏ chọn"
+          class="mat-select-search-clear">
+    <mat-icon>close</mat-icon>
+  </button>
+  </mat-form-field>
+  <button tabindex="-1" mat-stroked-button *ngIf="showIconAddOrEdit && this.model!=null && this.model>0"
+        (click)="edit()" [disabled]="disabled"
+        matTooltip="{{tooltipIconEdit}}"
+        class="mat-select-add">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button tabindex="-1" mat-stroked-button *ngIf="showIconAddOrEdit && !(this.model!=null && this.model>0)"
+        (click)="add()" [disabled]="disabled"
+        matTooltip="{{tooltipIconAdd}}"
+        class="mat-select-add">
+        <mat-icon>add</mat-icon>
+  </button>
+  <button tabindex="-1" mat-stroked-button *ngIf="iconCustom"
+        (click)="iconCustomClick()" [disabled]="disabled"
+        matTooltip="{{iconCustomTooltip}}"
+        class="mat-select-add">
+    <mat-icon>{{iconCustom}}</mat-icon>
+  </button>
+  <label id="error{{id}}" class="error" [innerHTML]="validationerror"></label>
+</div>

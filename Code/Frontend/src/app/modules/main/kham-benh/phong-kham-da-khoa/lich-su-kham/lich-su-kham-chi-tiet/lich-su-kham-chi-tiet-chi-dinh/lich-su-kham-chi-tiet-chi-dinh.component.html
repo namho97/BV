@@ -1,0 +1,12 @@
+<app-table #tableDichVuDangChon masterName="tableDichVuDangChon" [columns]="columnsDichVuDangChon"
+    [dataSource]="dataSourceDichVuDangChon" [documentType]="documentType" heightToolbar="{{heightToolbarDichVuDangChon}}" [pageable]="false"
+    [groupByColumns]="groupByColumnsDichVuDangChon" [sortByColumn]="sortByColumnDichVuDangChon" [showIndex]="true" [hasFooter]="true"
+    [showCheckbox]="false" [hideHeader]="true" [noBorderTop]="true" [hasSticky]="true">
+  </app-table>
+<ng-template #thanhTienFooterTemplate>
+  <strong>600.000</strong>
+</ng-template>
+
+<ng-template #tinhTrangTemplate let-dataItem>
+  <span style="border-radius: 15px;padding: 3px 10px;text-align: center;margin-right: 5px;" class="bg" [ngClass]="{'grey':dataItem.LoaiTinhTrang==1,'orange': dataItem.LoaiTinhTrang==2,'green': dataItem.LoaiTinhTrang==3,'red': dataItem.LoaiTinhTrang==4}">{{dataItem.TinhTrang}}</span>
+</ng-template>

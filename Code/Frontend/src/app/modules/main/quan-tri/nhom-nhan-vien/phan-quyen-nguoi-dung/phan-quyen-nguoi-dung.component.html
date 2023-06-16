@@ -1,0 +1,42 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM NHÂN VIÊN</a>
+        <a class="active">PHÂN QUYỀN NGƯỜI DÙNG</a>
+      </div>
+      <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="tablePhanQuyenNguoiDung.create()" >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="grid-content">
+      <app-table  #tablePhanQuyenNguoiDung masterName="tablePhanQuyenNguoiDung" [columns]="columnsPhanQuyenNguoiDung"
+       [documentType]="documentTypePhanQuyenNguoiDung"
+      [groupByColumns]="groupByColumnsPhanQuyenNguoiDung"
+      [sortByColumn]="sortByColumnPhanQuyenNguoiDung" [showIndex]="false" [showCheckbox]="false"
+      (extDataItemSelected)="extDataItemSelected($event)">
+    </app-table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT </h3>
+    </div>
+    <div class="chi-tiet-content" *ngIf="dataChon!=null">
+      <app-phan-quyen-nguoi-dung-chi-tiet [data]="dataChon" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()" (quayLaiVaTaiLaiChange)="quayLaiVaTaiLaiChange()"></app-phan-quyen-nguoi-dung-chi-tiet>
+    </div>
+  </div>
+</div>
+
+<ng-template #trangThaiTemplate let-dataItem>
+  <app-checkbox id="quyenMacDinh{{dataItem.Id}}" label=" " [(model)]="dataItem.IsDefault" [disabled]="true" class="text-center" customClass="mb-0">
+  </app-checkbox>
+</ng-template>
+
+
+<ng-template #actionTemplate let-dataItem>
+  <button mat-icon-button color="warn" (click)="tablePhanQuyenNguoiDung.delete(dataItem)" *ngIf="!dataItem.IsDefault"><mat-icon>delete_outline</mat-icon></button>
+</ng-template>

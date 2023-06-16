@@ -1,0 +1,44 @@
+.grid-content{
+    .left{
+        width: 400px;
+        height: 100%;
+        float: left;
+        border-right: 1px solid rgba(0, 0, 0, 0.12);
+        @media (max-width: 575px) {         
+            width: 100%;
+            border-right: none;
+        }
+    }
+    .right{
+        width: calc(100% - 401px);
+        height: 100%;
+        float: left;
+        @media (max-width: 575px) {         
+            width: 100%;
+        }
+        .header{
+            height: 55px;
+            .title{
+                line-height: 55px;
+            }
+        }
+    }
+    @media (max-width: 575px) {         
+        .left{
+            width: 100%;
+        }
+        .right{
+            width: 0%;
+        }
+    }
+    &.has-detail{
+        @media (max-width: 575px) {         
+            .left{
+                display: none;
+            }
+            .right{
+                width: calc(100% - 1px);
+            }
+        }
+    }
+}

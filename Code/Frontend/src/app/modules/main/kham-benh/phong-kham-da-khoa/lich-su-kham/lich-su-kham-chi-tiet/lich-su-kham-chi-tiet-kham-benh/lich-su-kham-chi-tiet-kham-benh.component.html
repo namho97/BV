@@ -1,0 +1,157 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" >
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>KHÁM BỆNH</legend>
+          <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+            <tr>
+              <td width="30%">LÝ DO KHÁM BỆNH:</td>
+              <td><strong>Đau bụng</strong></td>
+            </tr>
+            <tr>
+              <td>NỘI DUNG:</td>
+              <td><strong>-Đau đầu, sổ mũi, ù tai, ho -Tiểu đường</strong></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>CHẨN ĐOÁN</legend>
+          
+          <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+            <tr>
+              <td width="30%">ICD CHÍNH:</td>
+              <td><strong>Z00 - Khám tổng quát và kiểm tra sức khỏe</strong></td>
+            </tr>
+            <tr>
+              <td>ICD KÈM THEO:</td>
+              <td><strong>Z00 - Khám tổng quát và kiểm tra sức khỏe, A00 - Bệnh tả</strong></td>
+            </tr>
+            <tr>
+              <td>CHẨN ĐOÁN:</td>
+              <td><strong>Khám tổng quát và kiểm tra sức khỏe cho những người không có điều gì than phiền về sức khỏe hoặc những người đã có chẩn đoán</strong></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" *ngIf="data.KhamBenh.CoHenTaiKham">
+        <fieldset>
+          <legend>THÔNG TIN HẸN TÁI KHÁM</legend>
+          <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+            <tr>
+              <td width="30%">KHÁM LẠI SAU (ngày):</td>
+              <td><strong>7</strong></td>
+            </tr>
+            <tr>
+              <td>NGÀY HẸN TÁI KHÁM:</td>
+              <td><strong>25/08/2022</strong></td>
+            </tr>
+            <tr>
+              <td>GHI CHÚ:</td>
+              <td><strong>Khi đi nhớ mang theo phim</strong></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>CHỈ SỐ SINH TỒN
+          </legend>
+          <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+            <tr>
+              <td width="50%">MẠCH (nhịp/phút):</td>
+              <td><strong>58</strong></td>
+            </tr>
+            <tr>
+              <td>NHIỆT ĐỘ (°C):</td>
+              <td><strong>36</strong></td>
+            </tr>
+            <tr>
+              <td>HUYẾT ÁP (mmHg):</td>
+              <td><strong>25/69</strong></td>
+            </tr>
+            <tr>
+              <td>NHỊP THỞ (lần/phút):</td>
+              <td><strong>25</strong></td>
+            </tr>
+            <tr>
+              <td>CÂN NẶNG (kg):</td>
+              <td><strong>50</strong></td>
+            </tr>
+            <tr>
+              <td>CHIỀU CAO (cm):</td>
+              <td><strong>160</strong></td>
+            </tr>
+            <tr>
+              <td>BMI (kg/m²):</td>
+              <td><strong>0.9</strong></td>
+            </tr>
+            <tr>
+              <td>GLASSGOW:</td>
+              <td><strong>12</strong></td>
+            </tr>
+            <tr>
+              <td>SpO2 (%):</td>
+              <td><strong>23</strong></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset class="mb-3">
+          <legend>TIỀN SỬ BỆNH 
+          </legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+                <tr>
+                  <th style="width:25px">#</th>
+                  <th style="width:100px">LOẠI</th>
+                  <th>TÊN BỆNH</th>
+                </tr>
+                <tr *ngFor="let item of data.KhamBenh.TienSuBenhs;let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.LoaiTienSuBenh}}</td>
+                  <td>{{item.TenBenhTienSu}} </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+        <fieldset>
+          <legend>DỊ ỨNG 
+          </legend>
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="0 grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <table style="table-layout: fixed;width:100%" class="table-format td-p-10">
+                <tr>
+                  <th style="width:25px">#</th>
+                  <th style="width:70px">LOẠI</th>
+                  <th style="width:100px">TÊN DỊ ỨNG</th>
+                  <th>BIỂU HIỆN</th>
+                  <th style="width:80px">MỨC ĐỘ</th>
+                </tr>
+                <tr *ngFor="let item of data.KhamBenh.DiUngs;let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.LoaiDiUng}}</td>
+                  <td>{{item.TenDiUng}}</td>
+                  <td>{{item.BieuHienDiUng}}</td>
+                  <td>{{item.MucDoDiUng}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>

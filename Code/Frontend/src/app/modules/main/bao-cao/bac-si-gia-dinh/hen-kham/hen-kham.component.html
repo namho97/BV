@@ -1,0 +1,51 @@
+<div class="header">
+  <div class="breadcrumb flat">
+    <a>BÁO CÁO</a>
+    <a class="active">HẸN KHÁM</a>
+  </div>
+</div>
+
+<div class="grid-content">
+  <app-table #table masterName="table" [columns]="columns" [documentType]="documentType" [disabledLoadWhenOpeningPage]="true"
+    [groupByColumns]="groupByColumns" [headerTemplate]="headerTemplate" [sortByColumn]="sortByColumn"
+    [showIndex]="true" [showCheckbox]="false">
+  </app-table>
+</div>
+
+<ng-template #headerTemplate>
+  <div class="header-template" id="header">
+    <div style="position: relative;">
+      <app-select style="display: inline-block;margin-bottom: 4px;width: 200px;margin-right: 5px;"
+        label="TRẠNG THÁI" url="Common/GetTrangThaiYeuCauTiepNhanLookup"
+        [(model)]="queryInfo.TrangThai"  (modelObjectChange)="trangThaimodelObjectChange($event)">
+      </app-select>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 200px;margin-right: 5px;" id="TuNgay"
+        label="TỪ NGÀY" [(model)]="queryInfo.TuNgay">
+      </app-datetimepicker>
+      <app-datetimepicker style="display: inline-block;margin-bottom: 4px;width: 200px;margin-right: 5px;" id="DenNgay"
+        label="ĐẾN NGÀY" [(model)]="queryInfo.DenNgay">
+      </app-datetimepicker>
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;">
+        <button (click)="timKiem()" mat-stroked-button color="primary" class="btn-tim-kiem">
+          <mat-icon>search</mat-icon> Tìm kiếm
+        </button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width: 145px;" *ngIf="dangTimKiem">
+        <button (click)="huyTimKiem()" mat-button class="btn-huy-tim-kiem">
+          <mat-icon>clear</mat-icon> Hủy tìm kiếm
+        </button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width:142px;" *ngIf="table!=null && table._tableDataSource!=null &&table._tableDataSource.data!=null && table._tableDataSource.data.length>0">
+        <button (click)="xuatExcel()" mat-stroked-button color="accent" class="btn-tim-kiem">
+          <img src="assets/img/export-to-excel.png" alt="Xuất báo cáo" height="24"> Xuất báo cáo
+        </button>
+      </div>
+      <div style="display: inline-block;margin-bottom: 4px;width:120px;" *ngIf="table!=null && table._tableDataSource!=null &&table._tableDataSource.data!=null && table._tableDataSource.data.length>0">
+        <button (click)="print()" mat-stroked-button color="accent" class="btn-tim-kiem">
+          <mat-icon>print</mat-icon> In báo cáo
+        </button>
+       
+      </div>
+    </div>
+  </div>
+</ng-template>

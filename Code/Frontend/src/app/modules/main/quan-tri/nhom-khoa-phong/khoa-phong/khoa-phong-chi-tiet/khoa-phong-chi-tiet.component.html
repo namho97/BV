@@ -1,0 +1,75 @@
+<div class="form-content">
+    <ng-scrollbar fxLayout="row column" fxLayoutGap="0%">
+        <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+            <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" class="mb-3">
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%" id="Ma" label="MÃ" [required]="true"
+                    placeholder="MÃ" [(model)]="khoaPhongVo.Ma" maxLength="20"
+                    [validationerror]="'Ma' | validationerror:validationErrors">
+                </app-textbox>
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="30%" fxFlex.sm="30%" id="Ten" label="TÊN" [required]="true"
+                    placeholder="TÊN" [(model)]="khoaPhongVo.Ten" maxLength="250"
+                    [validationerror]="'Ten' | validationerror:validationErrors">
+                </app-textbox>
+
+                <!-- <app-select fxFlex="100%" fxFlex.gt-sm="35%" fxFlex.sm="35%" label="CHUYÊN KHOA" [required]="true"
+                    [items]="[{KeyId:1,DisplayName:'Khoa hồi sức cấp cứu'},{KeyId:2,DisplayName:'Khoa nội tổng hợp'},{KeyId:3,DisplayName:'Khoa khám bệnh'}]"
+                    [(model)]="khoaPhongVo.ChuyenKhoaIds" [multiple]="true"
+                    [validationerror]="'ChuyenKhoaIds' | validationerror:validationErrors">
+                </app-select> -->
+
+                <app-textboxnumeric id="so-tien-thu-tam-ung" fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%"
+                    label="SỐ TIỀN THU TẠM ỨNG" customClass="input-blue" placeholder="SỐ TIỀN THU TẠM ỨNG"
+                    [(model)]="khoaPhongVo.SoTienThuTamUng" 
+                    [validationerror]="'SoLuong' | validationerror:validationErrors" type="number">
+                </app-textboxnumeric>
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="LOẠI KHOA PHÒNG" [required]="true"
+                    url="QuanTriNhomKhoaPhongKhoaPhong/GetLookupLoaiKhoaPhong"
+                    [(model)]="khoaPhongVo.LoaiKhoaPhong" 
+                    [validationerror]="'LoaiKhoaPhong' | validationerror:validationErrors">
+                </app-select>
+
+                <div fxFlex="50%" fxFlex.sm="50%">
+                    <div class="container-custom no-label">
+                        <label>Kiểu Khám</label>
+                        <div fxLayout="row">
+                            <app-checkbox id="khongMangThai" label="Nội trú" class="ml-4 mb-1" fxFlex="35%"
+                                [(model)]="khoaPhongVo.CoKhamNoiTru" style="margin-top: 1px;">
+                            </app-checkbox>
+
+                            <app-checkbox id="coMangThai" label="Ngoại trú" class="mb-1"
+                                [(model)]="khoaPhongVo.CoKhamNgoaiTru" style="margin-top: 1px;">
+                            </app-checkbox>
+                        </div>
+                    </div>
+                </div>
+
+                <app-textboxnumeric id="so-giuong-ke-hoach" fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%"
+                    label="SỐ GIƯỜNG KẾ HOẠCH" customClass="input-blue" placeholder="SỐ GIƯỜNG KẾ HOẠCH"
+                    [(model)]="khoaPhongVo.SoGiuongKeHoach" type="number">
+                </app-textboxnumeric>
+
+                <app-select fxFlex="100%" fxFlex.gt-sm="25%" fxFlex.sm="25%" label="HIỆU LỰC" 
+                    [items]="[{KeyId:1,DisplayName:'Đang sử dụng'},{KeyId:2,DisplayName:'Không sử dụng'}]"
+                    [(model)]="khoaPhongVo.HieuLuc" 
+                    >
+                </app-select>
+
+
+                <app-textbox fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" id="mo-ta" label="MÔ TẢ"
+                    placeholder="MÔ TẢ" [(model)]="khoaPhongVo.MoTa" maxLength="2000">
+                </app-textbox>
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>
+<div class="form-footer">
+    <button mat-stroked-button (click)="quayLai()" class="mr-1" *ngIf="!showOnPopup">Quay lại</button>
+
+    <button *ngIf="!isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="luu()">LƯU</button>
+    <button *ngIf="isUpdate" mat-raised-button color="primary" type="button" style="float: right;"
+        (click)="capNhat()">CẬP
+        NHẬT</button>
+    <button type="button" (click)="nhapLai()" mat-button class="mr-1" style="float: right;"> NHẬP LẠI</button>
+</div>

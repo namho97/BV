@@ -1,0 +1,30 @@
+<div class="panel">
+  <div class="left">
+    <div class="header">
+      <div class="breadcrumb flat">
+        <a>QUẢN TRỊ</a>
+        <a>NHÓM VẬT TƯ</a>
+        <a class="active">VẬT TƯ</a>
+      </div> 
+      <!-- <button mat-mini-fab color="primary" class="add" matTooltip="Thêm" (click)="gridTree()">
+        <mat-icon>add</mat-icon>
+      </button> -->
+    </div>
+    <div class="grid-content">      
+      <!-- (extOnSelected)="chonNhomVatTu($event)" -->
+      <app-tree #treeNhomVatTu id="treeNhomVatTu" urlGetData="QuanTriNhomVatTuVatTu/GetDataForGridAsync"
+      [(model)]="id" [isExpandAll]="false" heightToolbar="150"   >
+    </app-tree>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="header">
+      <h3 class="title">THÔNG TIN CHI TIẾT</h3>
+    </div>
+    <div class="chi-tiet-content">
+      <!-- <app-nhom-thuoc-chi-tiet [data]="id" (dataChange)="dataChange($event)"
+        (quayLaiChange)="quayLaiChange()"></app-nhom-thuoc-chi-tiet> -->
+    </div>
+  </div>
+</div>

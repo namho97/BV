@@ -1,0 +1,102 @@
+<!-- <div class="header">
+  <div class="breadcrumb flat">
+    <a class="active">TRANG CHỦ</a>
+  </div>
+</div> -->
+
+<div class="grid-content p-15">
+  <ng-scrollbar fxLayout="row columns" fxLayoutGap="0%">
+    <div  fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+      <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+
+        <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%">
+          <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%">
+              <mat-card class="text-center">
+                <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px grid" 
+                  fxLayoutAlign="center">
+                  <app-datetimepicker id="TuNgay" label="TỪ NGÀY" [(model)]="this.timKiemModel.TuNgay" fxFlex="100%" fxFlex.gt-sm="40%"
+                    fxFlex.sm="40%">
+                  </app-datetimepicker>
+                  <app-datetimepicker id="DenNgay" label="ĐẾN NGÀY" [(model)]="this.timKiemModel.DenNgay" fxFlex="100%" fxFlex.gt-sm="40%"
+                    fxFlex.sm="40%">
+                  </app-datetimepicker>
+                  <div fxFlex="100%" fxFlex.gt-sm="20%" fxFlex.sm="20%">
+                    <button class="btn-tim-kiem" color="primary" mat-stroked-button type="button" matTooltip="Làm mới"
+                     style="float:left;padding:7px 12px 7px 12px !important;margin-top:2px;" (click)="timKiem()">
+                      <mat-icon>search</mat-icon> Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+            
+            <div fxFlex="50%" fxFlex.gt-sm="30%" fxFlex.sm="30%">
+              <mat-card>
+                <mat-card-title class="element-ellipsis"><strong>TRẠNG THÁI KHÁM</strong></mat-card-title>
+                <mat-card-content>
+                  <div class="chart-tinh-trang-kham" style="height: 202px;overflow: hidden;">
+                    <canvas #chartTinhTrangKham id="chartTinhTrangKham"></canvas>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div fxFlex="50%" fxFlex.gt-sm="24%" fxFlex.sm="24%">
+              <mat-card class="text-center" style="height: 241px;overflow-y: auto;">
+                <button mat-fab color="primary">
+                  <mat-icon>groups</mat-icon>
+                </button>
+                <h2 class="mt-4">{{chiTietTiepNhanVo.TongTiepNhanSoLuong}}</h2>
+                <p>TỔNG TIẾP NHẬN</p>
+              </mat-card>
+            </div>
+            <div fxFlex="50%" fxFlex.gt-sm="23%" fxFlex.sm="23%">
+              <mat-card class="text-center" style="height: 241px;overflow-y: auto;">
+                <button mat-fab color="warn">
+                  <mat-icon>child_care</mat-icon>
+                </button>
+                <h2 class="mt-4">{{chiTietTiepNhanVo.TreEmSoLuong}}</h2>
+                <p>TRẺ EM</p>
+                <p class="red"><button mat-button>
+                    {{chiTietTiepNhanVo.TreEmPhanTram}}%
+                  </button></p>
+              </mat-card>
+            </div>
+            <div fxFlex="50%" fxFlex.gt-sm="23%" fxFlex.sm="23%">
+              <mat-card class="text-center" style="height: 241px;overflow-y: auto;">
+                <button mat-fab color="default">
+                  <mat-icon>hotel</mat-icon>
+                </button>
+                <h2 class="mt-4">{{chiTietTiepNhanVo.NhapVienSoLuong}}</h2>
+                <p>NHẬP VIỆN</p>
+                <p class="red"><button mat-button>
+                    {{chiTietTiepNhanVo.NhapVienPhanTram}}%
+                  </button></p>
+              </mat-card>
+            </div>
+            <div fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%" class="mb-0 pb-0">
+              <mat-card>
+                <mat-card-title><strong>LỊCH HẸN KHÁM</strong><button mat-raised-button color="warn" class="float-right" style="margin-top: -10px;" routerLink="/kham-benh/bac-si-gia-dinh/bac-si-kham"><mat-icon>medical_services</mat-icon> Khám bệnh</button></mat-card-title>
+                <mat-card-content>
+                  <div class="chart-lich-hen-kham">
+                    <canvas #chartLichHenKham id="chartLichHenKham"></canvas>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.sm="50%" class="mb-0 pb-0">
+          <mat-card>
+            <mat-card-title><strong>DOANH THU GẦN ĐÂY</strong></mat-card-title>
+            <mat-card-content>
+              <div class="chart-doanh-thu">
+                <canvas #chartDoanhThuGanDay id="chartDoanhThuGanDay"></canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>
